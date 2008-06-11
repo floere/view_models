@@ -83,9 +83,19 @@ controller_method :current_user, :logger
 
 # * Big Example
 #
+# The following classes all have specs of course ;) But are not shown since they don't help the example.
+
+# Presenters superclass for this project.
+#
+# We include all of Rails' helpers for the presenters in this project.
+# Also, we include the ApplicationHelper.
+#
+# We delegate logger and current_user calls in the presenters to
+# the active controller.
+#
 class Presenters::Project < Presenters::Base
+  
   # All of Rails' standard helpers.
-  #
   helper ActionView::Helpers::ActiveRecordHelper
   helper ActionView::Helpers::TagHelper
   helper ActionView::Helpers::FormTagHelper
@@ -98,17 +108,36 @@ class Presenters::Project < Presenters::Base
   
   helper ApplicationHelper
   
-  controller_method :logger, :currently_logged_in_user
+  controller_method :logger, :current_user
+  
+end
+
+# All items have a description that needs to be filtered by textilize.
+#
+class Presenters::Item < Presenters::Project
+  model_reader :description, :filter_through => :textilize
+  model_reader :price, :filter_through => :localize_currency
+  
+  # Converts a database price tag to the users chosen value, with the users preferred currency appended.
+  # If the user is Swiss, localize_currency will convert 10 Euros to "16.57 CHF" 
+  #
+  def localize_currency(price_in_euros)
+    converted_price = current_user.convert_price(price_in_euros)
+    "#{converted_price} #{current_user.currency.to_s}"
+  end
 end
 
 # This class also has partial templates in the directory
-# app/views/presenters/book
-# _cart_item.html.haml
-# _cart_item.text.erb
+#   app/views/presenters/book
+# that are called
+#   _cart_item.html.haml
+#   _cart_item.text.erb
 #
-class Presenters::Book < Presenters::Project
+# Call presenter_for on a book in the view or controller to get this presenter.
+#
+class Presenters::Book < Presenters::Item
   model_reader :author, :title, :pages
-  model_reader :excerpt, :description, :filter_through => :textilize
+  model_reader :excerpt, :filter_through => :textilize
   
   def header
     content_tag(:h1, "#{author} – #{title}")
@@ -117,4 +146,21 @@ class Presenters::Book < Presenters::Project
   def full_description
     content_tag(:p, "#{excerpt} #{description}", :class => 'description full')
   end
+end
+
+# This class also has partial templates in the directory
+#   app/views/presenters/toy
+# that are called
+#   _cart_item.html.haml
+#   _cart_item.text.erb
+#
+# Call presenter_for on a toy in the view or controller to get this presenter.
+#
+class Presenters::Toy < Presenters::Item
+  model_reader :starting_age, :small_dangerous_parts
+  
+  def obligatory_parental_warning
+    "Warning, this toy can only be used by kids ages #{starting_age} and up. Your department of health. Thank you."
+  end
+  
 end
