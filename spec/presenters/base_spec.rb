@@ -134,36 +134,6 @@ describe Presenters::Base do
     end
   end
   
-  describe "#render_as" do
-    before(:each) do
-      model_mock = flexmock(:model)
-      context_mock = flexmock(:context)
-      @presenter = Presenters::Base.new(model_mock, context_mock)
-      
-      @view_name = flexmock(:view_name)
-      @view_instance_mock = flexmock(:view_instance)
-      
-      flexmock(@presenter).should_receive(:view_instance).once.and_return @view_instance_mock
-      
-      path_mock = flexmock(:path)
-      flexmock(@presenter).should_receive(:template_path).once.with(@view_name).and_return path_mock
-      
-      @view_instance_mock.should_receive(:render).once.with(
-        :partial => path_mock, :locals => { :presenter => @presenter }
-      )
-    end
-    it "should not call template_format=" do
-      @view_instance_mock.should_receive(:template_format=).never
-      
-      @presenter.render_as(@view_name)
-    end
-    it "should call template_format=" do
-      @view_instance_mock.should_receive(:template_format=).once.with(:some_format)
-      
-      @presenter.render_as(@view_name, :some_format)
-    end
-  end
-  
   describe "with mocked Presenter" do
     attr_reader :model_mock, :context_mock, :presenter
     before(:each) do
@@ -171,17 +141,47 @@ describe Presenters::Base do
       @context_mock = flexmock(:context)
       @presenter = Presenters::Base.new(model_mock, context_mock)
     end
+    describe "#render_as" do
+      before(:each) do
+        @view_name = flexmock(:view_name)
+        @view_instance_mock = flexmock(:view_instance)
+
+        flexmock(presenter).should_receive(:view_instance).once.and_return @view_instance_mock
+
+        path_mock = flexmock(:path)
+        flexmock(presenter).should_receive(:template_path).once.with(@view_name).and_return path_mock
+
+        @view_instance_mock.should_receive(:render).once.with(
+          :partial => path_mock, :locals => { :presenter => presenter }
+        )
+      end
+      it "should not call template_format=" do
+        @view_instance_mock.should_receive(:template_format=).never
+
+        presenter.render_as(@view_name)
+      end
+      it "should call template_format=" do
+        @view_instance_mock.should_receive(:template_format=).once.with(:some_format)
+
+        presenter.render_as(@view_name, :some_format)
+      end
+    end
+    
     describe "#presenter_template_path" do
       describe "absolute path given" do
         it "should use it as given" do
-          presenter.template_path('some/path/to/template').should == 'some/path/to/template'
+          in_the presenter do
+            template_path('some/path/to/template').should == 'some/path/to/template'
+          end
         end
       end
       describe "with just the template name" do
         it "should prepend the presenter path" do
           flexmock(Presenters::Base).should_receive(:presenter_path).and_return('some/presenter/path/to')
           
-          presenter.template_path('template').should == 'some/presenter/path/to/template'
+          in_the presenter do
+            template_path('template').should == 'some/presenter/path/to/template'
+          end
         end
       end
     end
@@ -189,22 +189,26 @@ describe Presenters::Base do
     describe "#view_instance" do
       it "should create a new view instance from ActionView::Base" do
         view_paths_mock = flexmock(:view_paths)
-        @context_mock.should_receive('class.view_paths').once.and_return(view_paths_mock)
+        context_mock.should_receive('class.view_paths').once.and_return(view_paths_mock)
         
         flexmock(ActionView::Base).should_receive(:new).once.with(view_paths_mock, {}, @context_mock)
-        @presenter.view_instance
+        in_the presenter do
+          view_instance
+        end
       end
       it "should extend the view instance with the master helper module" do
         master_helper_module_mock = flexmock(:master_helper_module)
-        flexmock(@presenter).should_receive(:master_helper_module).and_return(master_helper_module_mock)
+        flexmock(presenter).should_receive(:master_helper_module).and_return(master_helper_module_mock)
         
         view_instance_mock = flexmock(:view_instance)
         view_instance_mock.should_receive(:extend).with(master_helper_module_mock)
         
-        @context_mock.should_receive('class.view_paths').once
+        context_mock.should_receive('class.view_paths').once
         flexmock(ActionView::Base).should_receive(:new).once.and_return view_instance_mock
         
-        @presenter.view_instance
+        in_the presenter do
+          view_instance
+        end
       end
     end
   end
