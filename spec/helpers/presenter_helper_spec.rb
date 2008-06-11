@@ -30,9 +30,9 @@ describe PresenterHelper do
       presenter_class_mock.should_receive(:new).once.with(model, context_mock)
       presenter_for(model, context_mock)
     end
-    describe "specific_mapping" do
+    describe "specific_presenter_mapping" do
       it "should return an empty hash by default" do
-        specific_mapping.should == {}
+        specific_presenter_mapping.should == {}
       end
     end
     describe "no specific mapping" do
@@ -58,7 +58,7 @@ describe PresenterHelper do
       class SomeModelClass; end
       class Presenters::SomeSpecificClass < Presenters::Base; end
       before(:each) do
-        flexmock(self).should_receive(:specific_mapping).and_return(
+        flexmock(self).should_receive(:specific_presenter_mapping).and_return(
           { SomeModelClass => Presenters::SomeSpecificClass }
         )
       end

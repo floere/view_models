@@ -40,7 +40,7 @@ module PresenterHelper
   #
   def presenter_for(model, context = self)
     # Is there a specific mapping?
-    presenter_class = specific_mapping[model.class]
+    presenter_class = specific_presenter_mapping[model.class]
     
     # If not, get the default mapping.
     presenter_class = default_presenter_class_for(model) unless presenter_class
