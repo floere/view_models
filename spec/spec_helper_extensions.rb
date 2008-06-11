@@ -1,23 +1,5 @@
 module SpecHelperExtensions
 
-  # Common helpers for view specs.
-  #
-  module ViewSpecHelper
-  
-    # Overrides the rspec template, returning the controller template.
-    #
-    def template
-      raise '"template" test helper method only available in view/functional specs' unless @controller
-      @controller.template
-    end
-  
-    # Overrides the rspec template, wraps it with a flexmock.
-    #
-    def view
-      flexmock(template)
-    end
-  end
-
   # Allows the definition of "describe-wide" examples and describes.
   # 
   # Case for "it". Use in the describe block:
