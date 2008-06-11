@@ -1,5 +1,13 @@
 # (Re)Presenters for Rails
-# Ask florian.hanke@gmail.com if you have questions, thanks! :)
+# A possible presenter solution.
+# Ask/Write florian.hanke@gmail.com if you have questions/feedback, thanks! :)
+# Fork if you have improvements. Tell me where to merge them from, thanks!
+#
+# Problem: Display Methods are not well placed either in
+# * models: Violation of the MVC principle.
+# * helpers: No Polymorphism.
+# Solution:
+# A thin proxy layer over a model, with access to the controller, used by the view or controller.
 # 
 # IMPORTANT NOTE:
 # As of yet it is needed to copy the representer/views/presenters/collection
@@ -10,7 +18,8 @@
 # * Getting a presenter in a view or a controller.
 #
 # Call presenter_for:
-# Note: By convention, uses Presenters::Model::Class::Name, thus prefixing Presenters::
+# Note: By convention, uses Presenters::Model::Class::Name, thus prefixing Presenters:: to
+#       the model class name.
 presenter_instance = presenter_for model_instance
 
 # * Getting a collection presenter in a view.
@@ -54,16 +63,17 @@ presenter.render_as :example, :text
 helper ActionView::Helpers::UrlHelper
 helper ApplicationHelper
 # Note: It is helpful to create a superclass to all presenters in the project
-# with generally used helpers.
-# We use Presenters::Project a lot.
+#       with generally used helpers.
+# We use Presenters::Project a lot, for example. See example below.
 
 # * Controller Delegate Methods
 #
 # Use controller_method(*args).
-# Delegates current_member and logger on the presenter to the controller.
-controller_method :current_member, :logger
+#
+# Delegates current_user and logger on the presenter to the controller.
+controller_method :current_user, :logger
 
-# * Big Example:
+# * Big Example
 #
 class Presenters::Project < Presenters::Base
   # All of Rails' standard helpers.
@@ -80,9 +90,14 @@ class Presenters::Project < Presenters::Base
   
   helper ApplicationHelper
   
-  controller_method :logger, :current_logged_in_reader
+  controller_method :logger, :currently_logged_in_user
 end
 
+# This class also has partial templates in the directory
+# app/views/presenters/book
+# _cart_item.html.haml
+# _cart_item.text.erb
+#
 class Presenters::Book < Presenters::Project
   model_reader :author, :title, :pages
   model_reader :excerpt, :description, :filter_through => :textilize
