@@ -1,0 +1,10 @@
+<%- width = 66 -%>
+<%= '-'*width %>
+<% collection.each do |item| -%>
+<% presenter = presenter_for(item, self) -%>
+<%- result = presenter.render_as(template_name) -%>
+<%= '|' + "%-#{width}s"%(result[0,width]) + '|' -%>
+<%- p ('|' + "%-#{width}s"%(result[0,width]) + '|') %>
+<%= separator || ">#{'-'*(width-2)}<" unless item == collection.entries.last %>
+<% end -%>
+<%= '-'*width %>

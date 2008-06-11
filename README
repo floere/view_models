@@ -1,0 +1,97 @@
+# (Re)Presenters for Rails
+# Ask florian.hanke@gmail.com if you have questions, thanks! :)
+# 
+# IMPORTANT NOTE:
+# As of yet it is needed to copy the representer/views/presenters/collection
+# directory to the corresponding location in app/views/presenters/collection.
+# This is only needed if you wish to use the collection presenter.
+# Note: Rewrite the collection templates as needed, they are rather basic.
+#
+# * Getting a presenter in a view or a controller.
+#
+# Call presenter_for:
+# Note: By convention, uses Presenters::Model::Class::Name, thus prefixing Presenters::
+presenter_instance = presenter_for model_instance
+
+# * Getting a collection presenter in a view.
+#
+# Call collection_presenter_for:
+collection_presenter_instance = collection_presenter_for enumerable_containing_model_instances
+# Rendering a list.
+collection_presenter_instance.list
+# Rendering a collection.
+collection_presenter_instance.collection
+# Rendering a table.
+collection_presenter_instance.table
+# Rendering a pagination.
+# Note: Only works if the passed parameter for collection_presenter_for is a PaginationEnumeration.
+collection_presenter_instance.pagination
+
+# * Writing filtered delegate methods on the presenter.
+#
+# Will create two delegate methods that delegate to the model:
+model_reader :first_name, :last_name
+# Will create a description delegate method that filters the model value through h:
+model_reader :description, :filter_through => :h
+# Will create a description delegate method that filters the model value through first textilize, then h:
+model_reader :description, :filter_through => [:textilize, :h]
+# Will create both a first_name and last_name delegate method
+# that filters the model value through first textilize, then h:
+model_reader :first_name, :last_name, :filter_through => [:textilize, :h]
+
+# * Rendering presenter templates
+#
+presenter = presenter_for Model::Class.new # gets a Presenters::Model::Class instance
+# Renders the 'example' partial in presenters/model/class.
+# Note: Renders a format depending on the request. ../index.text will render example.text.erb.
+presenter.render_as :example
+# Renders the 'example.text.erb' partial in presenters/model/class.
+presenter.render_as :example, :text
+
+# * Rails Helpers in Presenters
+#
+# Use helper as in the controller.
+helper ActionView::Helpers::UrlHelper
+helper ApplicationHelper
+# Note: It is helpful to create a superclass to all presenters in the project
+# with generally used helpers.
+# We use Presenters::Project a lot.
+
+# * Controller Delegate Methods
+#
+# Use controller_method(*args).
+# Delegates current_member and logger on the presenter to the controller.
+controller_method :current_member, :logger
+
+# * Big Example:
+#
+class Presenters::Project < Presenters::Base
+  # All of Rails' standard helpers.
+  #
+  helper ActionView::Helpers::ActiveRecordHelper
+  helper ActionView::Helpers::TagHelper
+  helper ActionView::Helpers::FormTagHelper
+  helper ActionView::Helpers::FormOptionsHelper
+  helper ActionView::Helpers::FormHelper
+  helper ActionView::Helpers::UrlHelper
+  helper ActionView::Helpers::AssetTagHelper
+  helper ActionView::Helpers::PrototypeHelper
+  helper ActionView::Helpers::TextHelper
+  
+  helper ApplicationHelper
+  
+  controller_method :logger, :current_logged_in_reader
+end
+
+class Presenters::Book < Presenters::Project
+  model_reader :author, :title, :pages
+  model_reader :excerpt, :description, :filter_through => :textilize
+  
+  def header
+    content_tag(:h1, "#{author} – #{title}")
+  end
+  
+  def full_description
+    content_tag(:p, "#{excerpt} #{description}", :class => 'description full')
+  end
+end

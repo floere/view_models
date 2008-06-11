@@ -1,0 +1,5 @@
+<% collection.each do |item| -%>
+<% presenter = presenter_for(item, self) -%>
+<%= presenter.render_as(template_name) -%>
+<%= separator || '\n' unless item == collection.entries.last -%>
+<% end -%>
