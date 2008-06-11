@@ -116,6 +116,8 @@ end
 #
 class Presenters::Item < Presenters::Project
   model_reader :description, :filter_through => :textilize
+  # Use price in the view as follows:
+  # = presenter.price - will display e.g. 16.57 CHF, since it is filtered first through localize_currency
   model_reader :price, :filter_through => :localize_currency
   
   # Converts a database price tag to the users chosen value, with the users preferred currency appended.
