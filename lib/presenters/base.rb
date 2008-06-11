@@ -86,16 +86,6 @@ module Presenters
       @controller = extract_controller_from context
     end
     
-    # Extracts a controller from the context.
-    #
-    def extract_controller_from(context)
-      if context.respond_to?(:controller)
-        context.controller
-      else
-        context
-      end
-    end
-    
     # Make #logger available in presenters. 
     #
     controller_method :logger
@@ -121,23 +111,36 @@ module Presenters
       view.render :partial => template_path(view_name), :locals => { :presenter => self }
     end
     
-    # Creates a view instance from the given view class.
-    #
-    def view_instance
-      view = ActionView::Base.new(controller.class.view_paths, {}, controller)
-      view.extend master_helper_module
-    end
-  
-    # Returns the root of this presenters views with the template name appended.
-    # e.g. 'presenters/some/specific/path/to/template'
-    #
-    def template_path(name)
-      name = name.to_s
-      if name.include?('/')    # Specific path like 'presenters/somethingorother/foo.haml' given.
-        name
-      else
-        File.join(self.class.presenter_path, name)
+    private
+      
+      # Creates a view instance from the given view class.
+      #
+      def view_instance
+        view = ActionView::Base.new(controller.class.view_paths, {}, controller)
+        view.extend master_helper_module
       end
-    end
+      
+      # Returns the root of this presenters views with the template name appended.
+      # e.g. 'presenters/some/specific/path/to/template'
+      #
+      def template_path(name)
+        name = name.to_s
+        if name.include?('/')    # Specific path like 'presenters/somethingorother/foo.haml' given.
+          name
+        else
+          File.join(self.class.presenter_path, name)
+        end
+      end
+      
+      # Extracts a controller from the context.
+      #
+      def extract_controller_from(context)
+        if context.respond_to?(:controller)
+          context.controller
+        else
+          context
+        end
+      end
+      
   end
 end
