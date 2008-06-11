@@ -106,7 +106,7 @@ module PresenterHelper
     # Renders a collection.
     #
     # Note: The only difference between a list and a collection is the enclosing
-    # list type. While list uses ol, the collection uses ul.
+    #       list type. While list uses ol, the collection uses ul.
     #
     # Options:
     #   collection => collection to iterate over
@@ -182,8 +182,8 @@ module PresenterHelper
       # Helper method that renders a partial in the context of the context instance.
       #
       # Example:
-      # If the collection presenter helper has been instantiated in the context
-      # of a controller, render will be called in the controller.
+      #   If the collection presenter helper has been instantiated in the context
+      #   of a controller, render will be called in the controller.
       #
       def render_partial(name, locals)
         @context.instance_eval { render :partial => "presenters/collection/#{name}", :locals => locals }
