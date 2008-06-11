@@ -20,4 +20,5 @@ Spec::Rake::SpecTask.new(:rcov) do |t|
   t.spec_files = Dir.glob('spec/**/*_spec.rb')
   t.warning = false
   t.rcov = true
+  puts "Open coverage/index.html for the rcov results."
 end
