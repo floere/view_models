@@ -4,7 +4,7 @@ module PresenterHelper
   #
   class MissingPresenterError < RuntimeError; end
   
-  # 
+  # Error thrown if the presenter loaded is not a presenter.
   #
   class NotAPresenterError < RuntimeError; end
   
