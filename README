@@ -24,6 +24,8 @@ presenter_instance = presenter_for model_instance
 
 # * Getting a collection presenter in a view.
 #
+# The collection presenter renders each of the given items with its presenter.
+#
 # Call collection_presenter_for:
 collection_presenter_instance = collection_presenter_for enumerable_containing_model_instances
 # Rendering a list.
@@ -38,19 +40,25 @@ collection_presenter_instance.pagination
 
 # * Writing filtered delegate methods on the presenter.
 #
-# Will create two delegate methods that delegate to the model:
+# Will create two delegate methods first_name and last_name that delegate to the model.
 model_reader :first_name, :last_name
-# Will create a description delegate method that filters the model value through h:
+# Will create a description delegate method that filters the model value through h.
 model_reader :description, :filter_through => :h
-# Will create a description delegate method that filters the model value through first textilize, then h:
+# Will create a description delegate method that filters the model value through first textilize, then h.
 model_reader :description, :filter_through => [:textilize, :h]
 # Will create both a first_name and last_name delegate method
-# that filters the model value through first textilize, then h:
+# that filters the model value through first textilize, then h.
 model_reader :first_name, :last_name, :filter_through => [:textilize, :h]
+# Note: Filter methods can be any method on the presenter with arity 1.
 
 # * Rendering presenter templates
 #
-presenter = presenter_for Model::Class.new # gets a Presenters::Model::Class instance
+# Use render_as(template_name, format = nil).
+#
+# Gets a Presenters::Model::Class instance
+presenter = presenter_for Model::Class.new
+# Gets a Presenters::<model_instance.class.name> instance
+presenter = presenter_for model_instance
 # Renders the 'example' partial in presenters/model/class.
 # Note: Renders a format depending on the request. ../index.text will render example.text.erb.
 presenter.render_as :example
