@@ -1,8 +1,8 @@
-require 'presenters'
-require 'presenters/base'
-require 'presenters/active_record'
+require 'representers'
+require 'representers/base'
+require 'representers/active_record'
 
-require 'helpers/presenter_helper'
+require 'helpers/representer_helper'
 
-ActionController::Base.send :helper, PresenterHelper
-ActionController::Base.send :include, PresenterHelper
+ActionController::Base.send :helper, RepresenterHelper
+ActionController::Base.send :include, RepresenterHelper

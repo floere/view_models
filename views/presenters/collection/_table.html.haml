@@ -1,6 +1,0 @@
-Table:
-%table.collection
-  - collection.each do |item|
-    %tr
-      - presenter = presenter_for(item, self)
-      = presenter.render_as(template_name)

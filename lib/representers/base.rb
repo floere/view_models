@@ -1,8 +1,8 @@
-# Base Module for Presenters.
+# Base Module for Representers.
 #
-module Presenters
+module Representers
   
-  # Base class from which all presenters inherit.
+  # Base class from which all representers inherit.
   #
   class Base
     attr_reader :model, :controller
@@ -39,7 +39,7 @@ module Presenters
         end
       end
     
-      # Make a helper available to the current presenter, its subclasses and the presenter's views.
+      # Make a helper available to the current representer, its subclasses and the representer's views.
       #
       # Same as in Controller::Base.
       #
@@ -53,7 +53,7 @@ module Presenters
       # Example: 
       #   controller_method :current_user
       #
-      # In the presenter:
+      # In the representer:
       #   self.current_user
       # will call
       #   controller.current_user
@@ -64,20 +64,20 @@ module Presenters
         end
       end
     
-      # Returns the path from the presenter_view_paths to the actual templates.
-      # e.g. "presenters/models/book"
+      # Returns the path from the representer_view_paths to the actual templates.
+      # e.g. "representers/models/book"
       #
       # If the class is named
-      #   Presenters::Models::Book
+      #   Representers::Models::Book
       # this method will yield
-      #   presenters/models/book
+      #   representers/models/book
       #
-      def presenter_path
+      def representer_path
         name.underscore
       end
     end # class << self
     
-    # Create a presenter. To create a presenter, you need to have a model (to present) and a context.
+    # Create a representer. To create a representer, you need to have a model (to present) and a context.
     # The context is usually a view or a controller.
     # Note: But doesn't need to be one :)
     # 
@@ -86,18 +86,18 @@ module Presenters
       @controller = extract_controller_from context
     end
     
-    # Make #logger available in presenters. 
+    # Make #logger available in representers. 
     #
     controller_method :logger
     
-    # Renders the given view in the presenter's view root in the format given.
+    # Renders the given view in the representer's view root in the format given.
     #
     # Example:
-    #   app/views/presenters/this/presenter/template.html.haml
-    #   app/views/presenters/this/presenter/template.text.erb
+    #   app/views/representers/this/representer/template.html.haml
+    #   app/views/representers/this/representer/template.text.erb
     #
-    # Calling presenter.render_as('template', :html) will render the haml
-    # template, calling presenter.render_as('template', :text) will render
+    # Calling representer.render_as('template', :html) will render the haml
+    # template, calling representer.render_as('template', :text) will render
     # the erb.
     #
     def render_as(view_name, format = nil)
@@ -107,8 +107,8 @@ module Presenters
       # Set the format to render in, e.g. :text, :html
       view.template_format = format if format
     
-      # Finally, render and pass the presenter as a local variable.
-      view.render :partial => template_path(view_name), :locals => { :presenter => self }
+      # Finally, render and pass the representer as a local variable.
+      view.render :partial => template_path(view_name), :locals => { :representer => self }
     end
     
     private
@@ -120,15 +120,15 @@ module Presenters
         view.extend master_helper_module
       end
       
-      # Returns the root of this presenters views with the template name appended.
-      # e.g. 'presenters/some/specific/path/to/template'
+      # Returns the root of this representers views with the template name appended.
+      # e.g. 'representers/some/specific/path/to/template'
       #
       def template_path(name)
         name = name.to_s
-        if name.include?('/')    # Specific path like 'presenters/somethingorother/foo.haml' given.
+        if name.include?('/')    # Specific path like 'representers/somethingorother/foo.haml' given.
           name
         else
-          File.join(self.class.presenter_path, name)
+          File.join(self.class.representer_path, name)
         end
       end
       
