@@ -101,7 +101,7 @@ describe Representers::Base do
       Representers::Base.helper helper_module
     end
     it "should include the helper in the master helper module" do
-      master_helper_module_mock = flexmock(:master_helper_module)
+      master_helper_module_mock = flexmock(Module.new)
       flexmock(Representers::Base).should_receive(:master_helper_module).and_return master_helper_module_mock
       
       helper_module = Module.new
@@ -110,7 +110,7 @@ describe Representers::Base do
       Representers::Base.helper helper_module
     end
   end
-  
+    
   describe ".presenter_path" do
     it "should call underscore on its name" do
       name_mock = flexmock(:name)

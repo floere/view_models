@@ -6,11 +6,10 @@ module Representers
   #
   class Base
     attr_reader :model, :controller
-
-    # A module that will collect all helpers that need to be made available to the view. 
-    class_inheritable_accessor :master_helper_module
-    self.master_helper_module = Module.new
-  
+    
+    #make helper and helper_method available
+    include ActionController::Helpers
+      
     class << self
 
       # Define a reader for a model attribute. Acts as a filtered delegation to the model. 
@@ -38,15 +37,15 @@ module Representers
           class_eval(reader)
         end
       end
-    
-      # Make a helper available to the current representer, its subclasses and the representer's views.
+      
+      # Wrapper for add_template_helper in ActionController::Helpers, also
+      # includes given helper in the representer
       #
-      # Same as in Controller::Base.
-      #
-      def helper(helper)
-        include helper
-        master_helper_module.send(:include, helper)
-      end
+      alias old_add_template_helper add_template_helper
+      def add_template_helper(helper_module)
+        include helper_module
+        old_add_template_helper helper_module
+      end      
     
       # Delegates method calls to the controller.
       #
@@ -86,9 +85,17 @@ module Representers
       @controller = extract_controller_from context
     end
     
-    # Make #logger available in representers. 
+    # Delegate controller methods.
     #
     controller_method :logger
+    controller_method :form_authenticity_token
+    controller_method :protect_against_forgery?
+    controller_method :request_forgery_protection_token
+    
+    # Make all the dynamically generated routes (restful routes etc.)
+    # available in the representer
+    #
+    ActionController::Routing::Routes.install_helpers(self)
     
     # Renders the given view in the representer's view root in the format given.
     #
@@ -110,16 +117,18 @@ module Representers
       # Finally, render and pass the representer as a local variable.
       view.render :partial => template_path(view_name), :locals => { :representer => self }
     end
-    
-    private
-      
+
+    protected
+
       # Creates a view instance from the given view class.
       #
       def view_instance
         view = ActionView::Base.new(controller.class.view_paths, {}, controller)
         view.extend master_helper_module
       end
-      
+    
+    private
+        
       # Returns the root of this representers views with the template name appended.
       # e.g. 'representers/some/specific/path/to/template'
       #

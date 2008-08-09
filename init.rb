@@ -2,7 +2,8 @@ require 'representers'
 require 'representers/base'
 require 'representers/active_record'
 
-require 'helpers/representer_helper'
+require 'helpers/view'
+require 'helpers/rails'
 
-ActionController::Base.send :helper, RepresenterHelper
-ActionController::Base.send :include, RepresenterHelper
+ActionController::Base.send :helper, Representers::Helper::Rails
+ActionController::Base.send :include, Representers::Helper::Rails
