@@ -231,7 +231,57 @@ describe Representers::Helper::Rails do
         collection_representer.send :render_partial, 'some_name', { :a => :b }
       end
     end
-
+    
+    describe "delegation" do
+      describe "enumerable" do
+        Enumerable.instance_methods.map(&:to_sym).each do |method|
+          it "should delegate #{method} to the collection" do
+            collection_mock.should_receive(method).once
+            
+            collection_representer.send(method)
+          end
+        end
+      end
+      describe "array" do
+        describe "length" do
+          it "should delegate to #length of the collection" do
+            collection_mock.should_receive(:length).once
+            
+            collection_representer.length
+          end
+          it "should return the length of the collection" do
+            collection_mock.should_receive(:length).and_return(:this_length)
+            
+            collection_representer.length.should == :this_length
+          end
+          it "should alias size" do
+            collection_mock.should_receive(:size).and_return(:this_length)
+            
+            collection_representer.size.should == :this_length
+          end
+        end
+        describe "empty?" do
+          it "should delegate to #empty? of the collection" do
+            collection_mock.should_receive(:empty?).once
+            
+            collection_representer.empty?
+          end
+          it "should return whatever #empty? of the collection returns" do
+            collection_mock.should_receive(:empty?).and_return(:true_or_false)
+            
+            collection_representer.empty?.should == :true_or_false
+          end
+        end
+        describe "each" do
+          it "should delegate to #each of the collection" do
+            collection_mock.should_receive(:each).with(Proc).once
+            
+            collection_representer.each { |c| }
+          end
+        end
+      end
+    end
+    
   end
   
 end

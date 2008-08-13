@@ -65,11 +65,20 @@ module Representers
       # * Render a Pagination
       #
       class Collection
-
+        
+        methods_to_delegate = Enumerable.instance_methods.map(&:to_sym) +
+          [:length, :size, :empty?, :each, :exit] -
+          [:select] <<
+          { :to => :@collection }
+        self.delegate(*methods_to_delegate)
+        def select(*args, &block) # active_support fail?
+          @collection.select(*args, &block)
+        end
+        
         def initialize(collection, context)
           @collection, @context = collection, context
         end
-
+        
         # Renders a list (in the broadest sense of the word).
         #
         # Options:
