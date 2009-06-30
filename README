@@ -1,5 +1,5 @@
-# Representers for Rails
-# A possible representer solution, i.e. no view logic in model code.
+# ViewModels for Rails
+# A possible view_model solution, i.e. no view logic in model code.
 # Ask/Write florian.hanke@gmail.com if you have questions/feedback, thanks! :)
 # Fork if you have improvements. Tell me where to merge them from, thanks!
 #
@@ -10,21 +10,21 @@
 # A thin proxy layer over a model, with access to the controller, used by the view or controller.
 # 
 # IMPORTANT NOTE:
-# As of yet it is needed to copy the representer/views/representers/collection
-# directory to the corresponding location in app/views/representers/collection.
+# As of yet it is needed to copy the view_model/views/view_models/collection
+# directory to the corresponding location in app/views/view_models/collection.
 # This is only needed if you wish to use the collection rpresenter.
 # Note: Rewrite the collection templates as needed, they are rather basic.
 #
-# * Getting a representer in a view or a controller.
+# * Getting a view_model in a view or a controller.
 #
-# Call representer_for:
-# Note: By convention, uses Representers::Model::Class::Name, thus prefixing Representers:: to
+# Call view_model_for:
+# Note: By convention, uses ViewModels::Model::Class::Name, thus prefixing ViewModels:: to
 #       the model class name.
-presenter_instance = representer_for model_instance
+presenter_instance = view_model_for model_instance
 
-# * Getting a collection representer in a view.
+# * Getting a collection view_model in a view.
 #
-# The collection representer renders each of the given items with its representer.
+# The collection view_model renders each of the given items with its view_model.
 #
 # Call collection_presenter_for:
 collection_presenter_instance = collection_presenter_for enumerable_containing_model_instances
@@ -38,7 +38,7 @@ collection_presenter_instance.table
 # Note: Only works if the passed parameter for collection_presenter_for is a PaginationEnumeration.
 collection_presenter_instance.pagination
 
-# * Writing filtered delegate methods on the representer.
+# * Writing filtered delegate methods on the view_model.
 #
 # Will create two delegate methods first_name and last_name that delegate to the model.
 model_reader :first_name, :last_name
@@ -49,51 +49,51 @@ model_reader :description, :filter_through => [:textilize, :h]
 # Will create both a first_name and last_name delegate method
 # that filters the model value through first textilize, then h.
 model_reader :first_name, :last_name, :filter_through => [:textilize, :h]
-# Note: Filter methods can be any method on the representer with arity 1.
+# Note: Filter methods can be any method on the view_model with arity 1.
 
-# * Rendering representer templates
+# * Rendering view_model templates
 #
 # Use render_as(template_name, format = nil).
 #
-# Gets a Representers::Model::Class instance
-presenter = representer_for Model::Class.new
-# Gets a Representers::<model_instance.class.name> instance
-presenter = representer_for model_instance
-# Renders the 'example' partial in representers/model/class.
+# Gets a ViewModels::Model::Class instance
+presenter = view_model_for Model::Class.new
+# Gets a ViewModels::<model_instance.class.name> instance
+presenter = view_model_for model_instance
+# Renders the 'example' partial in view_models/model/class.
 # Note: Renders a format depending on the request. ../index.text will render example.text.erb.
 presenter.render_as :example
-# Renders the 'example.text.erb' partial in representers/model/class.
+# Renders the 'example.text.erb' partial in view_models/model/class.
 presenter.render_as :example, :text
 
-# * Rails Helpers in Representers
+# * Rails Helpers in ViewModels
 #
 # Use helper as in the controller.
 helper ActionView::Helpers::UrlHelper
 helper ApplicationHelper
-# Note: It is helpful to create a superclass to all representers in the project
+# Note: It is helpful to create a superclass to all view_models in the project
 #       with generally used helpers.
-# We use Representers::Project a lot, for example. See example below.
+# We use ViewModels::Project a lot, for example. See example below.
 
 # * Controller Delegate Methods
 #
 # Use controller_method(*args).
 #
-# Delegates current_user and logger on the representer to the controller.
+# Delegates current_user and logger on the view_model to the controller.
 controller_method :current_user, :logger
 
 # * Big Example
 #
 # The following classes all have specs of course ;) But are not shown since they don't help the example.
 
-# Representers superclass for this project.
+# ViewModels superclass for this project.
 #
-# We include all of Rails' helpers for the representers in this project.
+# We include all of Rails' helpers for the view_models in this project.
 # Also, we include the ApplicationHelper.
 #
-# We delegate logger and current_user calls in the representers to
+# We delegate logger and current_user calls in the view_models to
 # the active controller.
 #
-class Representers::Project < Representers::Base
+class ViewModels::Project < ViewModels::Base
   
   # All of Rails' standard helpers.
   helper ActionView::Helpers::ActiveRecordHelper
@@ -114,10 +114,10 @@ end
 
 # All items have a description that needs to be filtered by textilize.
 #
-class Representers::Item < Representers::Project
+class ViewModels::Item < ViewModels::Project
   model_reader :description, :filter_through => :textilize
   # Use price in the view as follows:
-  # = representer.price - will display e.g. 16.57 CHF, since it is filtered first through localize_currency
+  # = view_model.price - will display e.g. 16.57 CHF, since it is filtered first through localize_currency
   model_reader :price, :filter_through => :localize_currency
   
   # Converts a database price tag to the users chosen value, with the users preferred currency appended.
@@ -130,14 +130,14 @@ class Representers::Item < Representers::Project
 end
 
 # This class also has partial templates in the directory
-#   app/views/representers/book
+#   app/views/view_models/book
 # that are called
 #   _cart_item.html.haml
 #   _cart_item.text.erb
 #
-# Call representer_for on a book in the view or controller to get this representer.
+# Call view_model_for on a book in the view or controller to get this view_model.
 #
-class Representers::Book < Representers::Item
+class ViewModels::Book < ViewModels::Item
   model_reader :author, :title, :pages
   model_reader :excerpt, :filter_through => :textilize
   
@@ -151,14 +151,14 @@ class Representers::Book < Representers::Item
 end
 
 # This class also has partial templates in the directory
-#   app/views/representers/toy
+#   app/views/view_models/toy
 # that are called
 #   _cart_item.html.haml
 #   _cart_item.text.erb
 #
-# Call representer_for on a toy in the view or controller to get this representer.
+# Call view_model_for on a toy in the view or controller to get this view_model.
 #
-class Representers::Toy < Representers::Item
+class ViewModels::Toy < ViewModels::Item
   model_reader :starting_age, :small_dangerous_parts
   
   def obligatory_parental_warning

@@ -1,8 +1,8 @@
-1.0.2 - 08.08.08 - Renamed Representers::Helper::Rails to Representers::Helper::Rails
-                 - Added Representers::Helpers::View for conveniently integrating common view-helpers
-                 - Added controller_methods for RequestForgeryProtection in Representers::Base
-                 - Added methods for id and dom_id in Representers::ActiveRecord
-                 - Included ActionController::Helpers in Representers::Base and removed own helper-method
-                 - Changed visibility of method view_instance in Representers::Base from private to protected
-1.0.1 - 24.07.08 - Rewrite: Presenter => Representer
+1.0.2 - 08.08.08 - Renamed ViewModels::Helper::Rails to ViewModels::Helper::Rails
+                 - Added ViewModels::Helpers::View for conveniently integrating common view-helpers
+                 - Added controller_methods for RequestForgeryProtection in ViewModels::Base
+                 - Added methods for id and dom_id in ViewModels::ActiveRecord
+                 - Included ActionController::Helpers in ViewModels::Base and removed own helper-method
+                 - Changed visibility of method view_instance in ViewModels::Base from private to protected
+1.0.1 - 24.07.08 - Rewrite: Presenter => ViewModel
 1.0.0 - May 2008 - Initial commit

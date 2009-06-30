@@ -1,8 +1,8 @@
-# Base Module for Representers.
+# Base Module for ViewModels.
 #
-module Representers
+module ViewModels
   
-  # Base class from which all representers inherit.
+  # Base class from which all view_models inherit.
   #
   class Base
     attr_reader :model, :controller
@@ -39,7 +39,7 @@ module Representers
       end
       
       # Wrapper for add_template_helper in ActionController::Helpers, also
-      # includes given helper in the representer
+      # includes given helper in the view_model
       #
       alias old_add_template_helper add_template_helper
       def add_template_helper(helper_module)
@@ -52,7 +52,7 @@ module Representers
       # Example: 
       #   controller_method :current_user
       #
-      # In the representer:
+      # In the view_model:
       #   self.current_user
       # will call
       #   controller.current_user
@@ -63,20 +63,20 @@ module Representers
         end
       end
     
-      # Returns the path from the representer_view_paths to the actual templates.
-      # e.g. "representers/models/book"
+      # Returns the path from the view_model_view_paths to the actual templates.
+      # e.g. "view_models/models/book"
       #
       # If the class is named
-      #   Representers::Models::Book
+      #   ViewModels::Models::Book
       # this method will yield
-      #   representers/models/book
+      #   view_models/models/book
       #
-      def representer_path
+      def view_model_path
         name.underscore
       end
     end # class << self
     
-    # Create a representer. To create a representer, you need to have a model (to present) and a context.
+    # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
     # The context is usually a view or a controller.
     # Note: But doesn't need to be one :)
     # 
@@ -93,18 +93,18 @@ module Representers
     controller_method :request_forgery_protection_token
     
     # Make all the dynamically generated routes (restful routes etc.)
-    # available in the representer
+    # available in the view_model
     #
     ActionController::Routing::Routes.install_helpers(self)
     
-    # Renders the given view in the representer's view root in the format given.
+    # Renders the given view in the view_model's view root in the format given.
     #
     # Example:
-    #   app/views/representers/this/representer/template.html.haml
-    #   app/views/representers/this/representer/template.text.erb
+    #   app/views/view_models/this/view_model/template.html.haml
+    #   app/views/view_models/this/view_model/template.text.erb
     #
-    # Calling representer.render_as('template', :html) will render the haml
-    # template, calling representer.render_as('template', :text) will render
+    # Calling view_model.render_as('template', :html) will render the haml
+    # template, calling view_model.render_as('template', :text) will render
     # the erb.
     #
     def render_as(view_name, format = nil)
@@ -114,8 +114,8 @@ module Representers
       # Set the format to render in, e.g. :text, :html
       view.template_format = format if format
     
-      # Finally, render and pass the representer as a local variable.
-      view.render :partial => template_path(view_name), :locals => { :representer => self }
+      # Finally, render and pass the view_model as a local variable.
+      view.render :partial => template_path(view_name), :locals => { :view_model => self }
     end
 
     protected
@@ -129,15 +129,15 @@ module Representers
     
     private
         
-      # Returns the root of this representers views with the template name appended.
-      # e.g. 'representers/some/specific/path/to/template'
+      # Returns the root of this view_models views with the template name appended.
+      # e.g. 'view_models/some/specific/path/to/template'
       #
       def template_path(name)
         name = name.to_s
-        if name.include?('/')    # Specific path like 'representers/somethingorother/foo.haml' given.
+        if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
           name
         else
-          File.join(self.class.representer_path, name)
+          File.join(self.class.view_model_path, name)
         end
       end
       

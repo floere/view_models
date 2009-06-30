@@ -1,64 +1,64 @@
-module Representers
+module ViewModels
   module Helper
     module Rails
   
-      @@specific_representer_mapping = {}
-      mattr_accessor :specific_representer_mapping
+      @@specific_view_model_mapping = {}
+      mattr_accessor :specific_view_model_mapping
   
-      # Error thrown if a representer for the given model class is not available.
+      # Error thrown if a view_model for the given model class is not available.
       #
-      class MissingRepresenterError < RuntimeError; end
+      class MissingViewModelError < RuntimeError; end
   
-      # Error thrown if the representer loaded is not a representer.
+      # Error thrown if the view_model loaded is not a view_model.
       #
-      class NotARepresenterError < RuntimeError; end
+      class NotAViewModelError < RuntimeError; end
   
-      # Construct a representer for a collection.
+      # Construct a view_model for a collection.
       #
-      def collection_representer_for(pagination_array, context = self)
+      def collection_view_model_for(pagination_array, context = self)
         Collection.new(pagination_array, context)
       end
   
-      # Create a new representer instance for the given model instance
+      # Create a new view_model instance for the given model instance
       # with the given arguments.
       #
-      # Note: Representers are usually of class Representers::<ModelClassName>.
-      #       (As returned by default_representer_class_for)
+      # Note: ViewModels are usually of class ViewModels::<ModelClassName>.
+      #       (As returned by default_view_model_class_for)
       #       Override specific_mapping if you'd like to install your own.
       #
-      # OR:   Override default_representer_class_for(model) if
+      # OR:   Override default_view_model_class_for(model) if
       #       you'd like to change the default.
       #
-      def representer_for(model, context = self)
+      def view_model_for(model, context = self)
         # Is there a specific mapping?
-        representer_class = specific_representer_mapping[model.class].classify.constantize if specific_representer_mapping.key? model.class
+        view_model_class = specific_view_model_mapping[model.class].classify.constantize if specific_view_model_mapping.key? model.class
     
         # If not, get the default mapping.
-        representer_class = default_representer_class_for(model) unless representer_class
+        view_model_class = default_view_model_class_for(model) unless view_model_class
     
-        unless representer_class < Representers::Base
-          raise NotARepresenterError.new("#{representer_class} is not a representer.")
+        unless view_model_class < ViewModels::Base
+          raise NotAViewModelError.new("#{view_model_class} is not a view_model.")
         end
     
-        # And create a representer for the model.
-        representer_class.new(model, context)
+        # And create a view_model for the model.
+        view_model_class.new(model, context)
       rescue NameError => e
-        raise MissingRepresenterError.new("No representer for #{model.class}.")
+        raise MissingViewModelError.new("No view_model for #{model.class}.")
       end
   
-      # Returns the default representer class for the given model instance.
+      # Returns the default view_model class for the given model instance.
       #
       # Default class name is:
-      # Representers::<ModelClassName>
+      # ViewModels::<ModelClassName>
       #
       # Override this method if you'd like to change the _default_
-      # model-to-representer class mapping.
+      # model-to-view_model class mapping.
       #
-      def default_representer_class_for(model)
-        "Representers::#{model.class.name}".constantize
+      def default_view_model_class_for(model)
+        "ViewModels::#{model.class.name}".constantize
       end
   
-      # The Collection representer helper has the purpose of presenting presentable collections.
+      # The Collection view_model helper has the purpose of presenting presentable collections.
       # * Render as list
       # * Render as table
       # * Render as collection
@@ -87,8 +87,8 @@ module Representers
         #   template_name => template to render for each model element
         #   separator => separator between each element
         # By default, uses:
-        #   * The collection of the collection representer to iterate over.
-        #   * The original context given to the collection representer to render in.
+        #   * The collection of the collection view_model to iterate over.
+        #   * The original context given to the collection view_model to render in.
         #   * Uses 'list_item' as the default element template.
         #   * Uses a nil separator.
         #
@@ -114,8 +114,8 @@ module Representers
         #   template_name => template to render for each model element
         #   separator => separator between each element
         # By default, uses:
-        #   * The collection of the collection representer to iterate over.
-        #   * The original context given to the collection representer to render in.
+        #   * The collection of the collection view_model to iterate over.
+        #   * The original context given to the collection view_model to render in.
         #   * Uses 'collection_item' as the default element template.
         #   * Uses a nil separator.
         #
@@ -140,8 +140,8 @@ module Representers
         #   template_name => template to render for each model element
         #   separator => separator between each element
         # By default, uses:
-        #   * The collection of the collection representer to iterate over.
-        #   * The original context given to the collection representer to render in.
+        #   * The collection of the collection view_model to iterate over.
+        #   * The original context given to the collection view_model to render in.
         #   * Uses 'table_row' as the default element template.
         #   * Uses a nil separator.
         #
@@ -163,8 +163,8 @@ module Representers
         #   context => context to render in
         #   separator => separator between pages
         # By default, uses:
-        #   * The collection of the collection representer to iterate over.
-        #   * The original context given to the collection representer to render in.
+        #   * The collection of the collection view_model to iterate over.
+        #   * The original context given to the collection view_model to render in.
         #   * Uses | as separator.
         #
         def pagination(options = {})
@@ -182,11 +182,11 @@ module Representers
           # Helper method that renders a partial in the context of the context instance.
           #
           # Example:
-          #   If the collection representer helper has been instantiated in the context
+          #   If the collection view_model helper has been instantiated in the context
           #   of a controller, render will be called in the controller.
           #
           def render_partial(name, locals)
-            @context.instance_eval { render :partial => "representers/collection/#{name}", :locals => locals }
+            @context.instance_eval { render :partial => "view_models/collection/#{name}", :locals => locals }
           end
       end
     end

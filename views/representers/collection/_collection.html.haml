@@ -1,7 +1,7 @@
 %ul.collection
   - collection.each do |item|
-    - representer = representer_for(item, self)
+    - view_model = view_model_for(item, self)
     %li
-      = representer.render_as(template_name)
+      = view_model.render_as(template_name)
     = separator unless item == collection.entries.last
         

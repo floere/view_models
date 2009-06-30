@@ -1,12 +1,12 @@
-module Representers
+module ViewModels
   module Helpers
-    # Module for conveniently including common view_helpers into a representer
+    # Module for conveniently including common view_helpers into a view_model
     #
     module View
   
-      def self.included(representer)
+      def self.included(view_model)
         self.all_view_helpers.each do |helper|
-          representer.class_eval { include helper }
+          view_model.class_eval { include helper }
         end
       end
       

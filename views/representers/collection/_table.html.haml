@@ -1,5 +1,5 @@
 %table.collection
   - collection.each do |item|
     %tr
-      - representer = representer_for(item, self)
-      = representer.render_as(template_name)
+      - view_model = view_model_for(item, self)
+      = view_model.render_as(template_name)

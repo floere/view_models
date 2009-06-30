@@ -1,9 +1,9 @@
-require 'representers'
-require 'representers/base'
-require 'representers/active_record'
+require 'view_models'
+require 'view_models/base'
+require 'view_models/active_record'
 
 require 'helpers/view'
 require 'helpers/rails'
 
-ActionController::Base.send :helper, Representers::Helper::Rails
-ActionController::Base.send :include, Representers::Helper::Rails
+ActionController::Base.send :helper, ViewModels::Helper::Rails
+ActionController::Base.send :include, ViewModels::Helper::Rails
