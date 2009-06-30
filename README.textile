@@ -33,61 +33,47 @@ h2. Examples & What you can do
 
 h3. Getting a view_model in a view or a controller.
 
-Call view_model_for:
-Note: By convention, uses ViewModels::Model::Class::Name, thus prefixing ViewModels:: to the model class name.
-@view_model_instance = view_model_for model_instance@
+Call view_model_for: @view_model_instance = view_model_for model_instance@
+Note: By convention, uses @ViewModels::Model::Class::Name@, thus prefixing @ViewModels::@ to the model class name.
 
 h3. Getting a collection view model in a view.
 
 The collection view_model renders each of the given items with its view_model.
 
-Call collection_view_model_for:
-@collection_view_model_instance = collection_view_model_for enumerable_containing_model_instances@
+Call collection_view_model_for: @collection_view_model_instance = collection_view_model_for enumerable_containing_model_instances@
 
-Rendering a list.
-@collection_view_model_instance.list@
+Rendering a list: @collection_view_model_instance.list@
 
-Rendering a collection.
-@collection_view_model_instance.collection@
+Rendering a collection: @collection_view_model_instance.collection@
 
-Rendering a table.
-@collection_view_model_instance.table@
+Rendering a table: @collection_view_model_instance.table@
 
-Rendering a pagination.
-Note: Only works if the passed parameter for collection_view_model_for is a PaginationEnumeration.
-@collection_view_model_instance.pagination@
+Rendering a pagination: @collection_view_model_instance.pagination@
+Note: Only works if the passed parameter for @collection_view_model_for@ is a @PaginationEnumeration@.
 
 h3. Writing filtered delegate methods on the view model.
 
-Will create two delegate methods first_name and last_name that delegate to the model.
-@model_reader :first_name, :last_name@
+Will create two delegate methods first_name and last_name that delegate to the model: @model_reader :first_name, :last_name@
 
-Will create a description delegate method that filters the model value through h.
-@model_reader :description, :filter_through => :h@
+Will create a description delegate method that filters the model value through h: @model_reader :description, :filter_through => :h@
 
-Will create a description delegate method that filters the model value through first textilize, then h.
-@model_reader :description, :filter_through => [:textilize, :h]@
+Will create a description delegate method that filters the model value through first textilize, then h: @model_reader :description, :filter_through => [:textilize, :h]@
 
-Will create both a first_name and last_name delegate method that filters the model value through first textilize, then h.
-@model_reader :first_name, :last_name, :filter_through => [:textilize, :h]@
+Will create both a first_name and last_name delegate method that filters the model value through first textilize, then h: @model_reader :first_name, :last_name, :filter_through => [:textilize, :h]@
 Note: Filter methods can be any method on the view_model with arity 1.
 
 h3. Rendering view model templates
 
 Use @render_as(template_name, format = nil)@.
 
-Gets a ViewModels::Model::Class instance
-@view_model = view_model_for Model::Class.new@
+Gets a @ViewModels::Model::Class@ instance: @view_model = view_model_for Model::Class.new@
 
-Gets a ViewModels::<model_instance.class.name> instance
-@view_model = view_model_for model_instance@
+Gets a @ViewModels::<model_instance.class.name>@ instance: @view_model = view_model_for model_instance@
 
-Renders the 'example' partial in view_models/model/class.
+Renders the 'example' partial in view_models/model/class: @view_model.render_as :example@
 Note: Renders a format depending on the request. ../index.text will render example.text.erb.
-@view_model.render_as :example@
 
-Renders the 'example.text.erb' partial in view_models/model/class.
-@view_model.render_as :example, :text@
+Renders the 'example.text.erb' partial in view_models/model/class: @view_model.render_as :example, :text@
 
 h3. Rails Helpers in ViewModels
 
@@ -101,19 +87,18 @@ h3. Controller Delegate Methods
 
 Use @controller_method(*args)@.
 
-Delegates current_user and logger on the view_model to the controller.
-@controller_method :current_user, :logger@
+Delegates current_user and logger on the view_model to the controller: @controller_method :current_user, :logger@
 
 h2. One Big Fat Example
 
 The following classes all have specs of course ;) But are not shown since they don't help the example.
 
-ViewModels superclass for this project.
+@ViewModels@ superclass for this project.
 
 We include all of Rails' helpers for the view models in this project.
 Also, we include the @ApplicationHelper@.
 
-We delegate logger and current_user calls in the view models to the active controller.
+We delegate @logger@ and @current_user@ calls in the view models to the active controller.
 
 <pre>
 <code>
