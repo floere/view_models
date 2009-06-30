@@ -1,4 +1,11 @@
-# ViewModels for Rails
+h1. ViewModels for Rails
+
+h2. Installation
+
+script/plugin install git://github.com/floere/view_models.git
+
+h2. Description
+
 # A possible view_model solution, i.e. no view logic in model code.
 # Ask/Write florian.hanke@gmail.com if you have questions/feedback, thanks! :)
 # Fork if you have improvements. Tell me where to merge them from, thanks!
