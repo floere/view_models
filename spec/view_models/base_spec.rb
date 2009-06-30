@@ -7,20 +7,20 @@ describe ViewModels::Base do
   describe "readers" do
     describe "model" do
       before(:each) do
-        @model_mock = flexmock(:model)
-        @view_model = ViewModels::Base.new(@model_mock, nil)
+        @model      = stub :model
+        @view_model = ViewModels::Base.new @model, nil
       end
       it "should have a reader" do
-        @view_model.model.should == @model_mock
+        @view_model.model.should == @model
       end
     end
     describe "controller" do
       before(:each) do
-        @context_mock = flexmock(:controller)
-        @view_model = ViewModels::Base.new(nil, @context_mock)
+        @context    = stub :controller
+        @view_model = ViewModels::Base.new nil, @context
       end
       it "should have a reader" do
-        @view_model.controller.should == @context_mock
+        @view_model.controller.should == @context
       end
     end
   end
@@ -28,9 +28,8 @@ describe ViewModels::Base do
   describe "context recognition" do
     describe "context is a view" do
       before(:each) do
-        @view_mock = flexmock(:view)
-        @view_mock.should_receive(:controller).and_return 'controller'
-        @view_model = ViewModels::Base.new(nil, @view_mock)
+        @view = stub :view, :controller => 'controller'
+        @view_model = ViewModels::Base.new nil, @view
       end
       it "should get the controller from the view" do
         @view_model.controller.should == 'controller'
@@ -38,11 +37,11 @@ describe ViewModels::Base do
     end
     describe "context is a controller" do
       before(:each) do
-        @controller_mock = flexmock(:controller)
-        @view_model = ViewModels::Base.new(nil, @controller_mock)
+        @controller = stub :controller
+        @view_model = ViewModels::Base.new nil, @controller
       end
       it "should just use it for the controller" do
-        @view_model.controller.should == @controller_mock
+        @view_model.controller.should == @controller
       end
     end
   end
@@ -86,8 +85,8 @@ describe ViewModels::Base do
   
   describe ".controller_method" do
     it "should set up delegate calls to the controller" do
-      flexmock(ViewModels::Base).should_receive(:delegate).once.with(:method1, :to => :controller)
-      flexmock(ViewModels::Base).should_receive(:delegate).once.with(:method2, :to => :controller)
+      ViewModels::Base.should_receive(:delegate).once.with(:method1, :to => :controller)
+      ViewModels::Base.should_receive(:delegate).once.with(:method2, :to => :controller)
       
       ViewModels::Base.controller_method :method1, :method2
     end
@@ -96,16 +95,17 @@ describe ViewModels::Base do
   describe ".helper" do
     it "should include the helper" do
       helper_module = Module.new
-      flexmock(ViewModels::Base).should_receive(:include).once.with helper_module
+      
+      ViewModels::Base.should_receive(:include).once.with helper_module
       
       ViewModels::Base.helper helper_module
     end
     it "should include the helper in the master helper module" do
-      master_helper_module_mock = flexmock(Module.new)
-      flexmock(ViewModels::Base).should_receive(:master_helper_module).and_return master_helper_module_mock
+      master_helper_module = Module.new
+      ViewModels::Base.should_receive(:master_helper_module).and_return master_helper_module
       
       helper_module = Module.new
-      master_helper_module_mock.should_receive(:include).once.with helper_module
+      master_helper_module.should_receive(:include).once.with helper_module
       
       ViewModels::Base.helper helper_module
     end
@@ -113,20 +113,20 @@ describe ViewModels::Base do
     
   describe ".presenter_path" do
     it "should call underscore on its name" do
-      name_mock = flexmock(:name)
-      flexmock(ViewModels::Base).should_receive(:name).once.and_return(name_mock)
+      name = stub :name
+      ViewModels::Base.should_receive(:name).once.and_return name
+      name.should_receive(:underscore).once.and_return :underscored_name
       
-      name_mock.should_receive(:underscore).once.and_return 'underscored_name'
-      ViewModels::Base.view_model_path.should == 'underscored_name'
+      ViewModels::Base.view_model_path.should == :underscored_name
     end
   end
   
   describe "#logger" do
     it "should delegate to the controller" do
-      controller_mock = flexmock(:controller)
-      view_model = ViewModels::Base.new(nil, controller_mock)
+      controller = stub :controller
+      view_model = ViewModels::Base.new nil, controller
       
-      controller_mock.should_receive(:logger).once
+      controller.should_receive(:logger).once
       
       in_the view_model do
         logger
@@ -135,22 +135,21 @@ describe ViewModels::Base do
   end
   
   describe "with mocked Presenter" do
-    attr_reader :model_mock, :context_mock, :view_model
     before(:each) do
-      @model_mock = flexmock(:model)
-      @context_mock = flexmock(:context)
-      @view_model = ViewModels::Base.new(model_mock, context_mock)
+      @model = stub :model
+      @context = stub :context
+      @view_model = ViewModels::Base.new model, context
     end
     describe "#render_as" do
       before(:each) do
-        @view_name = flexmock(:view_name)
-        @view_instance_mock = flexmock(:view_instance)
-
-        flexmock(view_model).should_receive(:view_instance).once.and_return @view_instance_mock
-
+        @view_name = stub :view_name
+        @view_instance_mock = stub :view_instance
+        
+        view_model.should_receive(:view_instance).once.and_return @view_instance_mock
+        
         path_mock = flexmock(:path)
         flexmock(view_model).should_receive(:template_path).once.with(@view_name).and_return path_mock
-
+        
         @view_instance_mock.should_receive(:render).once.with(
           :partial => path_mock, :locals => { :view_model => view_model }
         )

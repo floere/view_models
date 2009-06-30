@@ -194,13 +194,13 @@ describe ViewModels::Helper::Rails do
       end
       it "should call render_partial with the right parameters" do
         default_options = {
-          :collection => collection_mock,
-          :context => context_mock,
+          :collection => @collection,
+          :context => @context,
           :separator => '|'
         }
-        flexmock(collection_view_model).should_receive(:render_partial).once.with('pagination', default_options)
-
-        collection_view_model.pagination
+        @collection_view_model.should_receive(:render_partial).once.with 'pagination', default_options
+        
+        @collection_view_model.pagination
       end
       it "should override the default options if specific options are given" do
         specific_options = {
@@ -208,27 +208,27 @@ describe ViewModels::Helper::Rails do
           :context => :b,
           :separator => :c
         }
-        flexmock(collection_view_model).should_receive(:render_partial).once.with('pagination', specific_options)
-
-        collection_view_model.pagination(specific_options)
+        @collection_view_model.should_receive(:render_partial).once.with 'pagination', specific_options
+        
+        @collection_view_model.pagination specific_options
       end
     end
-
+    
     describe "render_partial" do
       it "should call instance eval on the context" do
-        context_mock.should_receive(:instance_eval).once
-
-        collection_view_model.send :render_partial, :some_name, :some_params
+        @context.should_receive(:instance_eval).once
+        
+        @collection_view_model.send :render_partial, :some_name, :some_params
       end
       it "should render the partial in the 'context' context" do
-        context_mock.should_receive(:render).once
-
-        collection_view_model.send :render_partial, :some_name, :some_params
+        @context.should_receive(:render).once
+        
+        @collection_view_model.send :render_partial, :some_name, :some_params
       end
       it "should call render partial on context with the passed through parameters" do
-        context_mock.should_receive(:render).once.with(:partial => 'view_models/collection/some_name', :locals => { :a => :b })
-
-        collection_view_model.send :render_partial, 'some_name', { :a => :b }
+        @context.should_receive(:render).once.with(:partial => 'view_models/collection/some_name', :locals => { :a => :b })
+        
+        @collection_view_model.send :render_partial, 'some_name', { :a => :b }
       end
     end
     
@@ -236,47 +236,49 @@ describe ViewModels::Helper::Rails do
       describe "enumerable" do
         Enumerable.instance_methods.map(&:to_sym).each do |method|
           it "should delegate #{method} to the collection" do
-            collection_mock.should_receive(method).once
+            @collection.should_receive(method).once
             
-            collection_view_model.send(method)
+            @collection_view_model.send method
           end
         end
       end
       describe "array" do
         describe "length" do
           it "should delegate to #length of the collection" do
-            collection_mock.should_receive(:length).once
+            @collection.should_receive(:length).once
             
-            collection_view_model.length
+            @collection_view_model.length
           end
           it "should return the length of the collection" do
-            collection_mock.should_receive(:length).and_return(:this_length)
+            @collection.should_receive(:length).and_return :this_length
             
-            collection_view_model.length.should == :this_length
+            @collection_view_model.length.should == :this_length
           end
           it "should alias size" do
-            collection_mock.should_receive(:size).and_return(:this_length)
+            @collection.should_receive(:size).and_return :this_length
             
-            collection_view_model.size.should == :this_length
+            @collection_view_model.size.should == :this_length
           end
         end
         describe "empty?" do
           it "should delegate to #empty? of the collection" do
-            collection_mock.should_receive(:empty?).once
+            @collection.should_receive(:empty?).once
             
-            collection_view_model.empty?
+            @collection_view_model.empty?
           end
           it "should return whatever #empty? of the collection returns" do
-            collection_mock.should_receive(:empty?).and_return(:true_or_false)
+            @collection.should_receive(:empty?).and_return :true_or_false
             
-            collection_view_model.empty?.should == :true_or_false
+            @collection_view_model.empty?.should == :true_or_false
           end
         end
         describe "each" do
           it "should delegate to #each of the collection" do
-            collection_mock.should_receive(:each).with(Proc).once
+            proc = stub :proc
             
-            collection_view_model.each { |c| }
+            @collection.should_receive(:each).with(proc).once
+            
+            @collection_view_model.each proc
           end
         end
       end
