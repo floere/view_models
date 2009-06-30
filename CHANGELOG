@@ -1,3 +1,4 @@
+1.1.0 - 30.06.09 - Real Rewrite: Presenter => ViewModel
 1.0.2 - 08.08.08 - Renamed ViewModels::Helper::Rails to ViewModels::Helper::Rails
                  - Added ViewModels::Helpers::View for conveniently integrating common view-helpers
                  - Added controller_methods for RequestForgeryProtection in ViewModels::Base
