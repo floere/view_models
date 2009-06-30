@@ -123,7 +123,7 @@ module ViewModels
       # Creates a view instance from the given view class.
       #
       def view_instance
-        view = ActionView::Base.new(controller.class.view_paths, {}, controller)
+        view = ActionView::Base.new controller.class.view_paths, {}, controller
         view.extend master_helper_module
       end
     

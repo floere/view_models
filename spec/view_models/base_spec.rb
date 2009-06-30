@@ -138,47 +138,46 @@ describe ViewModels::Base do
     before(:each) do
       @model = stub :model
       @context = stub :context
-      @view_model = ViewModels::Base.new model, context
+      @view_model = ViewModels::Base.new @model, @context
+      
+      @view_name = stub :view_name
+      @view_instance = stub :view_instance
     end
     describe "#render_as" do
       before(:each) do
-        @view_name = stub :view_name
-        @view_instance_mock = stub :view_instance
+        @view_model.stub! :view_instance => @view_instance
+        path = stub :path
+        @view_model.stub! :template_path => path
         
-        view_model.should_receive(:view_instance).once.and_return @view_instance_mock
-        
-        path_mock = flexmock(:path)
-        flexmock(view_model).should_receive(:template_path).once.with(@view_name).and_return path_mock
-        
-        @view_instance_mock.should_receive(:render).once.with(
-          :partial => path_mock, :locals => { :view_model => view_model }
+        @view_instance.should_receive(:render).any_number_of_times.with(
+          :partial => path, :locals => { :view_model => @view_model }
         )
       end
       it "should not call template_format=" do
-        @view_instance_mock.should_receive(:template_format=).never
-
-        view_model.render_as(@view_name)
+        @view_instance.should_receive(:template_format=).never
+        
+        @view_model.render_as @view_name
       end
       it "should call template_format=" do
-        @view_instance_mock.should_receive(:template_format=).once.with(:some_format)
-
-        view_model.render_as(@view_name, :some_format)
+        @view_instance.should_receive(:template_format=).once.with :some_format
+        
+        @view_model.render_as @view_name, :some_format
       end
     end
     
     describe "#presenter_template_path" do
       describe "absolute path given" do
         it "should use it as given" do
-          in_the view_model do
+          in_the @view_model do
             template_path('some/path/to/template').should == 'some/path/to/template'
           end
         end
       end
       describe "with just the template name" do
         it "should prepend the view_model path" do
-          flexmock(ViewModels::Base).should_receive(:view_model_path).and_return('some/view_model/path/to')
+          ViewModels::Base.stub! :view_model_path => 'some/view_model/path/to'
           
-          in_the view_model do
+          in_the @view_model do
             template_path('template').should == 'some/view_model/path/to/template'
           end
         end
@@ -186,26 +185,27 @@ describe ViewModels::Base do
     end
     
     describe "#view_instance" do
+      before(:each) do
+        @view_paths = stub :view_paths
+        @klass      = stub :klass
+        @context.should_receive('class').any_number_of_times.and_return @klass
+        @klass.should_receive('view_paths').any_number_of_times.and_return @view_paths
+      end
       it "should create a new view instance from ActionView::Base" do
-        view_paths_mock = flexmock(:view_paths)
-        context_mock.should_receive('class.view_paths').once.and_return(view_paths_mock)
+        ActionView::Base.should_receive(:new).once.with @view_paths, {}, @context
         
-        flexmock(ActionView::Base).should_receive(:new).once.with(view_paths_mock, {}, @context_mock)
-        in_the view_model do
+        in_the @view_model do
           view_instance
         end
       end
       it "should extend the view instance with the master helper module" do
-        master_helper_module_mock = flexmock(:master_helper_module)
-        flexmock(view_model).should_receive(:master_helper_module).and_return(master_helper_module_mock)
+        master_helper_module = stub :master_helper_module
+        @view_model.stub! :master_helper_module => master_helper_module
+        ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
         
-        view_instance_mock = flexmock(:view_instance)
-        view_instance_mock.should_receive(:extend).with(master_helper_module_mock)
+        @view_instance.should_receive(:extend).with master_helper_module
         
-        context_mock.should_receive('class.view_paths').once
-        flexmock(ActionView::Base).should_receive(:new).once.and_return view_instance_mock
-        
-        in_the view_model do
+        in_the @view_model do
           view_instance
         end
       end
