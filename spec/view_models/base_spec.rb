@@ -111,7 +111,7 @@ describe ViewModels::Base do
     end
   end
     
-  describe ".presenter_path" do
+  describe ".view_model_path" do
     it "should call underscore on its name" do
       name = stub :name
       ViewModels::Base.should_receive(:name).once.and_return name
@@ -165,7 +165,7 @@ describe ViewModels::Base do
       end
     end
     
-    describe "#presenter_template_path" do
+    describe "#view_model_template_path" do
       describe "absolute path given" do
         it "should use it as given" do
           in_the @view_model do

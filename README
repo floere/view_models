@@ -12,7 +12,7 @@
 # IMPORTANT NOTE:
 # As of yet it is needed to copy the view_model/views/view_models/collection
 # directory to the corresponding location in app/views/view_models/collection.
-# This is only needed if you wish to use the collection rpresenter.
+# This is only needed if you wish to use the collection view model.
 # Note: Rewrite the collection templates as needed, they are rather basic.
 #
 # * Getting a view_model in a view or a controller.
@@ -20,23 +20,23 @@
 # Call view_model_for:
 # Note: By convention, uses ViewModels::Model::Class::Name, thus prefixing ViewModels:: to
 #       the model class name.
-presenter_instance = view_model_for model_instance
+view_model_instance = view_model_for model_instance
 
 # * Getting a collection view_model in a view.
 #
 # The collection view_model renders each of the given items with its view_model.
 #
-# Call collection_presenter_for:
-collection_presenter_instance = collection_presenter_for enumerable_containing_model_instances
+# Call collection_view_model_for:
+collection_view_model_instance = collection_view_model_for enumerable_containing_model_instances
 # Rendering a list.
-collection_presenter_instance.list
+collection_view_model_instance.list
 # Rendering a collection.
-collection_presenter_instance.collection
+collection_view_model_instance.collection
 # Rendering a table.
-collection_presenter_instance.table
+collection_view_model_instance.table
 # Rendering a pagination.
-# Note: Only works if the passed parameter for collection_presenter_for is a PaginationEnumeration.
-collection_presenter_instance.pagination
+# Note: Only works if the passed parameter for collection_view_model_for is a PaginationEnumeration.
+collection_view_model_instance.pagination
 
 # * Writing filtered delegate methods on the view_model.
 #
