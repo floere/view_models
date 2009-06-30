@@ -2,7 +2,7 @@ h1. ViewModels for Rails
 
 h2. Installation
 
-script/plugin install git://github.com/floere/view_models.git
+@script/plugin install git://github.com/floere/view_models.git@
 
 h2. Description
 
