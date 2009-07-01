@@ -11,7 +11,7 @@ A possible view_model solution, i.e. no view logic in model code.
 h2. Feedback
 
 Ask/Write florian.hanke@gmail.com if you have questions/feedback, thanks! :)
-Fork if you have improvements. Tell me where to merge them from, thanks!
+Fork if you have improvements. Send me a pull request, it is much appreciated.
 
 h2. Problem
 
