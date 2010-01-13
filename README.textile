@@ -27,6 +27,7 @@ IMPORTANT NOTE:
 As of yet it is needed to copy the templates/views/view_models/collection
 directory to the corresponding location in app/views/view_models/collection.
 This is only needed if you wish to use the collection view model.
+The collections are automatically copied if you use the generator.
 Note: Rewrite the collection templates as needed, they are rather basic.
 
 h2. Examples & What you can do
@@ -88,6 +89,16 @@ h3. Controller Delegate Methods
 Use @controller_method(*args)@.
 
 Delegates current_user and logger on the view_model to the controller: @controller_method :current_user, :logger@
+
+h2. The Generator
+
+Generates view model class, spec, and views. Use as follows:
+
+script/generate view_models <view model class name>
+script/generate view_models User
+
+script/generate view_models <view model class name> <partials for render_as, separated by space>
+script/generate view_models User compact extensive list_item table_item
 
 h2. One Big Fat Example
 
