@@ -30,8 +30,7 @@ h2. Examples & What you can do
 h3. A quick one
 
 In the view:
-<pre><code>
-user = view_model_for @user
+<pre><code>user = view_model_for @user
 %h1= "You, #{user.full_name}, the user"
 %h2 This is how you look as a search result:
 = user.render_as :result
@@ -39,12 +38,8 @@ user = view_model_for @user
 = user.render_as :vcard
 </code></pre>
 In the view model:
-<pre><code>
-class ViewModels::User < ViewModels::Project
+<pre><code>class ViewModels::User < ViewModels::Project
   model_reader :first_name, :last_name
-  
-  # Renders the full name of the user.
-  #
   def full_name
     "#{last_name}, #{first_name}"
   end
