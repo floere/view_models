@@ -94,11 +94,11 @@ h2. The Generator
 
 Generates view model class, spec, and views. Use as follows:
 
-script/generate view_models <view model class name>
-script/generate view_models User
+@script/generate view_models <view model class name>@
+@script/generate view_models User@
 
-script/generate view_models <view model class name> <partials for render_as, separated by space>
-script/generate view_models User compact extensive list_item table_item
+@script/generate view_models <view model class name> <partials for render_as, separated by space>@
+@script/generate view_models User compact extensive list_item table_item@
 
 h2. One Big Fat Example
 
