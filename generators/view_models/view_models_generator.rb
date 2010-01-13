@@ -1,6 +1,5 @@
-class ViewModelsGenerator < Rails::Generator::Base
+class ViewModelsGenerator < Rails::Generator::NamedBase
   def manifest
-    
     record do |m|
       
       # Check for class naming collisions.
