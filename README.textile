@@ -23,6 +23,9 @@ h2. Solution
 
 A thin proxy layer over a model, with access to the controller, used by the view or controller.
 
+@The view@ has access to @the view model@ which in turn -> to @the model@
+                                                 -> @the controller@
+
 h2. Examples & What you can do
 
 h3. Getting a view_model in a view or a controller.
