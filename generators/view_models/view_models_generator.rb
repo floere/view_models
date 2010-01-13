@@ -25,7 +25,7 @@ class ViewModelsGenerator < Rails::Generator::NamedBase
       # Copy collection views.
       #
       m.directory "app/views/view_models/collection"
-      m.file "views/view_models/collection/*", "app/views/view_models/collection/*"
+      m.file "views/view_models/collection/*", "app/views/view_models/collection"
       
       # Show README.
       #
