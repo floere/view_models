@@ -20,7 +20,10 @@ class ViewModelsGenerator < Rails::Generator::NamedBase
       #
       m.directory "app/views/view_models"
       m.directory "app/views/view_models/#{file_name}"
-      m.template "views/_empty.html.haml", "app/views/view_models/#{file_name}/_list_item.html.haml"
+      actions << 'list_item' if actions.empty?
+      actions.each do |action|
+        m.template "views/_empty.html.haml", "app/views/view_models/#{file_name}/_#{action}.html.haml"
+      end
       
       # Copy collection views.
       #
