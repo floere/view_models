@@ -12,7 +12,8 @@ class BasicAuthGenerator < Rails::Generator::Base
       
       # Views
       m.directory "app/views/view_models"
-      m.file "views/view_model.html.haml", "app/views/view_models/#{file_name}/_some_partial.html.haml"
+      m.directory "app/views/view_models/#{file_name}"
+      m.file "views/_empty.html.haml", "app/views/view_models/#{file_name}/_list_item.html.haml"
       
       # Copy collection views.
       
