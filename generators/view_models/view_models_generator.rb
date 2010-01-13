@@ -41,12 +41,6 @@ class ViewModelsGenerator < Rails::Generator::NamedBase
       #
       m.readme "README"
       
-      # # View template for each action.
-      # actions.each do |action|
-      #   path = File.join('app/views', class_path, file_name, "#{action}.html.erb")
-      #   m.template 'view.html.erb', path,
-      #     :assigns => { :action => action, :path => path }
-      
     end
   end
 
