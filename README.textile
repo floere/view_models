@@ -30,32 +30,26 @@ h2. Examples & What you can do
 h3. A quick one
 
 In the view:
-<pre>
-<code>
-  user = view_model_for @user
-  %h1= "You, #{user.full_name}, the user"
-  %h2 This is how you look as a search result:
-  = user.render_as :result
-  %h2 This is how you look as a Vcard:
-  = user.render_as :vcard
-</code>
-</pre>
+<pre><code>
+user = view_model_for @user
+%h1= "You, #{user.full_name}, the user"
+%h2 This is how you look as a search result:
+= user.render_as :result
+%h2 This is how you look as a Vcard:
+= user.render_as :vcard
+</code></pre>
 In the view model:
-<pre>
-<code>
-  class ViewModels::User < ViewModels::Project
-    
-    model_reader :first_name, :last_name
-    
-    # Renders the full name of the user.
-    #
-    def full_name
-      "#{last_name}, #{first_name}"
-    end
-    
+<pre><code>
+class ViewModels::User < ViewModels::Project
+  model_reader :first_name, :last_name
+  
+  # Renders the full name of the user.
+  #
+  def full_name
+    "#{last_name}, #{first_name}"
   end
-</code>
-</pre>
+end
+</code></pre>
 Also, there are two partials in @app/views/view_models/user/@, @_result.html.haml@ and @_vcard.html.haml@ that define how the result of @user.render_as :result@ and @user.render_as :vcard@ look. The ViewModel can be accessed inside the view by using the local variable @view_model@.
 
 h3. Getting a view_model in a view or a controller.
