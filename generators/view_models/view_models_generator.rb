@@ -47,8 +47,4 @@ class ViewModelsGenerator < Rails::Generator::NamedBase
     end
   end
 
-  # def file_name
-  #   "create_users"
-  # end
-
 end
