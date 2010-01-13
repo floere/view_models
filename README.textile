@@ -24,7 +24,7 @@ h2. Solution
 A thin proxy layer over a model, with access to the controller, used by the view or controller.
  
 IMPORTANT NOTE:
-As of yet it is needed to copy the view_model/views/view_models/collection
+As of yet it is needed to copy the templates/views/view_models/collection
 directory to the corresponding location in app/views/view_models/collection.
 This is only needed if you wish to use the collection view model.
 Note: Rewrite the collection templates as needed, they are rather basic.
