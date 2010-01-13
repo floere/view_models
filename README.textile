@@ -45,7 +45,6 @@ In the view model:
 end</code></pre>
 In the model:
 <pre><code>class User < ActiveRecord::Base
-
 end</code></pre>
 Also, there are two partials in @app/views/view_models/user/@, @_result.html.haml@ and @_vcard.html.haml@ that define how the result of @user.render_as :result@ and @user.render_as :vcard@ look. The ViewModel can be accessed inside the view by using the local variable @view_model@.
 
