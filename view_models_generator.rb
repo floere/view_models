@@ -1,4 +1,4 @@
-class BasicAuthGenerator < Rails::Generator::Base
+class ViewModelsGenerator < Rails::Generator::Base
   def manifest
     
     record do |m|
