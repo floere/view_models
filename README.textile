@@ -22,13 +22,6 @@ Display Methods are not well placed either in
 h2. Solution
 
 A thin proxy layer over a model, with access to the controller, used by the view or controller.
- 
-IMPORTANT NOTE:
-As of yet it is needed to copy the templates/views/view_models/collection
-directory to the corresponding location in app/views/view_models/collection.
-This is only needed if you wish to use the collection view model.
-The collections are automatically copied if you use the generator.
-Note: Rewrite the collection templates as needed, they are rather basic.
 
 h2. Examples & What you can do
 
@@ -51,6 +44,14 @@ Rendering a table: @collection_view_model_instance.table@
 
 Rendering a pagination: @collection_view_model_instance.pagination@
 Note: Only works if the passed parameter for @collection_view_model_for@ is a @PaginationEnumeration@.
+
+Important note:
+  As of yet it is needed to copy the templates/views/view_models/collection
+  directory to the corresponding location in app/views/view_models/collection.
+  This is only needed if you wish to use the collection view model.
+  The collections are automatically copied if you use the generator.
+
+Note: Rewrite the collection templates as needed, they are rather basic.
 
 h3. Writing filtered delegate methods on the view model.
 
