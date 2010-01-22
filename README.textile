@@ -1,5 +1,21 @@
 h1. ViewModels for Rails
 
+h2. Previous contributors
+
+Code:
+
+@http://github.com/kschiess@
+
+@http://github.com/niko@
+
+@http://github.com/andi@
+
+Inspiration:
+
+@http://github.com/severin@
+
+Important note: These guys rock! :)
+
 h2. Installation
 
 @script/plugin install git://github.com/floere/view_models.git@
