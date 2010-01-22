@@ -4,15 +4,15 @@ h2. Previous contributors
 
 Code:
 
-@http://github.com/kschiess@
+"Kaspar":http://github.com/kschiess @http://github.com/kschiess@
 
-@http://github.com/niko@
+"Niko":http://github.com/niko @http://github.com/niko@
 
-@http://github.com/andi@
+"Andi":http://github.com/andi @http://github.com/andi@
 
 Inspiration:
 
-@http://github.com/severin@
+"Severin":http://github.com/severin @http://github.com/severin@
 
 Important note: These guys rock! :)
 
