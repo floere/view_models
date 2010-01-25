@@ -4,15 +4,15 @@ h2. Previous contributors
 
 Code:
 
-"Kaspar":http://github.com/kschiess @http://github.com/kschiess@
+"Kaspar":http://github.com/kschiess @http://github.com/kschiess@, for the first, and foundation-laying version.
 
-"Niko":http://github.com/niko @http://github.com/niko@
+"Niko":http://github.com/niko @http://github.com/niko@, for handling collections.
 
-"Andi":http://github.com/andi @http://github.com/andi@
+"Andi":http://github.com/andi @http://github.com/andi@, for refactoring it into a cleaner structure.
 
 Inspiration:
 
-"Severin":http://github.com/severin @http://github.com/severin@
+"Severin":http://github.com/severin @http://github.com/severin@, for bits and pieces here and there.
 
 Important note: These guys rock! :)
 
