@@ -157,6 +157,15 @@ describe ViewModels::Base do
         
         @view_model.render_as @view_name
       end
+      it "should call render with the correct default partial and the view_model as locals with locals" do
+        @view_model.should_receive(:template_path).once.with('some/specific/path').and_return 'some/even/more/specific/path'
+        
+        @view_instance.should_receive(:render).with(
+          :partial => 'some/even/more/specific/path', :locals => { :view_model => @view_model, :some_local => :some_value }
+        )
+        
+        @view_model.render_as 'some/specific/path', :locals => { :some_local => :some_value }
+      end
       it "should not call template_format=" do
         @view_instance.should_receive(:template_format=).never
         
