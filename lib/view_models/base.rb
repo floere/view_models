@@ -79,26 +79,36 @@ module ViewModels
       # Returns the root of this view_models views with the template name appended.
       # e.g. 'view_models/some/specific/path/to/template'
       #
-      def template_path(name)
+      def template_path(view, name)
         name = name.to_s
         if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
           name
         else
-          File.join(view_model_path, name)
+          # TODO memoize this
+          #
+          name = "_#{name}"
+          find_template_path view, name
         end
+      end
+
+      def find_template_path view, name
+        path = view.view_paths.find_template File.join(view_model_path, name), view.template_format
+        puts [:path, path, '<br/>']
+        path
+        # File.join(view_model_path, name)
       end
 
       # Tries to render the view.
       #
       def render view, view_name
-        partial_path = template_path(view_name)
-        begin
-          puts partial_path
-          puts "<br/>"
+        partial_path = template_path(view, view_name)
+        # begin
+        #   puts partial_path
+        #   puts "<br/>"
           view.render :partial => partial_path, :locals => { :view_model => self }
-        rescue ActionView::MissingTemplate => e
-          self.superclass.render view, view_name unless self == ViewModels::Base
-        end
+        # rescue ActionView::MissingTemplate => e
+          # self.superclass.render view, view_name unless self == ViewModels::Base
+        # end
       end
 
     end # class << self
