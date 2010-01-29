@@ -1,3 +1,4 @@
+1.3.0 - 29.01.10 - andi: Changed Api of ViewModels::Base#render_as to take an options hash. Now supports passing locals to the render call.
 1.2.0 - 13.01.10 - Simple generator written.
 1.1.0 - 30.06.09 - Rewrite: Representer => ViewModel
 1.0.2 - 08.08.08 - Renamed Representers::Helper::Rails to Representers::Helper::Rails

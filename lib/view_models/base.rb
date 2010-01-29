@@ -103,19 +103,27 @@ module ViewModels
     #   app/views/view_models/this/view_model/template.html.haml
     #   app/views/view_models/this/view_model/template.text.erb
     #
-    # Calling view_model.render_as('template', :html) will render the haml
-    # template, calling view_model.render_as('template', :text) will render
-    # the erb.
+    # The following options are supported: 
+    # * :format - Calling view_model.render_as('template', :format => :html) will render the haml
+    #   template, calling view_model.render_as('template', :format => :text) will render
+    #   the erb.
+    # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
+    #   view_model.render_as('template', :locals => { :my_local_variable => :value })
     #
-    def render_as(view_name, format = nil)
+    def render_as(view_name, options = {})
+      options = handle_old_render_as_api options
+      
       # Get a view instance from the view class.
       view = view_instance
     
       # Set the format to render in, e.g. :text, :html
-      view.template_format = format if format
-    
+      view.template_format = options.delete(:format) if options[:format]
+      
+      options[:locals] = { :view_model => self }.merge options[:locals] || {}
+      options[:partial] = options[:partial] || template_path(view_name)
+      
       # Finally, render and pass the view_model as a local variable.
-      view.render :partial => template_path(view_name), :locals => { :view_model => self }
+      view.render options
     end
 
     protected
@@ -148,6 +156,16 @@ module ViewModels
           context.controller
         else
           context
+        end
+      end
+   
+      def handle_old_render_as_api(options)
+        case options
+        when String, Symbol
+          ActiveSupport::Deprecation.warn("ViewModels::Base#render_as: please specify the format as render_as(view_name, :format => :your_format)")
+          {:format => options.to_sym}
+        else
+          options
         end
       end
       

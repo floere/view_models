@@ -133,7 +133,7 @@ describe ViewModels::Base do
       end
     end
   end
-  
+    
   describe "with mocked Presenter" do
     before(:each) do
       @model = stub :model
@@ -146,12 +146,16 @@ describe ViewModels::Base do
     describe "#render_as" do
       before(:each) do
         @view_model.stub! :view_instance => @view_instance
-        path = stub :path
-        @view_model.stub! :template_path => path
-        
-        @view_instance.should_receive(:render).any_number_of_times.with(
-          :partial => path, :locals => { :view_model => @view_model }
+        @path = stub :path
+        @view_model.stub! :template_path => @path
+        @view_instance.stub! :render
+      end
+      it "should call render with the correct default partial and the view_model as locals" do
+        @view_instance.should_receive(:render).with(
+          :partial => @path, :locals => { :view_model => @view_model }
         )
+        
+        @view_model.render_as @view_name
       end
       it "should not call template_format=" do
         @view_instance.should_receive(:template_format=).never
@@ -161,7 +165,30 @@ describe ViewModels::Base do
       it "should call template_format=" do
         @view_instance.should_receive(:template_format=).once.with :some_format
         
-        @view_model.render_as @view_name, :some_format
+        @view_model.render_as @view_name, :format => :some_format
+      end
+      it "should pass on the specified locals" do
+        @view_instance.should_receive(:render).with(
+          :partial => @path, :locals => {:view_model => @view_model, :my_option => :value}
+        )
+        
+        @view_model.render_as @view_name, :locals => {:my_option => :value}
+      end
+      it "should override the default view_model if specified" do
+        @my_view_model = stub :other_view_model
+        @view_instance.should_receive(:render).with(
+          :partial => @path, :locals => { :view_model => @my_view_model }
+        )
+        
+        @view_model.render_as @view_name, :locals => {:view_model => @my_view_model}
+      end
+      it "should override the default template if specified" do
+        @template = stub :template
+        @view_instance.should_receive(:render).with(
+          :partial => @template, :locals => { :view_model => @view_model }
+        )
+        
+        @view_model.render_as @view_name, :partial => @template
       end
     end
     
@@ -210,6 +237,40 @@ describe ViewModels::Base do
         end
       end
     end
+    
+    describe '.handle_old_render_as_api' do
+      context 'options is a string' do
+        it "should add a deprecation warning" do
+          ActiveSupport::Deprecation.should_receive(:warn)
+          @view_model.send(:handle_old_render_as_api, 'html')
+        end
+        it "should return the old format as format-option" do
+          ActiveSupport::Deprecation.silence {@view_model.send(:handle_old_render_as_api, 'html').should == {:format => :html}}
+        end
+      end
+      context 'options is not a string' do
+        context 'options is a symbol' do
+          it "should add a deprecation warning" do
+            ActiveSupport::Deprecation.should_receive(:warn)
+            @view_model.send(:handle_old_render_as_api, :html)
+          end
+          it "should return the old format as format-option" do
+            ActiveSupport::Deprecation.silence {@view_model.send(:handle_old_render_as_api, :html).should == {:format => :html}}
+          end
+        end
+        context 'options is not a symbol' do
+          it "should not add a deprecation warning" do
+            ActiveSupport::Deprecation.should_not_receive(:warn)
+            @view_model.send(:handle_old_render_as_api, :format => :html)
+          end
+          it "should return the the options hash" do
+            @view_model.send(:handle_old_render_as_api, :format => :html).should == {:format => :html}
+          end
+        end
+      end
+    end
+    
+    
   end
   
 end
