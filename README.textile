@@ -105,7 +105,7 @@ Note: Filter methods can be any method on the view_model with arity 1.
 
 h3. Rendering view model templates
 
-Use @render_as(template_name, format = nil)@.
+Use @render_as(template_name, options)@.
 
 Gets a @ViewModels::Model::Class@ instance: @view_model = view_model_for Model::Class.new@
 
@@ -114,7 +114,9 @@ Gets a @ViewModels::<model_instance.class.name>@ instance: @view_model = view_mo
 Renders the 'example' partial in view_models/model/class: @view_model.render_as :example@
 Note: Renders a format depending on the request. ../index.text will render example.text.erb.
 
-Renders the 'example.text.erb' partial in view_models/model/class: @view_model.render_as :example, :text@
+Renders the 'example.text.erb' partial in view_models/model/class: @view_model.render_as :example, :format => :text@
+
+Locals can be passed through as usual: @view_model.render_as :example, :format => :text, :locals => { :name => value }@
 
 h3. Rails Helpers in ViewModels
 
