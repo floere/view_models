@@ -32,20 +32,20 @@ module ViewModels
       def view_model_for(model, context = self)
         # Is there a specific mapping?
         view_model_class = specific_view_model_mapping[model.class].classify.constantize if specific_view_model_mapping.key? model.class
-    
+        
         # If not, get the default mapping.
         view_model_class = default_view_model_class_for(model) unless view_model_class
-    
+        
         unless view_model_class < ViewModels::Base
           raise NotAViewModelError.new("#{view_model_class} is not a view_model.")
         end
-    
+        
         # And create a view_model for the model.
         view_model_class.new(model, context)
       rescue NameError => e
         raise MissingViewModelError.new("No view_model for #{model.class}.")
       end
-  
+      
       # Returns the default view_model class for the given model instance.
       #
       # Default class name is:
