@@ -108,26 +108,31 @@ module ViewModels
     #   template, calling view_model.render_as('template', :format => :text) will render
     #   the erb.
     # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
-    #   view_model.render_as('template', :locals => { :my_local_variable => :value })
+    #   view_model.render_as('template', :locals => { :name => :value })
     #
     def render_as(view_name, options = {})
       options = handle_old_render_as_api options
       
       # Get a view instance from the view class.
+      #
       view = view_instance
-    
+      
       # Set the format to render in, e.g. :text, :html
+      #
       view.template_format = options.delete(:format) if options[:format]
       
+      # Set up the options. Include the view_model in the locals.
+      #
       options[:locals] = { :view_model => self }.merge options[:locals] || {}
-      options[:partial] = options[:partial] || template_path(view_name)
+      options[:partial] ||= template_path(view_name)
       
-      # Finally, render and pass the view_model as a local variable.
+      # Finally, render.
+      #
       view.render options
     end
-
+    
     protected
-
+      
       # Creates a view instance from the given view class.
       #
       def view_instance
@@ -158,7 +163,12 @@ module ViewModels
           context
         end
       end
-   
+      
+      # Handles a deprecated options hash passed to the #render_as method.
+      #
+      # 1.3.0: andi: Changed Api of ViewModels::Base#render_as to take an options hash.
+      #              Now supports passing locals to the render call.
+      #
       def handle_old_render_as_api(options)
         case options
         when String, Symbol

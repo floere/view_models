@@ -162,6 +162,12 @@ describe ViewModels::Base do
         
         @view_model.render_as @view_name
       end
+      it "should call template_format= correctly even with the old api" do
+        ActiveSupport::Deprecation.stub! :warn
+        @view_instance.should_receive(:template_format=).once.with :some_format
+        
+        @view_model.render_as @view_name, :some_format
+      end
       it "should call template_format=" do
         @view_instance.should_receive(:template_format=).once.with :some_format
         
