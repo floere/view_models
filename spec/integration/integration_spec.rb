@@ -6,10 +6,6 @@ class ViewModels::SubSubclass < ViewModels::Subclass; end
 
 describe 'Integration' do
   
-  # before(:all) do
-  #   Dir.chdir 'spec/integration'
-  # end
-  
   before(:each) do
     @controller_class = stub :klass, :view_paths => 'spec/integration', :controller_path => 'app/controllers/test'
     @context          = stub :controller, :class => @controller_class
@@ -18,20 +14,38 @@ describe 'Integration' do
     @view_model       = ViewModels::SubSubclass.new @context, @view
   end
   
-  describe 'template finding' do
-    it "should use its template" do
-      in_the @view_model do
-        render_as(:exists).should == 'exists'
+  describe 'render_as' do
+    describe 'template finding' do
+      it "should use its template" do
+        @view_model.render_as(:exists).should == 'html exists' # The default
+      end
+      it "should use the subclass' template" do
+        @view_model.render_as(:no_sub_subclass).should == 'no_sub_subclass'
+      end
+      it "should fail" do
+        @view_model.render_as(:none).should == nil
       end
     end
-    it "should use the subclass' template" do
-      in_the @view_model do
-        render_as(:no_sub_subclass).should == 'no_sub_subclass'
+    describe 'format' do
+      it 'should render text' do
+        @view_model.render_as(:exists, :format => '').should == 'exists'
+      end
+      it 'should render text' do
+        @view_model.render_as(:exists, :format => :text).should == 'text exists'
+      end
+      it 'should render html' do
+        @view_model.render_as(:exists, :format => :html).should == 'html exists'
       end
     end
-    it "should fail" do
-      in_the @view_model do
-        render_as(:none).should == nil
+    describe 'locals' do
+      it 'should render text' do
+        @view_model.render_as(:exists, :format => '', :locals => { :local_name => :some_local }).should == 'existssome_local'
+      end
+      it 'should render text' do
+        @view_model.render_as(:exists, :format => :text, :locals => { :local_name => :some_local }).should == 'text existssome_local'
+      end
+      it 'should render html' do
+        @view_model.render_as(:exists, :format => :html, :locals => { :local_name => :some_local }).should == 'html existssome_local'
       end
     end
   end

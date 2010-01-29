@@ -81,7 +81,7 @@ module ViewModels
       #
       def template_path(view, name)
         name = name.to_s
-        if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
+        if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
           name
         else
           File.join(view_model_path, name)
@@ -90,7 +90,7 @@ module ViewModels
       
       # Tries to render the view.
       #
-      # TODO memoize
+      # TODO memoize template path
       #
       def render view, view_name, options
         return if self == ViewModels::Base
@@ -150,7 +150,6 @@ module ViewModels
       # Set up the options. Include the view_model in the locals.
       #
       options[:locals] = { :view_model => self }.merge options[:locals] || {}
-      # options[:partial] ||= template_path(view_name)
       
       # Finally, render.
       #
@@ -171,25 +170,6 @@ module ViewModels
       def render view, view_name, options
         self.class.render view, view_name, options
       end
-      
-      # # Returns the root of this view_models views with the template name appended.
-      # # e.g. 'view_models/some/specific/path/to/template'
-      # #
-      # def template_path(name)
-      #   name = name.to_s
-      #   if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
-      #     name
-      #   else
-      #     File.join(self.class.view_model_path, name)
-      #   end
-      # end
-      
-      # # Returns the root of this view_models views with the template name appended.
-      # # e.g. 'view_models/some/specific/path/to/template'
-      # #
-      # def template_path(name)
-      #   self.class.template_path(name)
-      # end
 
       # Extracts a controller from the context.
       #
