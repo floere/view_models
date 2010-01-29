@@ -84,33 +84,22 @@ module ViewModels
         if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
           name
         else
-          # TODO memoize this
-          #
-          name = "_#{name}"
-          find_template_path view, name
+          File.join(view_model_path, name)
         end
       end
-
-      def find_template_path view, name
-        path = view.view_paths.find_template File.join(view_model_path, name), view.template_format
-        puts [:path, path, '<br/>']
-        path
-        # File.join(view_model_path, name)
-      end
-
+      
       # Tries to render the view.
       #
-      def render view, view_name
-        partial_path = template_path(view, view_name)
-        # begin
-        #   puts partial_path
-        #   puts "<br/>"
-          view.render :partial => partial_path, :locals => { :view_model => self }
-        # rescue ActionView::MissingTemplate => e
-          # self.superclass.render view, view_name unless self == ViewModels::Base
-        # end
+      # TODO memoize
+      #
+      def render view, view_name, options
+        return if self == ViewModels::Base
+        options[:partial] = template_path(view, view_name)
+        view.render options
+      rescue ActionView::MissingTemplate => e
+        self.superclass.render view, view_name, options 
       end
-
+      
     end # class << self
     
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
@@ -161,11 +150,11 @@ module ViewModels
       # Set up the options. Include the view_model in the locals.
       #
       options[:locals] = { :view_model => self }.merge options[:locals] || {}
-      options[:partial] ||= template_path(view_name)
+      # options[:partial] ||= template_path(view_name)
       
       # Finally, render.
       #
-      view.render options
+      render view, view_name, options
     end
     
     protected
@@ -179,17 +168,21 @@ module ViewModels
       
     private
       
-      # Returns the root of this view_models views with the template name appended.
-      # e.g. 'view_models/some/specific/path/to/template'
-      #
-      def template_path(name)
-        name = name.to_s
-        if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
-          name
-        else
-          File.join(self.class.view_model_path, name)
-        end
+      def render view, view_name, options
+        self.class.render view, view_name, options
       end
+      
+      # # Returns the root of this view_models views with the template name appended.
+      # # e.g. 'view_models/some/specific/path/to/template'
+      # #
+      # def template_path(name)
+      #   name = name.to_s
+      #   if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
+      #     name
+      #   else
+      #     File.join(self.class.view_model_path, name)
+      #   end
+      # end
       
       # # Returns the root of this view_models views with the template name appended.
       # # e.g. 'view_models/some/specific/path/to/template'
