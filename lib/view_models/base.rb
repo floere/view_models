@@ -7,7 +7,8 @@ module ViewModels
   class Base
     attr_reader :model, :controller
     
-    #make helper and helper_method available
+    # Make helper and helper_method available
+    #
     include ActionController::Helpers
       
     class << self
@@ -62,7 +63,7 @@ module ViewModels
           delegate method, :to => :controller
         end
       end
-    
+
       # Returns the path from the view_model_view_paths to the actual templates.
       # e.g. "view_models/models/book"
       #
@@ -74,6 +75,32 @@ module ViewModels
       def view_model_path
         name.underscore
       end
+
+      # Returns the root of this view_models views with the template name appended.
+      # e.g. 'view_models/some/specific/path/to/template'
+      #
+      def template_path(name)
+        name = name.to_s
+        if name.include?('/')    # Specific path like 'view_models/somethingorother/foo.haml' given.
+          name
+        else
+          File.join(view_model_path, name)
+        end
+      end
+
+      # Tries to render the view.
+      #
+      def render view, view_name
+        partial_path = template_path(view_name)
+        begin
+          puts partial_path
+          puts "<br/>"
+          view.render :partial => partial_path, :locals => { :view_model => self }
+        rescue ActionView::MissingTemplate => e
+          self.superclass.render view, view_name unless self == ViewModels::Base
+        end
+      end
+
     end # class << self
     
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
@@ -116,7 +143,7 @@ module ViewModels
       # Get a view instance from the view class.
       #
       view = view_instance
-      
+
       # Set the format to render in, e.g. :text, :html
       #
       view.template_format = options.delete(:format) if options[:format]
@@ -154,14 +181,17 @@ module ViewModels
         end
       end
       
+      # # Returns the root of this view_models views with the template name appended.
+      # # e.g. 'view_models/some/specific/path/to/template'
+      # #
+      # def template_path(name)
+      #   self.class.template_path(name)
+      # end
+
       # Extracts a controller from the context.
       #
       def extract_controller_from(context)
-        if context.respond_to?(:controller)
-          context.controller
-        else
-          context
-        end
+        context.respond_to?(:controller) ? context.controller : context
       end
       
       # Handles a deprecated options hash passed to the #render_as method.
