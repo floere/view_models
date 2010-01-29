@@ -173,7 +173,7 @@ module ViewModels
         case options
         when String, Symbol
           ActiveSupport::Deprecation.warn("ViewModels::Base#render_as: please specify the format as render_as(view_name, :format => :your_format)")
-          {:format => options.to_sym}
+          { :format => options.to_sym }
         else
           options
         end
