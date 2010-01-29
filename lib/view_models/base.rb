@@ -139,9 +139,9 @@ module ViewModels
         view = ActionView::Base.new controller.class.view_paths, {}, controller
         view.extend master_helper_module
       end
-    
+      
     private
-        
+      
       # Returns the root of this view_models views with the template name appended.
       # e.g. 'view_models/some/specific/path/to/template'
       #
