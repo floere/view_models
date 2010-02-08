@@ -15,8 +15,9 @@ describe 'Integration' do
   
   before(:each) do
     @model            = SubSubclass.new
+    @logger           = stub :logger
     @controller_class = stub :klass, :view_paths => 'spec/integration/views', :controller_path => 'app/controllers/test'
-    @context          = stub :controller, :class => @controller_class
+    @context          = stub :controller, :class => @controller_class, :logger => @logger
     @view_paths       = stub :find_template
     @view             = stub :view, :controller => @context, :view_paths => @view_paths
     @view_model       = ViewModels::SubSubclass.new @model, @view
@@ -37,6 +38,15 @@ describe 'Integration' do
     end
     it 'should filter some attributes multiple times' do
       @view_model.some_doubly_doubled_attribute.should == 'blahblahblahblah'
+    end
+    it 'should filter some attributes multiple times correctly' do
+      @view_model.some_mangled_attribute.should == 'DCBADCBA'
+    end
+  end
+  
+  describe 'controller_method' do
+    it 'should delegate to the context' do
+      @view_model.logger.should == @logger
     end
   end
   
