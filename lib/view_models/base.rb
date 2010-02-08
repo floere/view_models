@@ -123,7 +123,7 @@ module ViewModels
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model
     #
-    ActionController::Routing::Routes.install_helpers(self)
+    ActionController::Routing::Routes.install_helpers self
     
     # Renders the given view in the view_model's view root in the format given.
     #

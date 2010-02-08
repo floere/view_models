@@ -1,21 +1,44 @@
 require File.join(File.dirname(__FILE__), '../spec_helper')
 
+require File.join(File.dirname(__FILE__), 'models/subclass')
+require File.join(File.dirname(__FILE__), 'models/sub_subclass')
+
+require 'helpers/rails'
+ActionView::Base.send :include, ViewModels::Helper::Rails
+
 require 'view_models/base'
-class ViewModels::Subclass < ViewModels::Base; end
-class ViewModels::SubSubclass < ViewModels::Subclass; end
+require File.join(File.dirname(__FILE__), 'view_models/subclass')
+require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
+
 
 describe 'Integration' do
   
   before(:each) do
-    @controller_class = stub :klass, :view_paths => 'spec/integration', :controller_path => 'app/controllers/test'
+    @model            = SubSubclass.new
+    @controller_class = stub :klass, :view_paths => 'spec/integration/views', :controller_path => 'app/controllers/test'
     @context          = stub :controller, :class => @controller_class
     @view_paths       = stub :find_template
     @view             = stub :view, :controller => @context, :view_paths => @view_paths
-    @view_model       = ViewModels::SubSubclass.new @context, @view
+    @view_model       = ViewModels::SubSubclass.new @model, @view
+  end
+  
+  # describe 'collection rendering' do
+  #   it 'should description' do
+  #     @view_model.render_as(:list_example).should == 'html exists' # The default
+  #   end
+  # end
+  
+  describe 'model attributes' do
+    it 'should pass through unfiltered attributes' do
+      @view_model.some_untouched_attribute.should == :some_value
+    end
+    it 'should filter some attributes' do
+      @view_model.some_filtered_attribute.should == '%3Cscript%3Efilter+me%3C%2Fscript%3E'
+    end
   end
   
   describe 'render_as' do
-    describe 'template finding' do
+    describe 'template inheritance' do
       it "should use its template" do
         @view_model.render_as(:exists).should == 'html exists' # The default
       end
