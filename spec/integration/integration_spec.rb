@@ -40,7 +40,7 @@ describe 'Integration' do
       @view_model.some_doubly_doubled_attribute.should == 'blahblahblahblah'
     end
     it 'should filter some attributes multiple times correctly' do
-      @view_model.some_mangled_attribute.should == 'DCBADCBA'
+      @view_model.some_mangled_attribute.should == 'DCBDCB'
     end
   end
   

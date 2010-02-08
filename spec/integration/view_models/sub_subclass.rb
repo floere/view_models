@@ -5,7 +5,7 @@ class ViewModels::SubSubclass < ViewModels::Subclass
   model_reader :some_untouched_attribute
   model_reader :some_filtered_attribute, :filter_through => :h
   model_reader :some_doubly_doubled_attribute, :filter_through => [:doubled]*2
-  model_reader :some_mangled_attribute, :filter_through => [:reverse, :doubled, :upcase]
+  model_reader :some_mangled_attribute, :filter_through => [:reverse, :cutoff, :doubled, :upcase]
   
   def h v
     CGI.escape v
@@ -13,6 +13,10 @@ class ViewModels::SubSubclass < ViewModels::Subclass
   
   def doubled text
     text*2
+  end
+  
+  def cutoff text
+    text[0..-2]
   end
   
   def reverse text
