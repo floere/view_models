@@ -90,16 +90,31 @@ module ViewModels
         end
       end
       
+      # Caches partial names on successful rendering.
+      #
+      def caching name, options
+        @name_partial_mapping ||= {}
+        options[:partial] = @name_partial_mapping[name] || template_path(name)
+        result = yield options
+        @name_partial_mapping[name] ||= options[:partial]
+        result
+      end
+      
       # Tries to render the view.
       #
-      # TODO memoize template path
+      # Note: I am not happy about using Exceptions as control flow.
+      #       By caching partial paths successful renderings, we alleviate the problem.
       #
       def render view, name, options
         return if self == ViewModels::Base
-        options[:partial] = template_path name
-        view.render options
-      rescue ActionView::MissingTemplate => e
-        self.superclass.render view, name, options 
+        
+        caching name, options do |options|
+          begin
+            view.render options
+          rescue ActionView::MissingTemplate => e
+            superclass.render view, name, options
+          end
+        end
       end
       
     end # class << self

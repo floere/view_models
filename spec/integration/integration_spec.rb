@@ -14,13 +14,12 @@ require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
 describe 'Integration' do
   
   before(:each) do
-    @model            = SubSubclass.new
     @logger           = stub :logger
     @controller_class = stub :klass, :view_paths => 'spec/integration/views', :controller_path => 'app/controllers/test'
     @context          = stub :controller, :class => @controller_class, :logger => @logger
     @view_paths       = stub :find_template
     @view             = stub :view, :controller => @context, :view_paths => @view_paths
-    @view_model       = ViewModels::SubSubclass.new @model, @view
+    @view_model       = ViewModels::SubSubclass.new SubSubclass.new, @view
   end
   
   # describe 'collection rendering' do
@@ -91,6 +90,31 @@ describe 'Integration' do
       end
       it 'should render html' do
         @view_model.render_as(:exists, :format => :html, :locals => { :local_name => :some_local }).should == 'html exists with some_local'
+      end
+    end
+    describe 'memoizing' do
+      it 'should memoize' do
+        @view_model.class.should_receive(:template_path).once.with(:not_found_in_sub_subclass).and_return 'view_models/sub_subclass/not_found_in_sub_subclass'
+        @view_model.class.superclass.should_receive(:template_path).once.with(:not_found_in_sub_subclass).and_return 'view_models/subclass/not_found_in_sub_subclass'
+        
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
+        
+        @view_model.render_as(:not_found_in_sub_subclass).should == 'not found'
+      end
+      it 'should render the right one' do
+        @view_model.render_as :exists_in_both
+        @view_model.render_as(:exists_in_both).should == 'in sub subclass'
+        
+        other_view_model = ViewModels::Subclass.new Subclass.new, @view
+        other_view_model.render_as :exists_in_both
+        other_view_model.render_as(:exists_in_both).should == 'in subclass'
+        
+        @view_model.render_as :exists_in_both
+        @view_model.render_as(:exists_in_both).should == 'in sub subclass'
       end
     end
   end
