@@ -35,6 +35,9 @@ describe 'Integration' do
     it 'should filter some attributes' do
       @view_model.some_filtered_attribute.should == '%3Cscript%3Efilter+me%3C%2Fscript%3E'
     end
+    it 'should filter some attributes multiple times' do
+      @view_model.some_doubly_doubled_attribute.should == 'blahblahblahblah'
+    end
   end
   
   describe 'render_as' do
