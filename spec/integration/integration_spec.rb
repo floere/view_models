@@ -116,6 +116,12 @@ describe 'Integration' do
         @view_model.render_as :exists_in_both
         @view_model.render_as(:exists_in_both).should == 'in sub subclass'
       end
+      it 'should memoize nil if nothing is found' do
+        @view_model.render_as(:blargl)
+        @view_model.render_as(:blargl)
+        @view_model.render_as(:blargl)
+        @view_model.render_as(:blargl).should == nil
+      end
     end
   end
   

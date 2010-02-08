@@ -92,11 +92,13 @@ module ViewModels
       
       # Caches partial names on successful rendering.
       #
+      # Note: Caches only if something was rendered.
+      #
       def caching name, options
         @name_partial_mapping ||= {}
         options[:partial] = @name_partial_mapping[name] || template_path(name)
         result = yield options
-        @name_partial_mapping[name] ||= options[:partial]
+        @name_partial_mapping[name] ||= options[:partial] if result
         result
       end
       

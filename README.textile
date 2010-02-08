@@ -115,6 +115,7 @@ Renders the 'example' partial in view_models/model/class: @view_model.render_as 
 Note: Renders a format depending on the request. ../index.text will render example.text.erb.
 
 Renders the 'example.text.erb' partial in view_models/model/class: @view_model.render_as :example, :format => :text@
+Note: If the partial cannot be found, it will traverse the view model hierarchy upwards to find a partial template.
 
 Locals can be passed through as usual: @view_model.render_as :example, :format => :text, :locals => { :name => value }@
 
