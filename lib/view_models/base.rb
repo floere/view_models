@@ -72,19 +72,21 @@ module ViewModels
       # this method will yield
       #   view_models/models/book
       #
+      # Note: Remembers the result.
+      #
       def view_model_path
-        name.underscore
+        @view_model_path || @view_model_path = self.name.underscore
       end
 
       # Returns the root of this view_models views with the template name appended.
       # e.g. 'view_models/some/specific/path/to/template'
       #
-      def template_path(view, name)
+      def template_path name
         name = name.to_s
         if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
           name
         else
-          File.join(view_model_path, name)
+          File.join view_model_path, name
         end
       end
       
@@ -92,12 +94,12 @@ module ViewModels
       #
       # TODO memoize template path
       #
-      def render view, view_name, options
+      def render view, name, options
         return if self == ViewModels::Base
-        options[:partial] = template_path(view, view_name)
+        options[:partial] = template_path name
         view.render options
       rescue ActionView::MissingTemplate => e
-        self.superclass.render view, view_name, options 
+        self.superclass.render view, name, options 
       end
       
     end # class << self
@@ -137,7 +139,7 @@ module ViewModels
     #   view_model.render_as('template', :locals => { :name => :value })
     # * If no format is given, it will render the default format, which is html.
     #
-    def render_as(view_name, options = {})
+    def render_as view_name, options = {}
       options = handle_old_render_as_api options
       
       # Get a view instance from the view class.

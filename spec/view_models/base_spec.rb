@@ -151,18 +151,12 @@ describe ViewModels::Base do
         @view_instance.stub! :render
       end
       it "should call render with the correct default partial and the view_model as locals" do
-        @view_instance.should_receive(:render).with(
-          :partial => @path, :locals => { :view_model => @view_model }
-        )
+        @view_model.should_receive(:render).with @view_instance, @view_name, :locals => { :view_model => @view_model }
         
         @view_model.render_as @view_name
       end
       it "should call render with the correct default partial and the view_model as locals with locals" do
-        @view_model.should_receive(:template_path).once.with('some/specific/path').and_return 'some/even/more/specific/path'
-        
-        @view_instance.should_receive(:render).with(
-          :partial => 'some/even/more/specific/path', :locals => { :view_model => @view_model, :some_local => :some_value }
-        )
+        @view_model.should_receive(:render).with @view_instance, 'some/specific/path', :locals => { :view_model => @view_model, :some_local => :some_value }
         
         @view_model.render_as 'some/specific/path', :locals => { :some_local => :some_value }
       end
@@ -173,6 +167,7 @@ describe ViewModels::Base do
       end
       it "should call template_format= correctly even with the old api" do
         ActiveSupport::Deprecation.stub! :warn
+        
         @view_instance.should_receive(:template_format=).once.with :some_format
         
         @view_model.render_as @view_name, :some_format
@@ -183,34 +178,39 @@ describe ViewModels::Base do
         @view_model.render_as @view_name, :format => :some_format
       end
       it "should pass on the specified locals" do
-        @view_instance.should_receive(:render).with(
-          :partial => @path, :locals => {:view_model => @view_model, :my_option => :value}
-        )
+        @view_model.should_receive(:render).with @view_instance, @view_name, :locals => { :view_model => @view_model, :some_local => :some_value }
         
-        @view_model.render_as @view_name, :locals => {:my_option => :value}
+        @view_model.render_as @view_name, :locals => { :some_local => :some_value }
       end
       it "should override the default view_model if specified" do
-        @my_view_model = stub :other_view_model
-        @view_instance.should_receive(:render).with(
-          :partial => @path, :locals => { :view_model => @my_view_model }
-        )
+        specific_view_model = stub :specific_view_model
         
-        @view_model.render_as @view_name, :locals => {:view_model => @my_view_model}
+        @view_model.should_receive(:render).with @view_instance, @view_name, :locals => { :view_model => specific_view_model }
+        
+        @view_model.render_as @view_name, :locals => { :view_model => specific_view_model }
       end
       it "should override the default template if specified" do
-        @template = stub :template
-        @view_instance.should_receive(:render).with(
-          :partial => @template, :locals => { :view_model => @view_model }
-        )
+        template = stub :template
         
-        @view_model.render_as @view_name, :partial => @template
+        @view_model.should_receive(:render).with @view_instance, @view_name, :partial => template, :locals => { :view_model => @view_model }
+        
+        @view_model.render_as @view_name, :partial => template
       end
     end
     
     describe "#view_model_template_path" do
       describe "absolute path given" do
         it "should use it as given" do
-          in_the @view_model do
+          in_the @view_model.class do
+            template_path('some/path/to/template').should == 'some/path/to/template'
+          end
+        end
+        it 'should memoize the result' do
+          in_the @view_model.class do
+            @view_model.class.should_receive(:name).never
+            
+            template_path 'some/path/to/template'
+            
             template_path('some/path/to/template').should == 'some/path/to/template'
           end
         end
@@ -219,7 +219,7 @@ describe ViewModels::Base do
         it "should prepend the view_model path" do
           ViewModels::Base.stub! :view_model_path => 'some/view_model/path/to'
           
-          in_the @view_model do
+          in_the @view_model.class do
             template_path('template').should == 'some/view_model/path/to/template'
           end
         end
