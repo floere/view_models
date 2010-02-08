@@ -105,7 +105,7 @@ describe ViewModels::Helper::Rails do
           :separator => nil
         }
         
-        @collection_view_model.should_receive(:render_partial).once.with 'list', default_options
+        @collection_view_model.should_receive(:render_partial).once.with :list, default_options
         
         @collection_view_model.list
       end
@@ -117,7 +117,7 @@ describe ViewModels::Helper::Rails do
           :separator => :d
         }
         
-        @collection_view_model.should_receive(:render_partial).once.with 'list', specific_options
+        @collection_view_model.should_receive(:render_partial).once.with :list, specific_options
         
         @collection_view_model.list specific_options
       end
@@ -136,7 +136,7 @@ describe ViewModels::Helper::Rails do
           :template_name => :collection_item,
           :separator => nil
         }
-        @collection_view_model.should_receive(:render_partial).once.with 'collection', default_options
+        @collection_view_model.should_receive(:render_partial).once.with :collection, default_options
         
         @collection_view_model.collection
       end
@@ -148,7 +148,7 @@ describe ViewModels::Helper::Rails do
           :separator => :d
         }
         
-        @collection_view_model.should_receive(:render_partial).once.with 'collection', specific_options
+        @collection_view_model.should_receive(:render_partial).once.with :collection, specific_options
         
         @collection_view_model.collection specific_options
       end
@@ -168,7 +168,7 @@ describe ViewModels::Helper::Rails do
           :separator => nil
         }
         
-        @collection_view_model.should_receive(:render_partial).once.with 'table', default_options
+        @collection_view_model.should_receive(:render_partial).once.with :table, default_options
         
         @collection_view_model.table
       end
@@ -180,7 +180,7 @@ describe ViewModels::Helper::Rails do
           :separator => :d
         }
         
-        @collection_view_model.should_receive(:render_partial).once.with 'table', specific_options
+        @collection_view_model.should_receive(:render_partial).once.with :table, specific_options
         
         @collection_view_model.table(specific_options)
       end
@@ -198,7 +198,7 @@ describe ViewModels::Helper::Rails do
           :context => @context,
           :separator => '|'
         }
-        @collection_view_model.should_receive(:render_partial).once.with 'pagination', default_options
+        @collection_view_model.should_receive(:render_partial).once.with :pagination, default_options
         
         @collection_view_model.pagination
       end
@@ -208,7 +208,7 @@ describe ViewModels::Helper::Rails do
           :context => :b,
           :separator => :c
         }
-        @collection_view_model.should_receive(:render_partial).once.with 'pagination', specific_options
+        @collection_view_model.should_receive(:render_partial).once.with :pagination, specific_options
         
         @collection_view_model.pagination specific_options
       end
@@ -228,7 +228,7 @@ describe ViewModels::Helper::Rails do
       it "should call render partial on context with the passed through parameters" do
         @context.should_receive(:render).once.with(:partial => 'view_models/collection/some_name', :locals => { :a => :b })
         
-        @collection_view_model.send :render_partial, 'some_name', { :a => :b }
+        @collection_view_model.send :render_partial, :some_name, { :a => :b }
       end
     end
     

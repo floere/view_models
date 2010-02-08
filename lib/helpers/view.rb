@@ -4,7 +4,7 @@ module ViewModels
     #
     module View
   
-      def self.included(view_model)
+      def self.included view_model
         self.all_view_helpers.each do |helper|
           view_model.class_eval { include helper }
         end

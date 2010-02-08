@@ -24,7 +24,7 @@ module ViewModels
       #   model_reader :foobar, :filter_through => :h                 # html escape foobar 
       #   model_reader :foobar, :filter_through => [:textilize, :h]   # first textilize, then html escape
       #
-      def model_reader(*args)
+      def model_reader *args
         args = args.dup
         opts = args.pop if args.last.kind_of?(Hash)
       
@@ -43,7 +43,7 @@ module ViewModels
       # includes given helper in the view_model
       #
       alias old_add_template_helper add_template_helper
-      def add_template_helper(helper_module)
+      def add_template_helper helper_module
         include helper_module
         old_add_template_helper helper_module
       end      
@@ -58,7 +58,7 @@ module ViewModels
       # will call
       #   controller.current_user
       #
-      def controller_method(*methods)
+      def controller_method *methods
         methods.each do |method|
           delegate method, :to => :controller
         end
@@ -108,7 +108,7 @@ module ViewModels
     # The context is usually a view or a controller.
     # Note: But doesn't need to be one :)
     # 
-    def initialize(model, context)
+    def initialize model, context
       @model = model
       @controller = extract_controller_from context
     end
@@ -176,7 +176,7 @@ module ViewModels
 
       # Extracts a controller from the context.
       #
-      def extract_controller_from(context)
+      def extract_controller_from context
         context.respond_to?(:controller) ? context.controller : context
       end
       
@@ -185,10 +185,10 @@ module ViewModels
       # 1.3.0: andi: Changed Api of ViewModels::Base#render_as to take an options hash.
       #              Now supports passing locals to the render call.
       #
-      def handle_old_render_as_api(options)
+      def handle_old_render_as_api options
         case options
         when String, Symbol
-          ActiveSupport::Deprecation.warn("ViewModels::Base#render_as: please specify the format as render_as(view_name, :format => :your_format)")
+          ActiveSupport::Deprecation.warn "ViewModels::Base#render_as: please specify the format as render_as(view_name, :format => :your_format)"
           { :format => options.to_sym }
         else
           options
