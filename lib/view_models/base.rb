@@ -135,6 +135,7 @@ module ViewModels
     #   the erb.
     # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
     #   view_model.render_as('template', :locals => { :name => :value })
+    # * If no format is given, it will render the default format, which is html.
     #
     def render_as(view_name, options = {})
       options = handle_old_render_as_api options
