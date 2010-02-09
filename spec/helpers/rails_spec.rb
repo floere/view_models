@@ -57,7 +57,7 @@ describe ViewModels::Helper::Rails do
       class SomeModelClazz; end
       class ViewModels::SomeSpecificClazz < ViewModels::Base; end
       before(:each) do
-        self.should_receive(:specific_view_model_mapping).any_number_of_times.and_return SomeModelClazz => 'ViewModels::SomeSpecificClazz'
+        self.should_receive(:specific_view_model_mapping).any_number_of_times.and_return SomeModelClazz => ViewModels::SomeSpecificClazz
       end
       it "should return a specifically mapped view_model instance" do
         view_model_for(SomeModelClazz.new).should be_instance_of ViewModels::SomeSpecificClazz

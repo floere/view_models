@@ -67,7 +67,7 @@ module ViewModels
       # view model class for the given model.
       #
       def specific_view_model_class_for model
-        specific_view_model_mapping[model.class].classify.constantize if specific_view_model_mapping.key? model.class
+        specific_view_model_mapping[model.class]
       end
       
       # The Collection view_model helper has the purpose of presenting presentable collections.

@@ -67,7 +67,9 @@ Also, there are two partials in @app/views/view_models/user/@, @_result.html.ham
 h3. Getting a view_model in a view or a controller.
 
 Call view_model_for: @view_model_instance = view_model_for model_instance@
-Note: By convention, uses @ViewModels::Model::Class::Name@, thus prefixing @ViewModels::@ to the model class name.
+By convention, uses @ViewModels::Model::Class::Name@, thus prefixing @ViewModels::@ to the model class name.
+
+Note: You can override @specific_view_model_class_for@ to change the mapping of model to class, or make it dynamic.
 
 h3. Getting a collection view model in a view.
 
