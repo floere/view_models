@@ -31,7 +31,7 @@ module ViewModels
       def view_model_class_for model
         # Is there a specific mapping?
         #
-        view_model_class = specific_view_model_mapping[model.class].classify.constantize if specific_view_model_mapping.key? model.class
+        view_model_class = specific_view_model_class_for model
         
         # If not, get the default mapping.
         #
@@ -66,6 +66,15 @@ module ViewModels
       #
       def default_view_model_class_for model
         "ViewModels::#{model.class.name}".constantize
+      end
+      
+      # Returns a specific view_model class for the given model instance.
+      #
+      # Override this method, if you want to return a specific
+      # view model class for the given model.
+      #
+      def specific_view_model_class_for model
+        specific_view_model_mapping[model.class].classify.constantize if specific_view_model_mapping.key? model.class
       end
   
       # The Collection view_model helper has the purpose of presenting presentable collections.
