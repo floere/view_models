@@ -113,7 +113,7 @@ module ViewModels
         caching name, options do |options|
           begin
             view.render options
-          rescue ActionView::MissingTemplate => e
+          rescue ActionView::MissingTemplate => missing_template
             superclass.render view, name, options
           end
         end
