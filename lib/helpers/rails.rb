@@ -4,15 +4,11 @@ module ViewModels
       
       mattr_accessor :specific_view_model_mapping
       self.specific_view_model_mapping = {}
-  
+      
       # Error thrown if a view_model for the given model class is not available.
       #
       class MissingViewModelError < RuntimeError; end
-  
-      # Error thrown if the view_model loaded is not a view_model.
-      #
-      class NotAViewModelError < RuntimeError; end
-  
+      
       # Construct a view_model for a collection.
       #
       def collection_view_model_for pagination_array, context = self
@@ -29,11 +25,7 @@ module ViewModels
       #       you'd like to change the default.
       #
       def view_model_class_for model
-        view_model_class = specific_view_model_class_for(model) || default_view_model_class_for(model)
-        
-        raise NotAViewModelError.new("#{view_model_class} is not a view_model.") unless view_model_class < ViewModels::Base
-        
-        view_model_class
+        specific_view_model_class_for(model) || default_view_model_class_for(model)
       rescue NameError => name_error
         raise MissingViewModelError.new("No view_model for #{model.class}.")
       end
@@ -84,7 +76,7 @@ module ViewModels
           { :to => :@collection }
         self.delegate *methods_to_delegate
         def select *args, &block # active_support fail?
-          @collection.select(*args, &block)
+          @collection.select *args, &block
         end
         
         def initialize collection, context
@@ -138,10 +130,10 @@ module ViewModels
             :template_name => :collection_item,
             :separator => nil
           }
-
+          
           render_partial :collection, default_options.merge(options)
         end
-
+        
         # Renders a table.
         #
         # Note: Each item represents a table row.
@@ -164,10 +156,10 @@ module ViewModels
             :template_name => :table_row,
             :separator => nil
           }.merge(options)
-
+          
           render_partial :table, options
         end
-
+        
         # Renders a pagination.
         #
         # Options:
@@ -185,12 +177,12 @@ module ViewModels
             :context => @context,
             :separator => '|'
           }.merge options
-
+          
           render_partial :pagination, options
         end
-
+        
         private
-      
+          
           # Helper method that renders a partial in the context of the context instance.
           #
           # Example:

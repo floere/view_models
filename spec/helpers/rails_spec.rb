@@ -35,13 +35,6 @@ describe ViewModels::Helper::Rails do
       end
     end
     describe "no specific mapping" do
-      it "should raise on a non-view_model instance" do
-        class SomeNonViewModelClazz; end
-        class ViewModels::SomeNonViewModelClazz; end
-        lambda {
-          view_model_for(SomeNonViewModelClazz.new)
-        }.should raise_error(ViewModels::Helper::Rails::NotAViewModelError, 'ViewModels::SomeNonViewModelClazz is not a view_model.')
-      end
       it "should raise on an non-mapped model" do
         lambda {
           view_model_for(42)
