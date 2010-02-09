@@ -198,6 +198,19 @@ describe ViewModels::Base do
       end
     end
     
+    describe '#view_paths' do
+      it "should delegate to the controller's class" do
+        controller_class = stub :controller_class
+        @context.stub! :class => controller_class
+        
+        controller_class.should_receive(:view_paths).once.with
+        
+        in_the @view_model do
+          view_paths
+        end
+      end
+    end
+    
     describe "#view_model_template_path" do
       describe "absolute path given" do
         it "should use it as given" do
