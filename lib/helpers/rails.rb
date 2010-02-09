@@ -29,17 +29,9 @@ module ViewModels
       #       you'd like to change the default.
       #
       def view_model_class_for model
-        # Is there a specific mapping?
-        #
-        view_model_class = specific_view_model_class_for model
+        view_model_class = specific_view_model_class_for(model) || default_view_model_class_for(model)
         
-        # If not, get the default mapping.
-        #
-        view_model_class = default_view_model_class_for model unless view_model_class
-        
-        unless view_model_class < ViewModels::Base
-          raise NotAViewModelError.new("#{view_model_class} is not a view_model.")
-        end
+        raise NotAViewModelError.new("#{view_model_class} is not a view_model.") unless view_model_class < ViewModels::Base
         
         view_model_class
       rescue NameError => name_error
@@ -53,6 +45,7 @@ module ViewModels
         view_model_class = view_model_class_for model
         
         # And create a view_model for the model.
+        #
         view_model_class.new model, context
       end
       
@@ -76,7 +69,7 @@ module ViewModels
       def specific_view_model_class_for model
         specific_view_model_mapping[model.class].classify.constantize if specific_view_model_mapping.key? model.class
       end
-  
+      
       # The Collection view_model helper has the purpose of presenting presentable collections.
       # * Render as list
       # * Render as table
