@@ -18,9 +18,8 @@ module ViewModels
       def collection_view_model_for pagination_array, context = self
         Collection.new pagination_array, context
       end
-  
-      # Create a new view_model instance for the given model instance
-      # with the given arguments.
+      
+      # Get the view_model class for the given model instance.
       #
       # Note: ViewModels are usually of class ViewModels::<ModelClassName>.
       #       (As returned by default_view_model_class_for)
@@ -29,21 +28,32 @@ module ViewModels
       # OR:   Override default_view_model_class_for(model) if
       #       you'd like to change the default.
       #
-      def view_model_for model, context = self
+      def view_model_class_for model
         # Is there a specific mapping?
+        #
         view_model_class = specific_view_model_mapping[model.class].classify.constantize if specific_view_model_mapping.key? model.class
         
         # If not, get the default mapping.
+        #
         view_model_class = default_view_model_class_for model unless view_model_class
         
         unless view_model_class < ViewModels::Base
           raise NotAViewModelError.new("#{view_model_class} is not a view_model.")
         end
         
-        # And create a view_model for the model.
-        view_model_class.new model, context
+        view_model_class
       rescue NameError => name_error
         raise MissingViewModelError.new("No view_model for #{model.class}.")
+      end
+      
+      # Create a new view_model instance for the given model instance
+      # with the given arguments.
+      #
+      def view_model_for model, context = self
+        view_model_class = view_model_class_for model
+        
+        # And create a view_model for the model.
+        view_model_class.new model, context
       end
       
       # Returns the default view_model class for the given model instance.
