@@ -1,9 +1,9 @@
 module ViewModels
   module Helper
     module Rails
-  
-      @@specific_view_model_mapping = {}
+      
       mattr_accessor :specific_view_model_mapping
+      self.specific_view_model_mapping = {}
   
       # Error thrown if a view_model for the given model class is not available.
       #
