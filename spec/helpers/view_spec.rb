@@ -6,12 +6,6 @@ describe ViewModels::Helpers::View do
   
   class TestClass; end
   
-  describe 'description' do
-    it 'should description' do
-      
-    end
-  end
-  
   describe "including it" do
     it "should include all the view helpers" do
       in_the TestClass do

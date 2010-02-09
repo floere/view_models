@@ -7,11 +7,7 @@ module ViewModels
       # Include hook.
       #
       def self.included view_model
-        self.all_view_helpers.each { |helper| include_into view_model, helper }
-      end
-      
-      def self.include_into view_model, helper
-        view_model.class_eval { include helper }
+        view_model.send :include, *all_view_helpers
       end
       
       def self.all_view_helpers
