@@ -111,10 +111,10 @@ module ViewModels
             :template_name => :list_item,
             :separator => nil
           }
-
+          
           render_partial :list, default_options.merge(options)
         end
-
+        
         # Renders a collection.
         #
         # Note: The only difference between a list and a collection is the enclosing
