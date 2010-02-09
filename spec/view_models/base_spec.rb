@@ -59,7 +59,7 @@ describe ViewModels::Base do
     it "should call filters in a given pattern" do
       @model.some_model_value = 's'
       @view_model.class.model_reader :some_model_value, :filter_through => [:a, :b, :a, :a]
-    
+      
       @view_model.some_model_value.should == 'sabaa'
     end
     it "should pass through the model value if no filters are installed" do
@@ -71,8 +71,16 @@ describe ViewModels::Base do
     it "should call filters in a given pattern" do
       @model.some_model_value = 's'
       @view_model.class.model_reader [:some_model_value], :filter_through => [:a, :b, :a, :a]
-    
+      
       @view_model.some_model_value.should == 'sabaa'
+    end
+    it "should handle a single filter" do
+      @model.some_model_value = 's'
+      @view_model.class.model_reader :some_model_value, :filter_through => :a
+      
+      lambda {
+        @view_model.some_model_value
+      }.should_not raise_error
     end
     describe 'extract_options_from' do
       context 'with hash as last element' do
@@ -99,9 +107,14 @@ describe ViewModels::Base do
       end
     end
     describe 'reader_definition_for' do
-      context 'with nil options' do
+      context 'with filter names' do
         it 'should return a correct definition' do
           @view_model.class.reader_definition_for(:some_field, [:a, :b, :c, :d]).should == "def some_field; a(b(c(d(model.some_field)))); end"
+        end
+      end
+      context 'without filter names' do
+        it 'should return a correct definition' do
+          @view_model.class.reader_definition_for(:some_field).should == "def some_field; model.some_field; end"
         end
       end
     end

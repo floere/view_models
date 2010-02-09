@@ -54,7 +54,10 @@ module ViewModels
       # Note: The filters are applied from last to first element.
       #
       def reader_definition_for field, filters = []
-        "def #{field}; #{filters.join('(').strip}(model.#{field})#{')' * (filters.size - 1) unless filters.empty?}; end"
+        size              = filters.size
+        left_parentheses  = filters.zip(['('] * size)
+        right_parentheses = ')' * size
+        "def #{field}; #{left_parentheses}model.#{field}#{right_parentheses}; end"
       end
       
       # Wrapper for add_template_helper in ActionController::Helpers, also
