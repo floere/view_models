@@ -24,19 +24,37 @@ module ViewModels
       #   model_reader :foobar, :filter_through => :h                 # html escape foobar 
       #   model_reader :foobar, :filter_through => [:textilize, :h]   # first textilize, then html escape
       #
-      def model_reader *args
-        args = args.dup
-        opts = args.pop if args.last.kind_of?(Hash)
-      
-        fields = args.flatten
-        filters = opts.nil? ? [] : [*(opts[:filter_through])].reverse
-      
+      def model_reader *fields
+        options = extract_options_from fields
+        filters = extract_filters_from options
+        
         fields.each do |field|
-          reader = "def #{field}; 
-                    #{filters.join('(').strip}(model.#{field})#{')' * (filters.size - 1) unless filters.empty?}; 
-                    end"
-          class_eval(reader)
+          class_eval reader_definition_for(field, filters)
         end
+      end
+      
+      # Extract options hash from args array if there are any.
+      # Returns nil if there are none.
+      #
+      # Note: Destructive.
+      #
+      def extract_options_from ary
+        ary.pop if ary.last.kind_of?(Hash)
+      end
+      
+      # Extract filter_through options from the options hash if there are any.
+      #
+      def extract_filters_from options
+        options ? [*(options[:filter_through])].reverse : []
+      end
+      
+      # Defines a reader for the given model field and filtering
+      # through the given filters, from right to left.
+      #
+      # Note: The filters are applied from last to first element.
+      #
+      def reader_definition_for field, filters = []
+        "def #{field}; #{filters.join('(').strip}(model.#{field})#{')' * (filters.size - 1) unless filters.empty?}; end"
       end
       
       # Wrapper for add_template_helper in ActionController::Helpers, also

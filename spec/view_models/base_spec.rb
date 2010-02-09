@@ -68,6 +68,43 @@ describe ViewModels::Base do
       
       @view_model.some_model_value.should == :some_model_value
     end
+    it "should call filters in a given pattern" do
+      @model.some_model_value = 's'
+      @view_model.class.model_reader [:some_model_value], :filter_through => [:a, :b, :a, :a]
+    
+      @view_model.some_model_value.should == 'sabaa'
+    end
+    describe 'extract_options_from' do
+      context 'with hash as last element' do
+        it 'should return it' do
+          @view_model.class.extract_options_from([:test, { :some => :hash }]).should == { :some => :hash }
+        end
+      end
+      context 'without hash as last element' do
+        it 'should return nil' do
+          @view_model.class.extract_options_from([:test]).should == nil
+        end
+      end
+    end
+    describe 'extract_filters_from' do
+      context 'with nil options' do
+        it 'should return an empty array' do
+          @view_model.class.extract_filters_from(nil).should == []
+        end
+      end
+      context 'with existing options' do
+        it 'should return a reverse array' do
+          @view_model.class.extract_filters_from( :filter_through => [:a, :b, :c] ).should == [:c, :b, :a]
+        end
+      end
+    end
+    describe 'reader_definition_for' do
+      context 'with nil options' do
+        it 'should return a correct definition' do
+          @view_model.class.reader_definition_for(:some_field, [:a, :b, :c, :d]).should == "def some_field; a(b(c(d(model.some_field)))); end"
+        end
+      end
+    end
   end
   
   describe ".master_helper_module" do
