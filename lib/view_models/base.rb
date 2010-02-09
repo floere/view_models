@@ -50,7 +50,7 @@ module ViewModels
       
       # Defines a reader for the given model field and filtering
       # through the given filters, from right to left.
-      #
+      # 
       # Note: The filters are applied from last to first element.
       #
       def reader_definition_for field, filters = []
