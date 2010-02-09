@@ -1,8 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
   <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="../basic.css" type="text/css" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-type' />
+    <link href='../basic.css' rel='stylesheet' type='text/css' />
     <title>Florian Hanke's View Models on Github</title>
   </head>
   <body>
@@ -15,14 +15,27 @@
     <h2>The problem</h2>
     <p>For bands that needed to be just the band name, for members the name and surname, for labels the name along with the amount of bands under contract. Requirements that are easily fulfilled, for an engineer with a few tricks up his sleeves. Or so it seemed.</p>
     <h2>A long and arduous journey</h2>
-    <p>First, we tried putting it into models, but that <em>violated the <a href="http://en.wikipedia.org/wiki/Model–view–controller">MVC principle</a></em>, we didn't feel to good about sticking view code into the model. Besides, all view helpers are pretty inaccessible in the model. And for a good reason too!</p>
-    <p>Even after sticking the code into a helper, thus into the view, this didn't feel much better either, as we had to check for the type of the model. That resulted in a case of case statements which we do not speak about too much nowadays. Even bringing it up here caused me to cringe. <em>Polymorphism? Sadly, no.</em></p>
-    <p>P.S: Rule number one. We do not speak about case statement club. <em>Ever</em>.</p>
+    <p>
+      First, we tried putting it into models, but that
+      <em>
+        violated the
+        <a href='http://en.wikipedia.org/wiki/Model–view–controller'>MVC principle</a>
+      </em>
+      , we didn't feel to good about sticking view code into the model. Besides, all view helpers are pretty inaccessible in the model. And for a good reason too!
+    </p>
+    <p>
+      Even after sticking the code into a helper, thus into the view, this didn't feel much better either, as we had to check for the type of the model. That resulted in a case of case statements which we do not speak about too much nowadays. Even bringing it up here caused me to cringe.
+      <em>Polymorphism? Sadly, no.</em>
+    </p>
+    <p>
+      P.S: Rule number one. We do not speak about case statement club.
+      <em>Ever.</em>
+    </p>
     <h2>The big question</h2>
     <p>So, where to put this view specific, model-type dependent code?</p>
     <h2>The solution</h2>
     <p>Enter view models, the public face of the normally shy models.</p>
     <h2>Bag o' bits</h2>
-    <a href="http://github.com/floere/view_models">Check them out here</a>
+    <a href='http://github.com/floere/view_models'>Check them out here</a>
   </body>
 </html>

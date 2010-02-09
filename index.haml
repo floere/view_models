@@ -1,0 +1,34 @@
+!!!
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", :'xml:lang' => "en", :lang => "en" }
+  %head
+    %meta{ :'http-equiv' => "Content-type", :content => "text/html; charset=utf-8" }
+    %link{ :rel => 'stylesheet', :href => '../basic.css', :type => 'text/css' }
+    %title Florian Hanke's View Models on Github
+  %body
+    %h1 View Models
+    %h2 Silly Tagline
+    %p The missing glue between the letters in ruby on rails' MVC.
+    %h2 But why? Let me tell you a story of high adventure
+    %p During writing a music community platform with multiple different profile types – in our case bands, normal members, venues, and labels – it occurred to us that type specific methods used in views were hard to place.
+    %p As a simple example: A method that generates a name that is displayed on top of the page, like "Rudy's Randy Rockers", or a similarly realistic band name.
+    %h2 The problem
+    %p For bands that needed to be just the band name, for members the name and surname, for labels the name along with the amount of bands under contract. Requirements that are easily fulfilled, for an engineer with a few tricks up his sleeves. Or so it seemed.
+    %h2 A long and arduous journey
+    %p
+      First, we tried putting it into models, but that
+      %em
+        violated the
+        %a{ :href => "http://en.wikipedia.org/wiki/Model–view–controller" } MVC principle
+      , we didn't feel to good about sticking view code into the model. Besides, all view helpers are pretty inaccessible in the model. And for a good reason too!
+    %p
+      Even after sticking the code into a helper, thus into the view, this didn't feel much better either, as we had to check for the type of the model. That resulted in a case of case statements which we do not speak about too much nowadays. Even bringing it up here caused me to cringe.
+      %em Polymorphism? Sadly, no.
+    %p
+      P.S: Rule number one. We do not speak about case statement club.
+      %em Ever.
+    %h2 The big question
+    %p So, where to put this view specific, model-type dependent code?
+    %h2 The solution
+    %p Enter view models, the public face of the normally shy models.
+    %h2 Bag o' bits
+    %a{ :href => "http://github.com/floere/view_models" } Check them out here
