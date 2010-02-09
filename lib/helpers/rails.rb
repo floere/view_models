@@ -42,7 +42,7 @@ module ViewModels
         
         # And create a view_model for the model.
         view_model_class.new model, context
-      rescue NameError => e
+      rescue NameError => name_error
         raise MissingViewModelError.new("No view_model for #{model.class}.")
       end
       
