@@ -10,9 +10,9 @@ module ViewModels
     # Make helper and helper_method available
     #
     include ActionController::Helpers
-      
+    
     class << self
-
+      
       # Define a reader for a model attribute. Acts as a filtered delegation to the model. 
       #
       # You may specify a :filter_through option that is either a symbol or an array of symbols. The return value
@@ -67,11 +67,11 @@ module ViewModels
       def add_template_helper helper_module
         include helper_module
         old_add_template_helper helper_module
-      end      
-    
+      end
+      
       # Delegates method calls to the controller.
       #
-      # Example: 
+      # Example:
       #   controller_method :current_user
       #
       # In the view_model:
@@ -84,7 +84,7 @@ module ViewModels
           delegate method, :to => :controller
         end
       end
-
+      
       # Returns the path from the view_model_view_paths to the actual templates.
       # e.g. "view_models/models/book"
       #
@@ -98,7 +98,7 @@ module ViewModels
       def view_model_path
         @view_model_path || @view_model_path = self.name.underscore
       end
-
+      
       # Returns the root of this view_models views with the template name appended.
       # e.g. 'view_models/some/specific/path/to/template'
       #
@@ -183,7 +183,7 @@ module ViewModels
       # Get a view instance from the view class.
       #
       view = view_instance
-
+      
       # Set the format to render in, e.g. :text, :html
       #
       view.template_format = options.delete(:format) if options[:format]
@@ -219,7 +219,7 @@ module ViewModels
       def render view, view_name, options
         self.class.render view, view_name, options
       end
-
+      
       # Extracts a controller from the context.
       #
       def extract_controller_from context
