@@ -55,32 +55,32 @@ describe ViewModels::Base do
         def a(s); s << 'a' end
         def b(s); s << 'b' end
       end
+      @model.some_model_value = 's'
     end
     it "should call filters in a given pattern" do
-      @model.some_model_value = 's'
       @view_model.class.model_reader :some_model_value, :filter_through => [:a, :b, :a, :a]
       
       @view_model.some_model_value.should == 'sabaa'
     end
     it "should pass through the model value if no filters are installed" do
-      @model.some_model_value = :some_model_value
       @view_model.class.model_reader :some_model_value
       
-      @view_model.some_model_value.should == :some_model_value
+      @view_model.some_model_value.should == 's'
     end
     it "should call filters in a given pattern" do
-      @model.some_model_value = 's'
       @view_model.class.model_reader [:some_model_value], :filter_through => [:a, :b, :a, :a]
       
       @view_model.some_model_value.should == 'sabaa'
     end
     it "should handle a single filter" do
-      @model.some_model_value = 's'
       @view_model.class.model_reader :some_model_value, :filter_through => :a
       
-      lambda {
-        @view_model.some_model_value
-      }.should_not raise_error
+      lambda { @view_model.some_model_value }.should_not raise_error
+    end
+    it "should handle an array of readers" do
+      @view_model.class.model_reader [:some_model_value, :some_other_model_value], :filter_through => :a
+      
+      lambda { @view_model.some_model_value }.should_not raise_error
     end
     describe 'extract_options_from' do
       context 'with hash as last element' do
