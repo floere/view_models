@@ -33,12 +33,23 @@ describe ViewModels::Helper::Rails do
       it "should return an empty hash by default" do
         specific_view_model_mapping.should == {}
       end
+      it "should raise an ArgumentError on an non-mapped model" do
+        # TODO really clear enough that one should provide a ViewModel with an initializer with 2 params?
+        #
+        class SomeViewModelClass; end
+        specific_view_model_mapping[String] = SomeViewModelClass
+        lambda {
+          view_model_for("Some String")
+        }.should raise_error(ArgumentError, "wrong number of arguments (2 for 0)")
+      end
     end
     describe "no specific mapping" do
       it "should raise on an non-mapped model" do
+        # TODO really clear enough that the view model class is missing?
+        #
         lambda {
           view_model_for(42)
-        }.should raise_error(ViewModels::Helper::Rails::MissingViewModelError, 'No view_model for Fixnum.')
+        }.should raise_error(NameError, "uninitialized constant ViewModels::Fixnum")
       end
       it "should return a default view_model instance" do
         class SomeModelClazz; end

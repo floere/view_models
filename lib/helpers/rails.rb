@@ -5,10 +5,6 @@ module ViewModels
       mattr_accessor :specific_view_model_mapping
       self.specific_view_model_mapping = {}
       
-      # Error thrown if a view_model for the given model class is not available.
-      #
-      class MissingViewModelError < RuntimeError; end
-      
       # Construct a view_model for a collection.
       #
       def collection_view_model_for pagination_array, context = self
@@ -26,12 +22,12 @@ module ViewModels
       #
       def view_model_class_for model
         specific_view_model_class_for(model) || default_view_model_class_for(model)
-      rescue NameError => name_error
-        raise MissingViewModelError.new("No view_model for #{model.class}.")
       end
       
       # Create a new view_model instance for the given model instance
       # with the given arguments.
+      #
+      # Note: Will emit an ArgumentError if the view model class doesn't support 2 arguments.
       #
       def view_model_for model, context = self
         view_model_class = view_model_class_for model
@@ -49,6 +45,8 @@ module ViewModels
       # Override this method if you'd like to change the _default_
       # model-to-view_model class mapping.
       #
+      # Note: Will emit a NameError if a corresponding ViewModels constant cannot be loaded.
+      #
       def default_view_model_class_for model
         "ViewModels::#{model.class.name}".constantize
       end
@@ -57,6 +55,8 @@ module ViewModels
       #
       # Override this method, if you want to return a specific
       # view model class for the given model.
+      #
+      # Note: Will emit a NameError if a corresponding ViewModels constant cannot be loaded.
       #
       def specific_view_model_class_for model
         specific_view_model_mapping[model.class]
