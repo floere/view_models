@@ -8,5 +8,7 @@ require 'helpers/collection'
 
 require 'extensions/active_record'
 
-ActionController::Base.send :helper, ViewModels::Helper::Rails
+# 
+# ActionController::Base.send :helper, ViewModels::Helper::Rails
 ActionController::Base.send :include, ViewModels::Helper::Rails
+ActionView::Base.send       :include, ViewModels::Helper::Rails

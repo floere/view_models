@@ -17,9 +17,20 @@ describe 'Integration' do
     @logger           = stub :logger
     @controller_class = stub :klass, :view_paths => 'spec/integration/views', :controller_path => 'app/controllers/test'
     @context          = stub :controller, :class => @controller_class, :logger => @logger
-    @view_paths       = stub :find_template
+    @view_paths       = stub :view_paths
     @view             = stub :view, :controller => @context, :view_paths => @view_paths
-    @view_model       = ViewModels::SubSubclass.new SubSubclass.new, @view
+    @model            = SubSubclass.new
+    @view_model       = ViewModels::SubSubclass.new @model, @view
+  end
+  
+  describe 'view_model_for inclusion in view' do
+    it 'should be included' do
+      view = ViewModels::View.new @context, Module.new
+      
+      lambda {
+        view.view_model_for @model
+      }.should_not raise_error
+    end
   end
   
   # describe 'collection rendering' do
