@@ -1,3 +1,5 @@
+require 'rubygems'
+
 require 'spec'
 
 require 'active_support'
