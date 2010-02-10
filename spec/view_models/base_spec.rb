@@ -184,7 +184,7 @@ describe ViewModels::Base do
     end
   end
     
-  describe "with mocked Presenter" do
+  context "with mocked Presenter" do
     before(:each) do
       @model = stub :model
       @context = stub :context
@@ -193,20 +193,38 @@ describe ViewModels::Base do
       @view_name = stub :view_name
       @view_instance = stub :view_instance
     end
+    describe '#render' do
+      it 'should delegate to the class' do
+        view, name = stub(:view), stub(:name)
+        
+        @view_model.class.should_receive(:render).once.with view, name, anything
+        
+        in_the @view_model do
+          render view, name, {}
+        end
+      end
+      it 'should inject itself into the options' do
+        @view_model.class.should_receive(:render).once.with anything, anything, { :locals => { :view_model => @view_model } }
+        
+        in_the @view_model do
+          render nil, nil, {}
+        end
+      end
+    end
     describe "#render_as" do
       before(:each) do
-        @view_model.stub! :view_instance => @view_instance
+        @view_model.stub! :view_instance_for => @view_instance
         @path = stub :path
         @view_model.stub! :template_path => @path
         @view_instance.stub! :render
       end
       it "should call render with the correct default partial and the view_model as locals" do
-        @view_model.should_receive(:render).with @view_instance, @view_name, :locals => { :view_model => @view_model }
+        @view_model.should_receive(:render).with @view_instance, @view_name, {}
         
         @view_model.render_as @view_name
       end
       it "should call render with the correct default partial and the view_model as locals with locals" do
-        @view_model.should_receive(:render).with @view_instance, 'some/specific/path', :locals => { :view_model => @view_model, :some_local => :some_value }
+        @view_model.should_receive(:render).with @view_instance, 'some/specific/path', :locals => { :some_local => :some_value }
         
         @view_model.render_as 'some/specific/path', :locals => { :some_local => :some_value }
       end
@@ -215,20 +233,8 @@ describe ViewModels::Base do
         
         @view_model.render_as @view_name
       end
-      it "should call template_format= correctly even with the old api" do
-        ActiveSupport::Deprecation.stub! :warn
-        
-        @view_instance.should_receive(:template_format=).once.with :some_format
-        
-        @view_model.render_as @view_name, :some_format
-      end
-      it "should call template_format=" do
-        @view_instance.should_receive(:template_format=).once.with :some_format
-        
-        @view_model.render_as @view_name, :format => :some_format
-      end
       it "should pass on the specified locals" do
-        @view_model.should_receive(:render).with @view_instance, @view_name, :locals => { :view_model => @view_model, :some_local => :some_value }
+        @view_model.should_receive(:render).with @view_instance, @view_name, :locals => { :some_local => :some_value }
         
         @view_model.render_as @view_name, :locals => { :some_local => :some_value }
       end
@@ -242,7 +248,7 @@ describe ViewModels::Base do
       it "should override the default template if specified" do
         template = stub :template
         
-        @view_model.should_receive(:render).with @view_instance, @view_name, :partial => template, :locals => { :view_model => @view_model }
+        @view_model.should_receive(:render).with @view_instance, @view_name, :partial => template
         
         @view_model.render_as @view_name, :partial => template
       end
@@ -296,27 +302,43 @@ describe ViewModels::Base do
         @context.should_receive('class').any_number_of_times.and_return @klass
         @klass.should_receive('view_paths').any_number_of_times.and_return @view_paths
       end
-      it "should create a new view instance from ActionView::Base" do
-        ActionView::Base.should_receive(:new).once.with @view_paths, {}, @context
-        
-        in_the @view_model do
-          view_instance
+      context 'with a specific format given' do
+        after(:each) do
+          in_the @view_model do
+            view_instance_for :some_format
+          end
+        end
+        it "should receive the right template format" do
+          ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
+          
+          @view_instance.should_receive(:template_format=).once.with :some_format
         end
       end
-      it "should extend the view instance with the master helper module" do
-        master_helper_module = stub :master_helper_module
-        @view_model.stub! :master_helper_module => master_helper_module
-        ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
-        
-        @view_instance.should_receive(:extend).with master_helper_module
-        
-        in_the @view_model do
-          view_instance
+      context 'with no format given' do
+        after(:each) do
+          in_the @view_model do
+            view_instance_for nil
+          end
+        end
+        it "should create a new view instance from ActionView::Base" do
+          ActionView::Base.should_receive(:new).once.with @view_paths, {}, @context
+        end
+        it "should extend the view instance with the master helper module" do
+          master_helper_module = stub :master_helper_module
+          @view_model.stub! :master_helper_module => master_helper_module
+          ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
+          
+          @view_instance.should_receive(:extend).with master_helper_module
+        end
+        it "should not set a template format" do
+          ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
+          
+          @view_instance.should_receive(:template_format=).never
         end
       end
     end
     
-    describe '.handle_old_render_as_api' do
+    describe '#handle_old_render_as_api' do
       context 'options is a string' do
         it "should add a deprecation warning" do
           ActiveSupport::Deprecation.should_receive(:warn)

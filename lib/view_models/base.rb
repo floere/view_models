@@ -175,35 +175,39 @@ module ViewModels
     #   the erb.
     # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
     #   view_model.render_as('template', :locals => { :name => :value })
-    # * If no format is given, it will render the default format, which is html.
+    # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as view_name, options = {}
       options = handle_old_render_as_api options
       
       # Get a view instance from the view class.
       #
-      view = view_instance
+      view = view_instance_for options.delete(:format)
       
-      # Set the format to render in, e.g. :text, :html
-      #
-      view.template_format = options.delete(:format) if options[:format]
-      
-      # Set up the options. Include the view_model in the locals.
-      #
-      options[:locals] = { :view_model => self }.merge options[:locals] || {}
-      
-      # Finally, render.
+      # Render the view_name in the view with the given options.
       #
       render view, view_name, options
     end
     
     protected
       
-      # Creates a view instance from the given view class.
+      # Creates a view instance with the given options.
       #
-      def view_instance
+      # The following options are supported:
+      # * :format - Calling view_instance_for :html will later render the haml
+      #   template, calling view_instance_for :text will later render
+      #   the erb.
+      #
+      def view_instance_for format
+        # Create new view instance.
+        #
         view = ActionView::Base.new view_paths, {}, controller
         view.extend master_helper_module
+        
+        # Set the template format on the view.
+        #
+        view.template_format = format if format
+        view
       end
       
       # Gets the view paths from its controller's class.
@@ -216,7 +220,15 @@ module ViewModels
       
     private
       
+      # Sets up the options correctly and delegates to the class to actually render.
+      #
       def render view, view_name, options
+        # Set up the options. Include the view_model in the locals.
+        #
+        options[:locals] = { :view_model => self }.merge options[:locals] || {}
+        
+        # Delegate to the class.
+        #
         self.class.render view, view_name, options
       end
       
