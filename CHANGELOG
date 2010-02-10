@@ -1,14 +1,20 @@
-1.4.2 - 10.02.10 - floere: render_as does not check the deprecated API anymore. Use the new options form to pass a format.
+1.4.2 - 10.02.10 - floere: render_as does not check the deprecated API anymore. Use the new options
+                           form to pass a format.
                  - floere: MissingViewModelError is not thrown anymore.
-1.4.0 - 08.02.10 - floere: Changed Api of ViewModels::Base#render_as to go up through the view model class hierarchy to find a partial.
-1.3.0 - 29.01.10 - andi: Changed Api of ViewModels::Base#render_as to take an options hash. Now supports passing locals to the render call.
+                 - floere: include ViewModels::Extensions::ActiveRecord in your Project view model to
+                           give id, dom_id, to_param capabilities to your view_models. Or include in a
+                           subclass.
+1.4.0 - 08.02.10 - floere: Changed Api of ViewModels::Base#render_as to go up through the view model
+                           class hierarchy to find a partial.
+1.3.0 - 29.01.10 - andi:   Changed Api of ViewModels::Base#render_as to take an options hash. Now supports
+                           passing locals to the render call.
 1.2.0 - 13.01.10 - floere: Simple generator written.
-1.1.0 - 30.06.09 - floere: Rewrite: Representer => ViewModel
-1.0.2 - 08.08.08 - floere: Renamed Representers::Helper::Rails to Representers::Helper::Rails
-                 - floere: Added Representers::Helpers::View for conveniently integrating common view-helpers
-                 - floere: Added controller_methods for RequestForgeryProtection in ViewModels::Base
-                 - floere: Added methods for id and dom_id in Representers::ActiveRecord
-                 - floere: Included ActionController::Helpers in Representers::Base and removed own helper-method
-                 - floere: Changed visibility of method view_instance in Representers::Base from private to protected
-1.0.1 - 24.07.08 - floere: Rewrite: Presenter => Representer
-1.0.0 - May 2008 - floere: Initial commit
+1.1.0 - 30.06.09 - floere: Rewrite: Representer => ViewModel.
+1.0.2 - 08.08.08 - floere: Renamed Representers::Helper::Rails to Representers::Helper::Rails.
+                 - floere: Added Representers::Helpers::View for conveniently integrating common view-helpers.
+                 - floere: Added controller_methods for RequestForgeryProtection in ViewModels::Base.
+                 - floere: Added methods for id and dom_id in Representers::ActiveRecord.
+                 - floere: Included ActionController::Helpers in Representers::Base and removed own helper-method.
+                 - floere: Changed visibility of method view_instance in Representers::Base from private to protected.
+1.0.1 - 24.07.08 - floere: Rewrite: Presenter => Representer.
+1.0.0 - May 2008 - floere: Initial commit.

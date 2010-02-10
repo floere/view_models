@@ -129,28 +129,16 @@ module ViewModels
           end
         end
         
-        # Prepare the cache and options.
-        #
-        def prepare name, options
-          @name_partial_mapping ||= {}
-          options[:partial] = @name_partial_mapping[name] || template_path(name)
-        end
-        
         # Caches partial names on successful rendering.
         #
         # Note: Caches only if something was rendered.
         #
         def caching name, options
-          prepare name, options
+          @name_partial_mapping ||= {}
+          options[:partial] = @name_partial_mapping[name] || template_path(name)
           result = yield options
-          remember name, options if result
+          @name_partial_mapping[name] ||= options[:partial] if result
           result
-        end
-        
-        # Remember the options for the name.
-        #
-        def remember name, options
-          @name_partial_mapping[name] ||= options[:partial]
         end
         
     end # class << self

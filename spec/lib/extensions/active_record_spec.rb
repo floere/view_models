@@ -1,11 +1,12 @@
-require File.join(File.dirname(__FILE__), '../spec_helper')
+require File.join(File.dirname(__FILE__), '../../spec_helper')
 
-describe ViewModels::ActiveRecord do
+describe ViewModels::Extensions::ActiveRecord do
   
   describe "to_param" do
     before(:each) do
       @model      = stub :model
-      @view_model = ViewModels::ActiveRecord.new @model, nil
+      @view_model = ViewModels::Base.new @model, nil
+      @view_model.extend ViewModels::Extensions::ActiveRecord
     end
     it "should delegate to_param to the model" do
       @model.should_receive(:to_param).once

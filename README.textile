@@ -162,18 +162,21 @@ We delegate @logger@ and @current_user@ calls in the view models to the active c
 <code>
 class ViewModels::Project < ViewModels::Base
   
-  # All of Rails' standard helpers.
-  helper ActionView::Helpers::ActiveRecordHelper
-  helper ActionView::Helpers::TagHelper
-  helper ActionView::Helpers::FormTagHelper
-  helper ActionView::Helpers::FormOptionsHelper
-  helper ActionView::Helpers::FormHelper
-  helper ActionView::Helpers::UrlHelper
-  helper ActionView::Helpers::AssetTagHelper
-  helper ActionView::Helpers::PrototypeHelper
-  helper ActionView::Helpers::TextHelper
+  # We want to be able to use id, dom_id, to_param on the view model.
+  #
+  include ViewModels::Extensions::ActiveRecord
   
+  # Our ApplicationHelper.
+  #
   helper ApplicationHelper
+  
+  # We want to be able to call view_model_for in our view_models.
+  #
+  helper ViewModels::Helper::Rails
+  
+  # Include all common view helpers.
+  #
+  helper ViewModels::Helpers::View
   
   controller_method :logger, :current_user
   
