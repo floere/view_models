@@ -198,6 +198,13 @@ module ViewModels
     
     protected
       
+      # Sets up the options correctly and delegates to the class to actually render.
+      #
+      def render view, view_name, options
+        options[:locals] = { :view_model => self }.merge options[:locals] || {}
+        self.class.render view, view_name, options
+      end
+      
       # Creates a view instance with the given format.
       #
       # Examples:
@@ -224,18 +231,6 @@ module ViewModels
       #
       def view_paths
         controller.class.view_paths
-      end
-      
-      # Sets up the options correctly and delegates to the class to actually render.
-      #
-      def render view, view_name, options
-        # Set up the options. Include the view_model in the locals.
-        #
-        options[:locals] = { :view_model => self }.merge options[:locals] || {}
-        
-        # Delegate to the class.
-        #
-        self.class.render view, view_name, options
       end
       
       # Extracts a controller from the context.
