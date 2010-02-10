@@ -12,16 +12,7 @@ module ViewModels
       
       def self.all_view_helpers
         [
-          ActionView::Helpers::ActiveRecordHelper,
-          ActionView::Helpers::TagHelper,
-          ActionView::Helpers::FormTagHelper,
-          ActionView::Helpers::FormOptionsHelper,
-          ActionView::Helpers::FormHelper,
-          ActionView::Helpers::UrlHelper,
-          ActionView::Helpers::AssetTagHelper,
-          ActionView::Helpers::PrototypeHelper,
-          ActionView::Helpers::TextHelper,
-          ActionView::Helpers::SanitizeHelper,
+          ActionView::Helpers,
           ERB::Util
         ]
       end
