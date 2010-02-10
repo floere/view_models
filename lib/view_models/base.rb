@@ -35,8 +35,9 @@ module ViewModels
       
       # Delegates method calls to the controller.
       #
-      # Example:
+      # Examples:
       #   controller_method :current_user
+      #   controller_method :current_user, :current_profile
       #
       # In the view_model:
       #   self.current_user
@@ -44,9 +45,7 @@ module ViewModels
       #   controller.current_user
       #
       def controller_method *methods
-        methods.each do |method|
-          delegate method, :to => :controller
-        end
+        delegate *methods << { :to => :controller }
       end
       
       # Wrapper for add_template_helper in ActionController::Helpers, also
@@ -167,10 +166,7 @@ module ViewModels
     
     # Delegate controller methods.
     #
-    controller_method :logger
-    controller_method :form_authenticity_token
-    controller_method :protect_against_forgery?
-    controller_method :request_forgery_protection_token
+    controller_method :logger, :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token
     
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model

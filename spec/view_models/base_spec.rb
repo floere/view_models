@@ -147,8 +147,7 @@ describe ViewModels::Base do
   
   describe ".controller_method" do
     it "should set up delegate calls to the controller" do
-      ViewModels::Base.should_receive(:delegate).once.with(:method1, :to => :controller)
-      ViewModels::Base.should_receive(:delegate).once.with(:method2, :to => :controller)
+      ViewModels::Base.should_receive(:delegate).once.with(:method1, :method2, :to => :controller)
       
       ViewModels::Base.controller_method :method1, :method2
     end
