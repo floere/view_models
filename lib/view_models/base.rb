@@ -37,7 +37,7 @@ module ViewModels
       #
       # Examples:
       #   controller_method :current_user
-      #   controller_method :current_user, :current_profile
+      #   controller_method :current_user, :current_profile  # multiple methods to be delegated
       #
       # In the view_model:
       #   self.current_user
