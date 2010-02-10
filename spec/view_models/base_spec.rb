@@ -338,39 +338,6 @@ describe ViewModels::Base do
       end
     end
     
-    describe '#handle_old_render_as_api' do
-      context 'options is a string' do
-        it "should add a deprecation warning" do
-          ActiveSupport::Deprecation.should_receive(:warn)
-          @view_model.send(:handle_old_render_as_api, 'html')
-        end
-        it "should return the old format as format-option" do
-          ActiveSupport::Deprecation.silence {@view_model.send(:handle_old_render_as_api, 'html').should == {:format => :html}}
-        end
-      end
-      context 'options is not a string' do
-        context 'options is a symbol' do
-          it "should add a deprecation warning" do
-            ActiveSupport::Deprecation.should_receive(:warn)
-            @view_model.send(:handle_old_render_as_api, :html)
-          end
-          it "should return the old format as format-option" do
-            ActiveSupport::Deprecation.silence {@view_model.send(:handle_old_render_as_api, :html).should == {:format => :html}}
-          end
-        end
-        context 'options is not a symbol' do
-          it "should not add a deprecation warning" do
-            ActiveSupport::Deprecation.should_not_receive(:warn)
-            @view_model.send(:handle_old_render_as_api, :format => :html)
-          end
-          it "should return the the options hash" do
-            @view_model.send(:handle_old_render_as_api, :format => :html).should == {:format => :html}
-          end
-        end
-      end
-    end
-    
-    
   end
   
 end

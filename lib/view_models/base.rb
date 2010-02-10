@@ -190,14 +190,7 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as view_name, options = {}
-      options = handle_old_render_as_api options
-      
-      # Get a view instance from the view class.
-      #
       view = view_instance_for options.delete(:format)
-      
-      # Render the view_name in the view with the given options.
-      #
       render view, view_name, options
     end
     
@@ -249,21 +242,6 @@ module ViewModels
       #
       def extract_controller_from context
         context.respond_to?(:controller) ? context.controller : context
-      end
-      
-      # Handles a deprecated options hash passed to the #render_as method.
-      #
-      # 1.3.0: andi: Changed Api of ViewModels::Base#render_as to take an options hash.
-      #              Now supports passing locals to the render call.
-      #
-      def handle_old_render_as_api options
-        case options
-        when String, Symbol
-          ActiveSupport::Deprecation.warn "ViewModels::Base#render_as: please specify the format as render_as(view_name, :format => :your_format)"
-          { :format => options.to_sym }
-        else
-          options
-        end
       end
       
   end
