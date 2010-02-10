@@ -33,42 +33,6 @@ module ViewModels
         end
       end
       
-      # Extract options hash from args array if there are any.
-      # Returns nil if there are none.
-      #
-      # Note: Destructive.
-      #
-      def extract_options_from ary
-        ary.pop if ary.last.kind_of?(Hash)
-      end
-      
-      # Extract filter_through options from the options hash if there are any.
-      #
-      def extract_filters_from options
-        options ? [*(options[:filter_through])].reverse : []
-      end
-      
-      # Defines a reader for the given model field and filtering
-      # through the given filters, from right to left.
-      # 
-      # Note: The filters are applied from last to first element.
-      #
-      def reader_definition_for field, filters = []
-        size              = filters.size
-        left_parentheses  = filters.zip(['('] * size)
-        right_parentheses = ')' * size
-        "def #{field}; #{left_parentheses}model.#{field}#{right_parentheses}; end"
-      end
-      
-      # Wrapper for add_template_helper in ActionController::Helpers, also
-      # includes given helper in the view_model
-      #
-      alias old_add_template_helper add_template_helper
-      def add_template_helper helper_module
-        include helper_module
-        old_add_template_helper helper_module
-      end
-      
       # Delegates method calls to the controller.
       #
       # Example:
@@ -85,54 +49,13 @@ module ViewModels
         end
       end
       
-      # Returns the path from the view_model_view_paths to the actual templates.
-      # e.g. "view_models/models/book"
+      # Wrapper for add_template_helper in ActionController::Helpers, also
+      # includes given helper in the view_model
       #
-      # If the class is named
-      #   ViewModels::Models::Book
-      # this method will yield
-      #   view_models/models/book
-      #
-      # Note: Remembers the result.
-      #
-      def view_model_path
-        @view_model_path || @view_model_path = self.name.underscore
-      end
-      
-      # Returns the root of this view_models views with the template name appended.
-      # e.g. 'view_models/some/specific/path/to/template'
-      #
-      def template_path name
-        name = name.to_s
-        if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
-          name
-        else
-          File.join view_model_path, name
-        end
-      end
-      
-      # Prepare the cache and options.
-      #
-      def prepare name, options
-        @name_partial_mapping ||= {}
-        options[:partial] = @name_partial_mapping[name] || template_path(name)
-      end
-      
-      # Caches partial names on successful rendering.
-      #
-      # Note: Caches only if something was rendered.
-      #
-      def caching name, options
-        prepare name, options
-        result = yield options
-        remember name, options if result
-        result
-      end
-      
-      # Remember the options for the name.
-      #
-      def remember name, options
-        @name_partial_mapping[name] ||= options[:partial]
+      alias old_add_template_helper add_template_helper
+      def add_template_helper helper_module
+        include helper_module
+        old_add_template_helper helper_module
       end
       
       # Tries to render the view.
@@ -142,7 +65,7 @@ module ViewModels
       #
       def render view, name, options
         return if self == ViewModels::Base
-        
+      
         caching name, options do |options|
           begin
             view.render options
@@ -152,6 +75,85 @@ module ViewModels
         end
       end
       
+      protected
+        
+        # Extract options hash from args array if there are any.
+        # Returns nil if there are none.
+        #
+        # Note: Destructive.
+        #
+        def extract_options_from ary
+          ary.pop if ary.last.kind_of?(Hash)
+        end
+        
+        # Extract filter_through options from the options hash if there are any.
+        #
+        def extract_filters_from options
+          options ? [*(options[:filter_through])].reverse : []
+        end
+        
+        # Defines a reader for the given model field and filtering
+        # through the given filters, from right to left.
+        # 
+        # Note: The filters are applied from last to first element.
+        #
+        def reader_definition_for field, filters = []
+          size              = filters.size
+          left_parentheses  = filters.zip(['('] * size)
+          right_parentheses = ')' * size
+          "def #{field}; #{left_parentheses}model.#{field}#{right_parentheses}; end"
+        end
+        
+        # Returns the path from the view_model_view_paths to the actual templates.
+        # e.g. "view_models/models/book"
+        #
+        # If the class is named
+        #   ViewModels::Models::Book
+        # this method will yield
+        #   view_models/models/book
+        #
+        # Note: Remembers the result.
+        #
+        def view_model_path
+          @view_model_path || @view_model_path = self.name.underscore
+        end
+        
+        # Returns the root of this view_models views with the template name appended.
+        # e.g. 'view_models/some/specific/path/to/template'
+        #
+        def template_path name
+          name = name.to_s
+          if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
+            name
+          else
+            File.join view_model_path, name
+          end
+        end
+        
+        # Prepare the cache and options.
+        #
+        def prepare name, options
+          @name_partial_mapping ||= {}
+          options[:partial] = @name_partial_mapping[name] || template_path(name)
+        end
+        
+        # Caches partial names on successful rendering.
+        #
+        # Note: Caches only if something was rendered.
+        #
+        def caching name, options
+          prepare name, options
+          result = yield options
+          remember name, options if result
+          result
+        end
+        
+        # Remember the options for the name.
+        #
+        def remember name, options
+          @name_partial_mapping[name] ||= options[:partial]
+        end
+        
     end # class << self
     
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
@@ -223,8 +225,6 @@ module ViewModels
       def view_paths
         controller.class.view_paths
       end
-      
-    private
       
       # Sets up the options correctly and delegates to the class to actually render.
       #
