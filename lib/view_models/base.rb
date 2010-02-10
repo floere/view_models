@@ -64,7 +64,7 @@ module ViewModels
       #
       def render view, name, options
         return if self == ViewModels::Base
-      
+        
         caching name, options do |options|
           begin
             view.render options
