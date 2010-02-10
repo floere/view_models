@@ -191,23 +191,24 @@ module ViewModels
     
     protected
       
-      # Creates a view instance with the given options.
+      # Creates a view instance with the given format.
       #
-      # The following options are supported:
-      # * :format - Calling view_instance_for :html will later render the haml
+      # Examples:
+      # * Calling view_instance_for :html will later render the haml
       #   template, calling view_instance_for :text will later render
       #   the erb.
       #
       def view_instance_for format
-        # Create new view instance.
-        #
-        view = ActionView::Base.new view_paths, {}, controller
-        view.extend master_helper_module
-        
-        # Set the template format on the view.
-        #
+        view = view_instance
         view.template_format = format if format
         view
+      end
+      
+      # Creates a view instance.
+      #
+      def view_instance
+        view = ActionView::Base.new view_paths, {}, controller
+        view.extend master_helper_module
       end
       
       # Gets the view paths from its controller's class.
