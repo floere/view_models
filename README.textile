@@ -6,7 +6,7 @@ Code:
 
 "Kaspar":http://github.com/kschiess @http://github.com/kschiess@, for the first, and foundation-laying version.
 
-"Niko":http://github.com/niko @http://github.com/niko@, for handling collections.
+"Niko":http://github.com/niko @http://github.com/niko@, for handling collections and better Helpers handling.
 
 "Andi":http://github.com/andi @http://github.com/andi@, for refactoring it into a cleaner structure.
 
