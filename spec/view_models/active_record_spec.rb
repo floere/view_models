@@ -1,7 +1,5 @@
 require File.join(File.dirname(__FILE__), '../spec_helper')
 
-require 'active_record'
-
 describe ViewModels::ActiveRecord do
   
   describe "to_param" do

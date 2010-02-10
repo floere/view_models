@@ -14,6 +14,8 @@ Inspiration:
 
 "Severin":http://github.com/severin @http://github.com/severin@, for bits and pieces here and there.
 
+"rainhead":http://github.com/rainhead @http://github.com/rainhead@, for the idea to subclass ActionView::Base.
+
 Important note: These guys rock! :)
 
 h2. Installation

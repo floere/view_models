@@ -214,19 +214,10 @@ module ViewModels
         view
       end
       
-      # Creates a view instance.
+      # Returns a view model view.
       #
       def view_instance
-        view = ActionView::Base.new view_paths, {}, controller
-        view.extend master_helper_module
-      end
-      
-      # Gets the view paths from its controller's class.
-      #
-      # Note: Maybe memoize, depending on usage.
-      #
-      def view_paths
-        controller.class.view_paths
+        ViewModels::View.new controller, master_helper_module
       end
       
       # Extracts a controller from the context.

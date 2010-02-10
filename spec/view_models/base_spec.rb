@@ -267,19 +267,6 @@ describe ViewModels::Base do
       end
     end
     
-    describe '#view_paths' do
-      it "should delegate to the controller's class" do
-        controller_class = stub :controller_class
-        @context.stub! :class => controller_class
-        
-        controller_class.should_receive(:view_paths).once.with
-        
-        in_the @view_model do
-          view_paths
-        end
-      end
-    end
-    
     describe "#view_model_template_path" do
       describe "absolute path given" do
         it "should use it as given" do
@@ -309,44 +296,11 @@ describe ViewModels::Base do
     end
     
     describe "#view_instance" do
-      before(:each) do
-        @view_paths = stub :view_paths
-        @klass      = stub :klass
-        @context.should_receive('class').any_number_of_times.and_return @klass
-        @klass.should_receive('view_paths').any_number_of_times.and_return @view_paths
-      end
-      context 'with a specific format given' do
-        after(:each) do
-          in_the @view_model do
-            view_instance_for :some_format
-          end
-        end
-        it "should receive the right template format" do
-          ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
-          
-          @view_instance.should_receive(:template_format=).once.with :some_format
-        end
-      end
-      context 'with no format given' do
-        after(:each) do
-          in_the @view_model do
-            view_instance_for nil
-          end
-        end
-        it "should create a new view instance from ActionView::Base" do
-          ActionView::Base.should_receive(:new).once.with @view_paths, {}, @context
-        end
-        it "should extend the view instance with the master helper module" do
-          master_helper_module = stub :master_helper_module
-          @view_model.stub! :master_helper_module => master_helper_module
-          ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
-          
-          @view_instance.should_receive(:extend).with master_helper_module
-        end
-        it "should not set a template format" do
-          ActionView::Base.should_receive(:new).any_number_of_times.and_return @view_instance
-          
-          @view_instance.should_receive(:template_format=).never
+      it 'should call new on ViewModels::View' do
+        ViewModels::View.should_receive(:new).once.with @context, anything
+        
+        in_the @view_model do
+          view_instance
         end
       end
     end
