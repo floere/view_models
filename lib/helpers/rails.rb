@@ -5,10 +5,13 @@ module ViewModels
       mattr_accessor :specific_view_model_mapping
       self.specific_view_model_mapping = {}
       
-      # Construct a view_model for a collection.
+      # Create a new view_model instance for the given model instance
+      # with the given arguments.
       #
-      def collection_view_model_for pagination_array, context = self
-        Collection.new pagination_array, context
+      # Note: Will emit an ArgumentError if the view model class doesn't support 2 arguments.
+      #
+      def view_model_for model, context = self
+        view_model_class_for(model).new model, context
       end
       
       # Get the view_model class for the given model instance.
@@ -22,15 +25,6 @@ module ViewModels
       #
       def view_model_class_for model
         specific_view_model_class_for(model) || default_view_model_class_for(model)
-      end
-      
-      # Create a new view_model instance for the given model instance
-      # with the given arguments.
-      #
-      # Note: Will emit an ArgumentError if the view model class doesn't support 2 arguments.
-      #
-      def view_model_for model, context = self
-        view_model_class_for(model).new model, context
       end
       
       # Returns the default view_model class for the given model instance.
@@ -56,6 +50,12 @@ module ViewModels
       #
       def specific_view_model_class_for model
         specific_view_model_mapping[model.class]
+      end
+      
+      # Construct a view_model for a collection.
+      #
+      def collection_view_model_for pagination_array, context = self
+        Collection.new pagination_array, context
       end
       
     end
