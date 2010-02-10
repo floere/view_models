@@ -30,11 +30,7 @@ module ViewModels
       # Note: Will emit an ArgumentError if the view model class doesn't support 2 arguments.
       #
       def view_model_for model, context = self
-        view_model_class = view_model_class_for model
-        
-        # And create a view_model for the model.
-        #
-        view_model_class.new model, context
+        view_model_class_for(model).new model, context
       end
       
       # Returns the default view_model class for the given model instance.
