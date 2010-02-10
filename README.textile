@@ -162,10 +162,6 @@ We delegate @logger@ and @current_user@ calls in the view models to the active c
 <code>
 class ViewModels::Project < ViewModels::Base
   
-  # We want to be able to use id, dom_id, to_param on the view model.
-  #
-  include ViewModels::Extensions::ActiveRecord
-  
   # Our ApplicationHelper.
   #
   helper ApplicationHelper
@@ -177,6 +173,12 @@ class ViewModels::Project < ViewModels::Base
   # Include all common view helpers.
   #
   helper ViewModels::Helpers::View
+  
+  # We want to be able to use id, dom_id, to_param on the view model.
+  #
+  # Note: Overrides the standard dom_id method from the RecordIdentificationHelper.
+  #
+  include ViewModels::Extensions::ActiveRecord
   
   controller_method :logger, :current_user
   
