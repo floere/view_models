@@ -74,6 +74,18 @@ module ViewModels
         end
       end
       
+      # Returns the root of this view_models views with the template name appended.
+      # e.g. 'view_models/some/specific/path/to/template'
+      #
+      def template_path name
+        name = name.to_s
+        if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
+          name
+        else
+          File.join view_model_path, name
+        end
+      end
+      
       protected
         
         # Extract options hash from args array if there are any.
@@ -115,18 +127,6 @@ module ViewModels
         #
         def view_model_path
           @view_model_path || @view_model_path = self.name.underscore
-        end
-        
-        # Returns the root of this view_models views with the template name appended.
-        # e.g. 'view_models/some/specific/path/to/template'
-        #
-        def template_path name
-          name = name.to_s
-          if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
-            name
-          else
-            File.join view_model_path, name
-          end
         end
         
         # Caches partial names on successful rendering.
