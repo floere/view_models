@@ -28,9 +28,7 @@ module ViewModels
         options = extract_options_from fields
         filters = extract_filters_from options
         
-        fields.each do |field|
-          class_eval reader_definition_for(field, filters)
-        end
+        fields.each { |field| install_reader(field, filters) }
       end
       
       # Delegates method calls to the controller.
@@ -101,6 +99,17 @@ module ViewModels
         #
         def extract_filters_from options
           options ? [*(options[:filter_through])].reverse : []
+        end
+        
+        # Install a reader for the given name with the given filters.
+        #
+        # Example:
+        # # Installs a reader for model.attribute which is first upcased, then h'd.
+        # #
+        # * install_reader :attribute, [:h, :upcase]
+        #
+        def install_reader name, filters
+          class_eval reader_definition_for(name, filters)
         end
         
         # Defines a reader for the given model field and filtering
