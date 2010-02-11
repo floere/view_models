@@ -1,6 +1,6 @@
-# View models specific view.
-#
 module ViewModels
+  # View model specific view.
+  #
   class View < ActionView::Base
     
     def initialize controller, master_helper_module
