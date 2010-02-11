@@ -13,20 +13,7 @@ module ViewModels
     
     class << self
       
-      # Define a reader for a model attribute. Acts as a filtered delegation to the model. 
-      #
-      # You may specify a :filter_through option that is either a symbol or an array of symbols. The return value
-      # from the model will be filtered through the functions (arity 1) and then passed back to the receiver. 
-      #
-      # Example: 
-      #
-      #   model_reader :foobar                                        # same as delegate :foobar, :to => :model
-      #   model_reader :foobar, :filter_through => :h                 # html escape foobar 
-      #   model_reader :foobar, :filter_through => [:textilize, :h]   # first textilize, then html escape
-      #
-      def model_reader *attributes_and_options
-        Extensions::ModelReader.install self, attributes_and_options
-      end
+      include Extensions::ModelReader
       
       # Delegates method calls to the controller.
       #
