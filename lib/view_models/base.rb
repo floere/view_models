@@ -152,15 +152,9 @@ module ViewModels
       #   the erb.
       #
       def view_instance_for format
-        view = view_instance
+        view = View.new controller, master_helper_module, format
         view.template_format = format if format
         view
-      end
-      
-      # Returns a view model view.
-      #
-      def view_instance
-        ViewModels::View.new controller, master_helper_module
       end
       
       # Extracts a controller from the context.
