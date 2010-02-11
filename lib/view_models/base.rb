@@ -24,11 +24,8 @@ module ViewModels
       #   model_reader :foobar, :filter_through => :h                 # html escape foobar 
       #   model_reader :foobar, :filter_through => [:textilize, :h]   # first textilize, then html escape
       #
-      def model_reader *fields
-        options = extract_options_from fields
-        filters = extract_filters_from options
-        
-        fields.each { |field| install_reader(field, filters) }
+      def model_reader *attributes_and_options
+        Extensions::ModelReader.install self, attributes_and_options
       end
       
       # Delegates method calls to the controller.
@@ -85,44 +82,6 @@ module ViewModels
       end
       
       protected
-        
-        # Extract options hash from args array if there are any.
-        # Returns nil if there are none.
-        #
-        # Note: Destructive.
-        #
-        def extract_options_from ary
-          ary.pop if ary.last.kind_of?(Hash)
-        end
-        
-        # Extract filter_through options from the options hash if there are any.
-        #
-        def extract_filters_from options
-          options ? [*(options[:filter_through])].reverse : []
-        end
-        
-        # Install a reader for the given name with the given filters.
-        #
-        # Example:
-        # # Installs a reader for model.attribute which is first upcased, then h'd.
-        # #
-        # * install_reader :attribute, [:h, :upcase]
-        #
-        def install_reader name, filters
-          class_eval reader_definition_for(name, filters)
-        end
-        
-        # Defines a reader for the given model field and filtering
-        # through the given filters, from right to left.
-        # 
-        # Note: The filters are applied from last to first element.
-        #
-        def reader_definition_for field, filters = []
-          size              = filters.size
-          left_parentheses  = filters.zip(['('] * size)
-          right_parentheses = ')' * size
-          "def #{field}; #{left_parentheses}model.#{field}#{right_parentheses}; end"
-        end
         
         # Returns the path from the view_model_view_paths to the actual templates.
         # e.g. "view_models/models/book"
