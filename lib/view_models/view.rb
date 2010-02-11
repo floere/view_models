@@ -1,3 +1,5 @@
+# View models specific view.
+#
 module ViewModels
   class View < ActionView::Base
     
