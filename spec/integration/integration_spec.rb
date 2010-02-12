@@ -23,9 +23,19 @@ describe 'Integration' do
     @view_model       = ViewModels::SubSubclass.new @model, @view
   end
   
+  describe 'controller context' do
+    it 'should work' do
+      controller = ActionController::Base.new
+      
+      lambda {
+        ViewModels::SubSubclass.new @model, controller
+      }.should_not raise_error
+    end
+  end
+  
   describe 'view_model_for inclusion in view' do
     it 'should be included' do
-      view = ViewModels::View.new @context, Module.new
+      view = ActionView::Base.new
       
       lambda {
         view.view_model_for @model
