@@ -39,6 +39,10 @@ module ViewModels
         old_add_template_helper helper_module
       end
       
+      def next_in_hierarchy
+        superclass
+      end
+      
       # Tries to render the view.
       #
       # Note: I am not happy about using Exceptions as control flow.
@@ -104,7 +108,7 @@ module ViewModels
     # 
     def initialize model, context
       @model = model
-      @controller = extract_controller_from context
+      @controller = context.respond_to?(:controller) ? context.controller : context
     end
     
     # Delegate controller methods.
@@ -157,11 +161,11 @@ module ViewModels
         view
       end
       
-      # Extracts a controller from the context.
-      #
-      def extract_controller_from context
-        context.respond_to?(:controller) ? context.controller : context
-      end
+      # # Extracts a controller from the context.
+      # #
+      # def extract_controller_from context
+      #   context.respond_to?(:controller) ? context.controller : context
+      # end
       
   end
 end
