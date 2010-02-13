@@ -50,8 +50,10 @@ module ViewModels
         old_add_template_helper helper_module
       end
       
-      def next_in_hierarchy
-        superclass
+      #
+      #
+      def next_renderer
+        superclass unless self == ViewModels::Base
       end
       
       # Tries to render the view.
@@ -59,16 +61,24 @@ module ViewModels
       # Note: I am not happy about using Exceptions as control flow.
       #       By caching partial paths successful renderings, we alleviate the problem.
       #
+      # def render view, name, options
+      #   return if self == ViewModels::Base
+      #   
+      #   caching name, options do |options|
+      #     begin
+      #       view.render options
+      #     rescue ActionView::MissingTemplate => missing_template
+      #       superclass.render view, name, options
+      #     end
+      #   end
+      # end
+      
       def render view, name, options
-        return if self == ViewModels::Base
-        
-        caching name, options do |options|
-          begin
-            view.render options
-          rescue ActionView::MissingTemplate => missing_template
-            superclass.render view, name, options
-          end
-        end
+        @name_partial_mapping ||= {}
+        options[:partial] = @name_partial_mapping[name] || template_path(name)
+        result = view.render_for self, name
+        @name_partial_mapping[name] ||= options[:partial] if result
+        result
       end
       
       # Returns the root of this view_models views with the template name appended.
@@ -83,7 +93,7 @@ module ViewModels
         end
       end
       
-      # The view gets 
+      # The view gets its render_options
       #
       def render_options name
         { :partial => template_path(name) }
@@ -106,17 +116,17 @@ module ViewModels
           @view_model_path || @view_model_path = self.name.underscore
         end
         
-        # Caches partial names on successful rendering.
-        #
-        # Note: Caches only if something was rendered.
-        #
-        def caching name, options
-          @name_partial_mapping ||= {}
-          options[:partial] = @name_partial_mapping[name] || template_path(name)
-          result = yield options
-          @name_partial_mapping[name] ||= options[:partial] if result
-          result
-        end
+        # # Caches partial names on successful rendering.
+        # #
+        # # Note: Caches only if something was rendered.
+        # #
+        # def caching name, options
+        #   @name_partial_mapping ||= {}
+        #   options[:partial] = @name_partial_mapping[name] || template_path(name)
+        #   result = yield options
+        #   @name_partial_mapping[name] ||= options[:partial] if result
+        #   result
+        # end
         
     end # class << self
     
