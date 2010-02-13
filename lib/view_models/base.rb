@@ -5,11 +5,22 @@ module ViewModels
   # Base class from which all view_models inherit.
   #
   class Base
-    attr_reader :model, :controller
+    
+    attr_accessor :format
+    attr_reader   :model, :controller
     
     # Make helper and helper_method available
     #
     include ActionController::Helpers
+    
+    # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
+    # The context is usually a view or a controller.
+    # Note: But doesn't need to be one :)
+    # 
+    def initialize model, context
+      @model = model
+      @controller = context.respond_to?(:controller) ? context.controller : context
+    end
     
     class << self
       
@@ -72,6 +83,12 @@ module ViewModels
         end
       end
       
+      # The view gets 
+      #
+      def render_options name
+        { :partial => template_path(name) }
+      end
+      
       protected
         
         # Returns the path from the view_model_view_paths to the actual templates.
@@ -83,6 +100,7 @@ module ViewModels
         #   view_models/models/book
         #
         # Note: Remembers the result.
+        # TODO Use memoize?
         #
         def view_model_path
           @view_model_path || @view_model_path = self.name.underscore
@@ -101,15 +119,6 @@ module ViewModels
         end
         
     end # class << self
-    
-    # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
-    # The context is usually a view or a controller.
-    # Note: But doesn't need to be one :)
-    # 
-    def initialize model, context
-      @model = model
-      @controller = context.respond_to?(:controller) ? context.controller : context
-    end
     
     # Delegate controller methods.
     #
@@ -135,11 +144,31 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as view_name, options = {}
-      view = view_instance_for options.delete(:format)
-      render view, view_name, options
+      with_format options do |format|
+        view = view_instance_for format
+        render view, view_name, options
+      end
     end
     
     protected
+      
+      # Tries to determine which format to use for rendering.
+      #
+      # If a render_as is called inside a view which already
+      # was rendered using render_as, it should use the format
+      # that the view model already used for the render_as.
+      #
+      # TODO: Should the format perhaps be saved in the view instance?
+      #       Or somewhere else. Because the used format should actually
+      #       be reset after exiting from render_as.
+      #
+      def with_format options
+        old_format = self.format
+        self.format = options.delete(:format) || self.format
+        result = yield self.format
+        self.format = old_format
+        result
+      end
       
       # Sets up the options correctly and delegates to the class to actually render.
       #
@@ -156,7 +185,7 @@ module ViewModels
       #   the erb.
       #
       def view_instance_for format
-        view = View.new controller, master_helper_module, format
+        view = View.new controller, master_helper_module
         view.template_format = format if format
         view
       end

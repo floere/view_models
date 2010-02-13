@@ -71,6 +71,14 @@ describe 'Integration' do
   end
   
   describe 'render_as' do
+    describe "nesting" do
+      it "should render the right nested template, with an explicitly defined format (see template)" do
+        @view_model.render_as(:outer, :format => :explicit).should == 'inner.also_explicit.erb'
+      end
+      it "should render the right nested template, respecting the defined format" do
+        @view_model.render_as(:outer, :format => :nesting).should == 'inner.nesting.erb'
+      end
+    end
     describe 'template inheritance' do
       it "should use its template" do
         @view_model.render_as(:exists).should == 'html exists' # The default
