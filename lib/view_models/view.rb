@@ -11,15 +11,18 @@ module ViewModels
     # This method tries to render with options obtained from the view model class.
     # 
     # If it fails, it asks the next view_model_class for new render_options.
-    # If the next view_model_class does not return
     #
-    # Returns nil if there is no next renderer
+    # Returns nil if there is no next view model class.
     # 
-    def render_for view_model_class, name
-      return unless options = view_model_class.render_options(name)
-      render options
+    # Note: I am not terribly happy about using Exceptions as control flow.
+    #
+    def render_for view_model_class, name, options # view_model_class, options
+      options = options.merge :partial => view_model_class.partial_path(name)
+      result = render options
+      view_model_class.save_successful_render name, options # if result
+      result
     rescue ActionView::MissingTemplate => missing_template
-      view_model_class = view_model_class.next_renderer and retry
+      view_model_class = view_model_class.next and retry
     end
     
   end
