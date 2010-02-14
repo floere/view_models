@@ -60,7 +60,9 @@ module ViewModels
       #
       def render_as view, name, options
         view.template_format = options.delete(:format) if options[:format]
-        view.render_for self, name, options
+        result = view.render_for self, name, options
+        save_successful_render name, options if result
+        result
       end
       
       # Returns the root of this view_models views with the template name appended.

@@ -18,9 +18,7 @@ module ViewModels
     #
     def render_for view_model_class, name, options # view_model_class, options
       options = options.merge :partial => view_model_class.partial_path(name)
-      result = render options
-      view_model_class.save_successful_render name, options # if result
-      result
+      render options
     rescue ActionView::MissingTemplate => missing_template
       view_model_class = view_model_class.next and retry
     end
