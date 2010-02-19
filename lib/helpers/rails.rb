@@ -37,8 +37,10 @@ module ViewModels
       #
       # Note: Will emit a NameError if a corresponding ViewModels constant cannot be loaded.
       #
+      mattr_accessor :default_prefix
+      self.default_prefix = 'ViewModels::'
       def default_view_model_class_for model
-        "ViewModels::#{model.class.name}".constantize
+        (default_prefix + model.class.name).constantize
       end
       
       # Returns a specific view_model class for the given model instance.
