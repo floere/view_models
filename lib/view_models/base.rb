@@ -2,7 +2,29 @@
 #
 module ViewModels
   
+  # Gets raised when render_as, render_the, or render_template cannot
+  # find the named template, not even in the hierarchy.
+  #
   class MissingTemplateError < StandardError; end
+  
+  # Extracts controllers for a living from unsuspecting views.
+  #
+  class ControllerExtractor
+    
+    attr_reader :context
+    
+    def initialize context
+      @context = context
+    end
+    
+    # Extracts a controller from the context.
+    #
+    def extract
+      context = self.context
+      context.respond_to?(:controller) ? context.controller : context
+    end
+    
+  end
   
   # Base class from which all view_models inherit.
   #
@@ -21,7 +43,7 @@ module ViewModels
     # 
     def initialize model, context
       @model = model
-      @controller = extract_controller_from context
+      @controller = ControllerExtractor.new(context).extract
     end
     
     class << self
@@ -88,6 +110,8 @@ module ViewModels
       
       protected
         
+        #
+        #
         def save_successful_render name, options
           @name_partial_mapping ||= {} # rewrite
           @name_partial_mapping[name] ||= options[:partial]
@@ -159,8 +183,8 @@ module ViewModels
       def render name, options
         options[:locals] = { :view_model => self }.merge options[:locals] || {}
         view = View.new controller, master_helper_module
-        if self.template_format = options.delete(:format) || self.template_format
-          view.template_format = self.template_format
+        if template_format = format_for(options)
+          view.template_format = template_format
         end
         # metaclass.send :define_method, :output_buffer= do |buffer|
         #   view.output_buffer = buffer
@@ -169,6 +193,14 @@ module ViewModels
         #   view.output_buffer = buffer
         # end
         self.class.render_as view, name, options
+      end
+      
+      # Extracts the format from the options and returns it, or a saved one.
+      #
+      # Returns nil when no format option has been passed or no format is saved.
+      #
+      def format_for options
+        self.template_format = options.delete(:format) || self.template_format
       end
       
       # # Creates a view instance with the given format.
@@ -183,12 +215,6 @@ module ViewModels
       #   view.template_format = format if format
       #   view
       # end
-      
-      # Extracts a controller from the context.
-      #
-      def extract_controller_from context
-        context.respond_to?(:controller) ? context.controller : context
-      end
       
   end
 end

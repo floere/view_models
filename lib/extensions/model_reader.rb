@@ -17,20 +17,36 @@ module ViewModels
       #   model_reader :foobar, :filter_through => [:textilize, :h]   # first textilize, then html escape
       #
       def model_reader *attributes_and_options
-        attributes, filters = split attributes_and_options
-        FilteredDelegationInstaller.new(self, attributes, filters).install
+        options = ModelReaderOptions.new *attributes_and_options
+        FilteredDelegationInstaller.new(self, options).install
       end
       
-      # Extract filter_through options from the options hash if there are any.
+      # Bundles the model reader options and extracts the relevant structured data.
       #
-      def split options
-        filters = if options.last.kind_of?(Hash)
-          filter_options = options.pop
-          [*(filter_options[:filter_through])].reverse
-        else
-          []
+      class ModelReaderOptions
+        
+        attr_reader :attributes, :filters
+        
+        def initialize *attributes_and_options
+          split attributes_and_options
         end
-        [options, filters]
+        
+        # Extract filter_through options from the options hash if there are any.
+        #
+        def split options
+          @filters = if options.last.kind_of?(Hash)
+            filter_options = options.pop
+            [*(filter_options[:filter_through])].reverse
+          else
+            []
+          end
+          @attributes = options
+        end
+        
+        def to_a
+          [attributes, filters]
+        end
+        
       end
       
       # The filtered delegation installer installs delegators on the target
@@ -40,8 +56,8 @@ module ViewModels
         
         attr_reader :target, :attributes, :filters
         
-        def initialize target, attributes, filters
-          @target, @attributes, @filters = target, attributes, filters
+        def initialize target, options
+          @target, @attributes, @filters = target, *options
         end
         
         # Install install
