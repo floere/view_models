@@ -2,6 +2,14 @@ module ViewModels
   module Helper
     module Rails
       
+      # Construct a view_model for a collection.
+      #
+      # TODO Move to Collection.
+      #
+      def collection_view_model_for pagination_array, context = self
+        Collection.new pagination_array, context
+      end
+      
       # The Collection view_model helper has the purpose of presenting presentable collections.
       # * Render as list
       # * Render as table
@@ -35,7 +43,7 @@ module ViewModels
         #   * The collection of the collection view_model to iterate over.
         #   * The original context given to the collection view_model to render in.
         #   * Uses 'list_item' as the default element template.
-        #   * Uses a nil separator.
+        #   * Uses a nil separator in html.
         #
         def list options = {}
           default_options = {

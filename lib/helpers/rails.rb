@@ -52,12 +52,6 @@ module ViewModels
         specific_view_model_mapping[model.class]
       end
       
-      # Construct a view_model for a collection.
-      #
-      def collection_view_model_for pagination_array, context = self
-        Collection.new pagination_array, context
-      end
-      
     end
   end
 end

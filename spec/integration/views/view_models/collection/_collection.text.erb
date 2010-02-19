@@ -1,5 +1,5 @@
 <%- collection.each do |item| -%>
 <%- view_model = view_model_for item -%>
-<%= view_model.render_as template_name -%>
+<%= view_model.render_as template_name, :format => :text -%>
 <%= separator unless item == collection.entries.last -%>
 <%- end -%>

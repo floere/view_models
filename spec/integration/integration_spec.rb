@@ -33,7 +33,7 @@ describe 'Integration' do
   # end
   
   describe 'capture in view model method' do
-    it 'should description' do
+    xit 'should description' do
       @view_model.render_as(:capture_in_method).should == ''
     end
   end
@@ -59,8 +59,13 @@ describe 'Integration' do
   end
   
   describe 'collection rendering' do
-    xit 'should render the collection' do
-      @view_model.render_as(:list_example).should == 'html exists' # The default
+    context 'text' do
+      xit 'should render a list' do
+        @view_model.render_as(:list_example, :format => :text).should == '_list_item.erb\n_list_item.erb'
+      end
+      it 'should render a collection' do
+        @view_model.render_as(:collection_example, :format => :text).should == '_collection_item.text.erb_collection_item.text.erb'
+      end
     end
   end
   
