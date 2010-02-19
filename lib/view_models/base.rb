@@ -71,20 +71,20 @@ module ViewModels
       # Returns the root of this view_models views with the template name appended.
       # e.g. 'view_models/some/specific/path/to/template'
       #
-      def template_path name
+      def template_path name, options
         name = name.to_s
         if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
           name
         else
-          File.join view_model_path, name
+          File.join view_model_path, "#{options[:prefix]}#{name}"
         end
       end
       
       # The view gets its TODO
       #
-      def partial_path name
+      def partial_path name, options
         @name_partial_mapping ||= {} # rewrite
-        @name_partial_mapping[name] || template_path(name)
+        @name_partial_mapping[name] || template_path(name, options) # TODO rewrite
       end
       def save_successful_render name, options
         @name_partial_mapping ||= {} # rewrite
@@ -134,19 +134,30 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as name, options = {}
-      options = name if name.kind_of? Hash
-      options[:locals] = { :view_model => self }.merge options[:locals] || {}
-      view = View.new controller, master_helper_module
-      self.class.render_as view, name, options
-      # options = name if name.kind_of? Hash
-      # with_format options do |format|
-      #   view = view_instance_for format # Move this into the class
-      #   render view, name, options
-      # end
+      options[:prefix] = :'_'
+      render name, options
     end
+    # render_the is used for small parts.
+    #
+    # Example:
+    # # If the view_model is called window, the following
+    # # is more legible than window.render_as :menubar
+    # * window.render_the :menubar
+    #
     alias render_the render_as
     
+    def render_template name, options = {}
+      options[:prefix] = nil
+      render name, options
+    end
+    
     protected
+      
+      def render name, options
+        options[:locals] = { :view_model => self }.merge options[:locals] || {}
+        view = View.new controller, master_helper_module
+        self.class.render_as view, name, options
+      end
       
       # # Tries to determine which format to use for rendering.
       # #

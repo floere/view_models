@@ -33,7 +33,7 @@ describe 'Integration' do
   # end
   
   describe 'capture in view model method' do
-    xit 'should description' do
+    it 'should description' do
       @view_model.render_as(:capture_in_method).should == ''
     end
   end
@@ -108,8 +108,11 @@ describe 'Integration' do
       end
     end
     describe "explicit template rendering" do
-      xit "should render the right template" do
-        @view_model.render_as(:show).should == 'show.html.erb'
+      it "should render the right template with format" do
+        @view_model.render_template(:show, :format => :text).should == 'show.text.erb'
+      end
+      it "should render the right template" do
+        @view_model.render_template(:show).should == 'show.html.erb'
       end
     end
     describe "explicit partial rendering" do
@@ -117,7 +120,7 @@ describe 'Integration' do
       #   @view_model.render_as(:partial => 'inner', :format => :nesting).should == '_inner.nesting.erb'
       # end
       xit "should render the right partial" do
-        @view_model.render_as(:partial => 'view_models/sub_subclass/inner', :format => :nesting).should == '_inner.nesting.erb'
+        @view_model.render_as('view_models/sub_subclass/inner', :format => :nesting).should == '_inner.nesting.erb'
       end
     end
     describe "nesting" do
@@ -133,7 +136,7 @@ describe 'Integration' do
         @view_model.render_as(:exists).should == 'html exists' # The default
       end
       it "should use the subclass' template" do
-        @view_model.render_as(:no_sub_subclass).should == 'no sub subclass'
+        @view_model.render_as(:no_sub_subclass).should == '_no_sub_subclass.erb'
       end
       it 'should raise ViewModels::MissingTemplateError if template is not found' do
         lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError)
@@ -172,16 +175,13 @@ describe 'Integration' do
     end
     describe 'memoizing' do
       it 'should memoize' do
-        @view_model.class.should_receive(:template_path).once.with(:not_found_in_sub_subclass).and_return 'view_models/sub_subclass/not_found_in_sub_subclass'
-        @view_model.class.superclass.should_receive(:template_path).once.with(:not_found_in_sub_subclass).and_return 'view_models/subclass/not_found_in_sub_subclass'
-        
         @view_model.render_as :not_found_in_sub_subclass
         @view_model.render_as :not_found_in_sub_subclass
         @view_model.render_as :not_found_in_sub_subclass
         @view_model.render_as :not_found_in_sub_subclass
         @view_model.render_as :not_found_in_sub_subclass
         
-        @view_model.render_as(:not_found_in_sub_subclass).should == 'not found'
+        @view_model.render_as(:not_found_in_sub_subclass).should == '_not_found_in_sub_subclass.erb'
       end
       it 'should render the right one' do
         @view_model.render_as :exists_in_both
