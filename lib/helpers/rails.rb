@@ -1,5 +1,5 @@
 module ViewModels
-  module Helper
+  module Helpers
     module Rails
       
       mattr_accessor :specific_view_model_mapping

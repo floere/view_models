@@ -1,1 +1,1 @@
-class ViewModels::Subclass < ViewModels::Base; end
+class ViewModels::Subclass < ViewModels::Project; end

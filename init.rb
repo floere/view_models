@@ -10,6 +10,6 @@ require 'helpers/rails'
 require 'helpers/collection'
 
 # 
-# ActionController::Base.send :helper, ViewModels::Helper::Rails
-ActionController::Base.send :include, ViewModels::Helper::Rails
-ActionView::Base.send       :include, ViewModels::Helper::Rails
+# ActionController::Base.send :helper, ViewModels::Helpers::Rails
+ActionController::Base.send :include, ViewModels::Helpers::Rails
+ActionView::Base.send       :include, ViewModels::Helpers::Rails

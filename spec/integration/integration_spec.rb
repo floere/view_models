@@ -7,6 +7,7 @@ require 'helpers/rails'
 ActionView::Base.send :include, ViewModels::Helper::Rails
 
 require 'view_models/base'
+require File.join(File.dirname(__FILE__), 'view_models/project')
 require File.join(File.dirname(__FILE__), 'view_models/subclass')
 require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
 
@@ -30,6 +31,12 @@ describe 'Integration' do
   #   p [:sub, ViewModels::Subclass.instance_variable_get(:@name_partial_mapping)]
   #   p [:subsub, ViewModels::SubSubclass.instance_variable_get(:@name_partial_mapping)]
   # end
+  
+  describe 'capture in view model method' do
+    it 'should description' do
+      @view_model.render_as(:capture_in_method).should == ''
+    end
+  end
   
   describe 'controller context' do
     it 'should work' do
@@ -88,7 +95,7 @@ describe 'Integration' do
       # it "should render the right partial" do
       #   @view_model.render_as(:partial => 'inner', :format => :nesting).should == '_inner.nesting.erb'
       # end
-      it "should render the right partial" do
+      xit "should render the right partial" do
         @view_model.render_as(:partial => 'view_models/sub_subclass/inner', :format => :nesting).should == '_inner.nesting.erb'
       end
     end
@@ -96,7 +103,7 @@ describe 'Integration' do
       it "should render the right nested template, with an explicitly defined format (see template)" do
         @view_model.render_as(:outer, :format => :explicit).should == '_inner.also_explicit.erb'
       end
-      it "should render the right nested template, respecting the defined format" do
+      xit "should render the right nested template, respecting the defined format" do
         @view_model.render_as(:outer, :format => :nesting).should == '_inner.nesting.erb'
       end
     end

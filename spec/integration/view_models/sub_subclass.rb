@@ -27,4 +27,8 @@ class ViewModels::SubSubclass < ViewModels::Subclass
     text.upcase
   end
   
+  def capture_in_method &block
+    capture &block
+  end
+  
 end

@@ -2,6 +2,8 @@
 #
 module ViewModels
   
+  class MissingTemplateError < StandardError; end
+  
   # Base class from which all view_models inherit.
   #
   class Base
@@ -53,7 +55,8 @@ module ViewModels
       # Returns the next view model class in the render hierarchy.
       #
       def next
-        superclass unless self == ViewModels::Base
+        raise MissingTemplateError.new if self == ViewModels::Base
+        superclass
       end
       
       #
