@@ -15,11 +15,10 @@ describe 'Integration' do
   
   before(:each) do
     @logger           = stub :logger, :null_object => true
-    @controller       = ActionController::Base.new
     @controller_class = stub @controller.class, :view_paths => 'spec/integration/views', :controller_path => 'app/controllers/test'
-    @context          = stub @controller, :class => @controller_class, :logger => @logger
+    @controller       = stub ActionController::Base.new, :class => @controller_class, :logger => @logger
     @view_paths       = stub :view_paths
-    @view             = stub :view, :controller => @context, :view_paths => @view_paths
+    @view             = stub :view, :controller => @controller, :view_paths => @view_paths
     @model            = SubSubclass.new
     @view_model       = ViewModels::SubSubclass.new @model, @view
   end
@@ -60,21 +59,26 @@ describe 'Integration' do
   
   describe 'collection rendering' do
     context 'default format' do
-      
+      it 'should render a html list' do
+        @view_model.render_as(:list_example).should == "<ol class=\"collection\"><li>_list_item.html.erb</li><li>_list_item.html.erb</li></ol>"
+      end
+      it 'should render a html collection' do
+        @view_model.render_as(:collection_example).should == "<ul class=\"collection\"><li>_collection_item.html.erb</li><li>_collection_item.html.erb</li></ul>"
+      end
     end
     context 'format html' do
-      it 'should render a list' do
+      it 'should render a html list' do
         @view_model.render_as(:list_example, :format => :html).should == "<ol class=\"collection\"><li>_list_item.html.erb</li><li>_list_item.html.erb</li></ol>"
       end
-      it 'should render a collection' do
+      it 'should render a html collection' do
         @view_model.render_as(:collection_example, :format => :html).should == "<ul class=\"collection\"><li>_collection_item.html.erb</li><li>_collection_item.html.erb</li></ul>"
       end
     end
     context 'format text' do
-      xit 'should render a list' do
+      xit 'should render a text list' do
         @view_model.render_as(:list_example, :format => :text).should == '_list_item.text.erb\n_list_item.text.erb'
       end
-      xit 'should render a collection' do
+      xit 'should render a text collection' do
         @view_model.render_as(:collection_example, :format => :text).should == '_collection_item.text.erb_collection_item.text.erb'
       end
     end
@@ -116,7 +120,7 @@ describe 'Integration' do
       end
     end
     describe "explicit partial rendering" do
-      it "should render the right partial" do
+      xit "should render the right partial" do
         # If one wants explicit template rendering, he needs to work more.
         # Let's be opinionated here :)
         #
@@ -127,7 +131,7 @@ describe 'Integration' do
       it "should render the right nested template, with an explicitly defined format (see template)" do
         @view_model.render_as(:outer, :format => :explicit).should == '_inner.also_explicit.erb'
       end
-      it "should render the right nested template, respecting the defined format" do
+      it "should render the right nested template, respecting the already defined format" do
         @view_model.render_as(:outer, :format => :nesting).should == '_inner.nesting.erb'
       end
     end

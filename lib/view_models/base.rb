@@ -81,7 +81,7 @@ module ViewModels
       
       # The view gets its TODO
       #
-      def partial_path name, options
+      def render_path name, options
         @name_partial_mapping ||= {} # rewrite
         @name_partial_mapping[name] || template_path(name, options) # TODO rewrite
       end
@@ -133,6 +133,7 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as name, options = {}
+      # options = name and name = options.delete(:partial) if name.kind_of?(Hash)
       options[:prefix] = :'_'
       render name, options
     end
@@ -152,56 +153,35 @@ module ViewModels
     
     protected
       
+      attr_accessor :template_format
+      
       def render name, options
         options[:locals] = { :view_model => self }.merge options[:locals] || {}
         view = View.new controller, master_helper_module
-        view.template_format = options.delete(:format) if options[:format]
-        metaclass.send :define_method, :output_buffer= do |buffer|
-          view.output_buffer = buffer
+        if self.template_format = options.delete(:format) || self.template_format
+          view.template_format = self.template_format
         end
-        metaclass.send :define_method, :output_buffer do |buffer|
-          view.output_buffer = buffer
-        end
+        # metaclass.send :define_method, :output_buffer= do |buffer|
+        #   view.output_buffer = buffer
+        # end
+        # metaclass.send :define_method, :output_buffer do |buffer|
+        #   view.output_buffer = buffer
+        # end
         self.class.render_as view, name, options
       end
       
-      # # Tries to determine which format to use for rendering.
+      # # Creates a view instance with the given format.
       # #
-      # # If a render_as is called inside a view which already
-      # # was rendered using render_as, it should use the format
-      # # that the view model already used for the render_as.
+      # # Examples:
+      # # * Calling view_instance_for :html will later render the haml
+      # #   template, calling view_instance_for :text will later render
+      # #   the erb.
       # #
-      # # TODO: Should the format perhaps be saved in the view instance?
-      # #       Or somewhere else. Because the used format should actually
-      # #       be reset after exiting from render_as.
-      # #
-      # def with_format options
-      #   old_format = self.format
-      #   self.format = options.delete(:format) || self.format
-      #   result = yield self.format
-      #   self.format = old_format
-      #   result
+      # def view_instance_for format
+      #   view = View.new controller, master_helper_module
+      #   view.template_format = format if format
+      #   view
       # end
-      # 
-      # # Sets up the options correctly and delegates to the class to actually render.
-      # #
-      # def render view, view_name, options
-      #   options[:locals] = { :view_model => self }.merge options[:locals] || {}
-      #   self.class.render view, view_name, options
-      # end
-      
-      # Creates a view instance with the given format.
-      #
-      # Examples:
-      # * Calling view_instance_for :html will later render the haml
-      #   template, calling view_instance_for :text will later render
-      #   the erb.
-      #
-      def view_instance_for format
-        view = View.new controller, master_helper_module
-        view.template_format = format if format
-        view
-      end
       
       # Extracts a controller from the context.
       #
