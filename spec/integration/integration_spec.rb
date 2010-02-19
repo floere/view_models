@@ -33,7 +33,7 @@ describe 'Integration' do
   
   describe 'capture in view model method' do
     xit 'should capture the content of the block' do
-      @view_model.render_as(:capture_in_method).should == ''
+      @view_model.render_as(:capture_in_method).should == 'Capturing: A Pirate!'
     end
   end
   
@@ -120,7 +120,7 @@ describe 'Integration' do
       end
     end
     describe "explicit partial rendering" do
-      xit "should render the right partial" do
+      it "should render the right partial" do
         # If one wants explicit template rendering, he needs to work more.
         # Let's be opinionated here :)
         #

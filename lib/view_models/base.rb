@@ -83,7 +83,7 @@ module ViewModels
       
       #
       #
-      def render_as view, name, options
+      def render view, name, options
         result = view.render_for self, name, options
         save_successful_render name, options if result
         result
@@ -95,7 +95,7 @@ module ViewModels
       def template_path name, options
         name = name.to_s
         if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
-          name
+          File.join File.dirname(name), "#{options[:prefix]}#{File.basename(name)}"
         else
           File.join view_model_path, "#{options[:prefix]}#{name}"
         end
@@ -158,7 +158,7 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as name, options = {}
-      # options = name and name = options.delete(:partial) if name.kind_of?(Hash)
+      options = name and name = options.delete(:partial) if name.kind_of?(Hash)
       options[:prefix] = :'_'
       render name, options
     end
@@ -186,13 +186,10 @@ module ViewModels
         if template_format = format_for(options)
           view.template_format = template_format
         end
-        # metaclass.send :define_method, :output_buffer= do |buffer|
-        #   view.output_buffer = buffer
+        # metaclass.send :define_method, :capture do |*args, &block|
+        #   view.capture *args, &block
         # end
-        # metaclass.send :define_method, :output_buffer do |buffer|
-        #   view.output_buffer = buffer
-        # end
-        self.class.render_as view, name, options
+        self.class.render view, name, options
       end
       
       # Extracts the format from the options and returns it, or a saved one.
