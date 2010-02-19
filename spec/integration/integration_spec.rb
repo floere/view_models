@@ -114,8 +114,8 @@ describe 'Integration' do
       it "should use the subclass' template" do
         @view_model.render_as(:no_sub_subclass).should == 'no sub subclass'
       end
-      it "should fail" do
-        @view_model.render_as(:none).should == nil
+      it 'should raise ViewModels::MissingTemplateError if template is not found' do
+        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError)
       end
     end
     describe 'format' do
@@ -160,7 +160,7 @@ describe 'Integration' do
         @view_model.render_as :not_found_in_sub_subclass
         @view_model.render_as :not_found_in_sub_subclass
         
-        # @view_model.render_as(:not_found_in_sub_subclass).should == 'not found'
+        @view_model.render_as(:not_found_in_sub_subclass).should == 'not found'
       end
       it 'should render the right one' do
         @view_model.render_as :exists_in_both
@@ -172,12 +172,6 @@ describe 'Integration' do
         
         @view_model.render_as :exists_in_both
         @view_model.render_as(:exists_in_both).should == 'in sub subclass'
-      end
-      it 'should memoize nil if nothing is found' do
-        @view_model.render_as(:blargl)
-        @view_model.render_as(:blargl)
-        @view_model.render_as(:blargl)
-        @view_model.render_as(:blargl).should == nil
       end
     end
   end
