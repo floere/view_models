@@ -1,16 +1,16 @@
 require File.join(File.dirname(__FILE__), '../../spec_helper')
 
-describe ViewModels::Helper::Rails do
-  include ViewModels::Helper::Rails
+describe ViewModels::Helpers::Rails do
+  include ViewModels::Helpers::Rails
   
   describe "collection_view_model_for" do
     it "should return kind of a ViewModels::Collection" do
-      collection_view_model_for([]).should be_kind_of ViewModels::Helper::Rails::Collection
+      collection_view_model_for([]).should be_kind_of ViewModels::Helpers::Rails::Collection
     end
     it "should pass any parameters directly through" do
       collection = stub :collection
       context = stub :context
-      ViewModels::Helper::Rails::Collection.should_receive(:new).with(collection, context).once
+      ViewModels::Helpers::Rails::Collection.should_receive(:new).with(collection, context).once
       collection_view_model_for collection, context
     end
   end
