@@ -59,11 +59,22 @@ describe 'Integration' do
   end
   
   describe 'collection rendering' do
-    context 'text' do
-      xit 'should render a list' do
-        @view_model.render_as(:list_example, :format => :text).should == '_list_item.erb\n_list_item.erb'
+    context 'default format' do
+      
+    end
+    context 'format html' do
+      it 'should render a list' do
+        @view_model.render_as(:list_example, :format => :html).should == "<ol class=\"list\"><li>_list_item.html.erb</li><li>_list_item.html.erb</li></ol>"
       end
       it 'should render a collection' do
+        @view_model.render_as(:collection_example, :format => :html).should == "<ul class=\"collection\"><li>_collection_item.html.erb</li><li>_collection_item.html.erb</li></ul>"
+      end
+    end
+    context 'format text' do
+      xit 'should render a list' do
+        @view_model.render_as(:list_example, :format => :text).should == '_list_item.text.erb\n_list_item.text.erb'
+      end
+      xit 'should render a collection' do
         @view_model.render_as(:collection_example, :format => :text).should == '_collection_item.text.erb_collection_item.text.erb'
       end
     end
