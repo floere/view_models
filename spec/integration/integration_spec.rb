@@ -75,10 +75,10 @@ describe 'Integration' do
       end
     end
     context 'format text' do
-      xit 'should render a text list' do
+      it 'should render a text list' do
         @view_model.render_as(:list_example, :format => :text).should == '_list_item.text.erb\n_list_item.text.erb'
       end
-      xit 'should render a text collection' do
+      it 'should render a text collection' do
         @view_model.render_as(:collection_example, :format => :text).should == '_collection_item.text.erb_collection_item.text.erb'
       end
     end

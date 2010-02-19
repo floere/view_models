@@ -1,1 +1,1 @@
-<ol class="collection"><%- collection.each do |item| -%><%- view_model = view_model_for item -%><li><%= view_model.render_as template_name -%></li><%= separator unless item == collection.last %><%- end -%></ol>
+<ol class="collection"><%- collection.each do |item| -%><%- view_model = view_model_for item -%><li><%- options = (template_format ? { :format => template_format } : {}) -%><%= view_model.render_as template_name, options -%></li><%= separator unless item == collection.last %><%- end -%></ol>

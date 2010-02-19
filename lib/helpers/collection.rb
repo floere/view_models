@@ -4,8 +4,6 @@ module ViewModels
       
       # Construct a view_model for a collection.
       #
-      # TODO Move to Collection.
-      #
       def collection_view_model_for pagination_array, context = self
         Collection.new pagination_array, context
       end

@@ -85,12 +85,13 @@ module ViewModels
         @name_partial_mapping ||= {} # rewrite
         @name_partial_mapping[name] || template_path(name, options) # TODO rewrite
       end
-      def save_successful_render name, options
-        @name_partial_mapping ||= {} # rewrite
-        @name_partial_mapping[name] ||= options[:partial]
-      end
       
       protected
+        
+        def save_successful_render name, options
+          @name_partial_mapping ||= {} # rewrite
+          @name_partial_mapping[name] ||= options[:partial]
+        end
         
         # Returns the path from the view_model_view_paths to the actual templates.
         # e.g. "view_models/models/book"
