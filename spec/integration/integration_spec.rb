@@ -33,7 +33,7 @@ describe 'Integration' do
   # end
   
   describe 'capture in view model method' do
-    it 'should description' do
+    xit 'should capture the content of the block' do
       @view_model.render_as(:capture_in_method).should == ''
     end
   end
@@ -116,18 +116,18 @@ describe 'Integration' do
       end
     end
     describe "explicit partial rendering" do
-      # it "should render the right partial" do
-      #   @view_model.render_as(:partial => 'inner', :format => :nesting).should == '_inner.nesting.erb'
-      # end
-      xit "should render the right partial" do
-        @view_model.render_as('view_models/sub_subclass/inner', :format => :nesting).should == '_inner.nesting.erb'
+      it "should render the right partial" do
+        # If one wants explicit template rendering, he needs to work more.
+        # Let's be opinionated here :)
+        #
+        @view_model.render_as(:partial => 'view_models/sub_subclass/inner', :format => :nesting).should == '_inner.nesting.erb'
       end
     end
     describe "nesting" do
       it "should render the right nested template, with an explicitly defined format (see template)" do
         @view_model.render_as(:outer, :format => :explicit).should == '_inner.also_explicit.erb'
       end
-      xit "should render the right nested template, respecting the defined format" do
+      it "should render the right nested template, respecting the defined format" do
         @view_model.render_as(:outer, :format => :nesting).should == '_inner.nesting.erb'
       end
     end

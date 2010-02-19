@@ -62,7 +62,6 @@ module ViewModels
       #
       #
       def render_as view, name, options
-        view.template_format = options.delete(:format) if options[:format]
         result = view.render_for self, name, options
         save_successful_render name, options if result
         result
@@ -156,6 +155,13 @@ module ViewModels
       def render name, options
         options[:locals] = { :view_model => self }.merge options[:locals] || {}
         view = View.new controller, master_helper_module
+        view.template_format = options.delete(:format) if options[:format]
+        metaclass.send :define_method, :output_buffer= do |buffer|
+          view.output_buffer = buffer
+        end
+        metaclass.send :define_method, :output_buffer do |buffer|
+          view.output_buffer = buffer
+        end
         self.class.render_as view, name, options
       end
       

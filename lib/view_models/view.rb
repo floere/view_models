@@ -17,7 +17,8 @@ module ViewModels
     # Note: I am not terribly happy about using Exceptions as control flow.
     #
     def render_for view_model_class, name, options # view_model_class, options
-      template = find_template view_model_class.partial_path(name, options)
+      path = view_model_class.partial_path name, options
+      template = find_template path
       # Could I directly render the template?
       #
       if template
