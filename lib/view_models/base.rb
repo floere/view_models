@@ -119,15 +119,15 @@ module ViewModels
     # Renders the given view in the view_model's view root in the format given.
     #
     # Example:
-    #   app/views/view_models/this/view_model/template.html.haml
-    #   app/views/view_models/this/view_model/template.text.erb
+    #   app/views/view_models/this/view_model/_partial.haml
+    #   app/views/view_models/this/view_model/_partial.text.erb
     #
     # The following options are supported: 
-    # * :format - Calling view_model.render_as('template', :format => :html) will render the haml
-    #   template, calling view_model.render_as('template', :format => :text) will render
-    #   the erb.
+    # * :format - Calling view_model.render_as('template') will render the haml
+    #   partial, calling view_model.render_as('template', :format => :text) will render
+    #   the text erb.
     # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
-    #   view_model.render_as('template', :locals => { :name => :value })
+    #   view_model.render_as(:partial, :locals => { :name => :value })
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as name, options = {}
@@ -141,6 +141,7 @@ module ViewModels
       #   render view, name, options
       # end
     end
+    alias render_the render_as
     
     protected
       

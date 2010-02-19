@@ -23,5 +23,11 @@ module ViewModels
       view_model_class = view_model_class.next and retry
     end
     
+    #
+    #
+    def find_template path
+      view_paths.find_template path, template_format rescue nil
+    end
+    
   end
 end
