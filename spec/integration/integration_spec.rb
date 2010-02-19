@@ -179,13 +179,13 @@ describe 'Integration' do
     end
     describe 'memoizing' do
       it 'should memoize' do
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.class.should_receive(:template_path).once
         
-        @view_model.render_as(:not_found_in_sub_subclass).should == '_not_found_in_sub_subclass.erb'
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
+        @view_model.render_as :not_found_in_sub_subclass
       end
       it 'should render the right one' do
         @view_model.render_as :exists_in_both

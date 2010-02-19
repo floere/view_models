@@ -17,12 +17,13 @@ module ViewModels
     # Note: I am not terribly happy about using Exceptions as control flow.
     #
     def render_for view_model_class, name, options # view_model_class, options
-      path = view_model_class.render_path name, options
+      path = view_model_class.render_path self, name, options
       template = find_template path
       # Could I directly render the template?
       #
       if template
-        render options.merge! :file => template.path
+        options.merge! :file => template.path
+        render options
       else
         render_for view_model_class.next, name, options
       end
@@ -32,6 +33,10 @@ module ViewModels
     #
     def find_template path
       view_paths.find_template path, template_format rescue nil
+    end
+    
+    def inheritance_mapping_key name
+      [template_format, name]
     end
     
   end

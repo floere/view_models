@@ -7,6 +7,25 @@ module ViewModels
   #
   class MissingTemplateError < StandardError; end
   
+  class PathStore
+    
+    def initialize view_model_class
+      @view_model_class = view_model_class
+      @name_path_mapping = {}
+    end
+    
+    def render_path view, name, options
+      @name_partial_mapping ||= {} # rewrite
+      @name_partial_mapping[view.inheritance_mapping_key(name)] || template_path(name, options) # TODO rewrite
+    end
+    
+    def save_successful_render key, options
+      @name_partial_mapping ||= {} # rewrite
+      @name_partial_mapping[key] ||= options[:file] # TODO rewrite
+    end
+    
+  end
+  
   # Extracts controllers for a living from unsuspecting views.
   #
   class ControllerExtractor
@@ -85,37 +104,38 @@ module ViewModels
       #
       def render view, name, options
         result = view.render_for self, name, options
-        save_successful_render name, options if result
+        save_successful_render view.inheritance_mapping_key(name), options if result
         result
       end
       
       # Returns the root of this view_models views with the template name appended.
       # e.g. 'view_models/some/specific/path/to/template'
       #
+      # TODO Split this method up!
+      #
       def template_path name, options
-        name = name.to_s
-        if name.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
-          File.join File.dirname(name), "#{options[:prefix]}#{File.basename(name)}"
+        prefix = options[:prefix] # extract from this method
+        if name.to_s.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
+          File.join File.dirname(name), "#{prefix}#{File.basename(name)}"
         else
-          File.join view_model_path, "#{options[:prefix]}#{name}"
+          File.join view_model_path, "#{prefix}#{name}"
         end
       end
       
       # The view gets its TODO
       #
-      def render_path name, options
+      def render_path view, name, options
         @name_partial_mapping ||= {} # rewrite
-        @name_partial_mapping[name] || template_path(name, options) # TODO rewrite
+        @name_partial_mapping[view.inheritance_mapping_key(name)] || template_path(name, options) # TODO rewrite
+      end
+      # TODO
+      #
+      def save_successful_render key, options
+        @name_partial_mapping ||= {} # rewrite
+        @name_partial_mapping[key] ||= options[:file] # TODO rewrite
       end
       
       protected
-        
-        #
-        #
-        def save_successful_render name, options
-          @name_partial_mapping ||= {} # rewrite
-          @name_partial_mapping[name] ||= options[:partial]
-        end
         
         # Returns the path from the view_model_view_paths to the actual templates.
         # e.g. "view_models/models/book"
@@ -178,13 +198,11 @@ module ViewModels
     
     protected
       
-      attr_accessor :template_format
-      
       def render name, options
         options[:locals] = { :view_model => self }.merge options[:locals] || {}
         view = View.new controller, master_helper_module
-        if template_format = format_for(options)
-          view.template_format = template_format
+        if format = format_for(options)
+          view.template_format = format
         end
         # metaclass.send :define_method, :capture do |*args, &block|
         #   view.capture *args, &block
@@ -196,6 +214,7 @@ module ViewModels
       #
       # Returns nil when no format option has been passed or no format is saved.
       #
+      attr_accessor :template_format
       def format_for options
         self.template_format = options.delete(:format) || self.template_format
       end
