@@ -102,6 +102,11 @@ describe 'Integration' do
   end
   
   describe 'render_as' do
+    describe 'render_the alias' do
+      it 'should also render' do
+        @view_model.render_the(:part_that_is_dependent_on_the_view_model).should == '_part_that_is_dependent_on_the_view_model.erb'
+      end
+    end
     describe "explicit template rendering" do
       xit "should render the right template" do
         @view_model.render_as(:show).should == 'show.html.erb'
