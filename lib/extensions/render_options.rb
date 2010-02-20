@@ -21,9 +21,10 @@ module ViewModels
         self
       end
       
+      #
+      #
       def view_model= view_model
         self[:locals] = { :view_model => view_model }.merge self[:locals] || {}
-        self
       end
       
       #

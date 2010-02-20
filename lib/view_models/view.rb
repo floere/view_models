@@ -15,8 +15,7 @@ module ViewModels
     # Returns nil if there is no next view model class.
     #
     def render_for view_model_class, options
-      path = view_model_class.render_path path_key(options), options
-      template = find_template path
+      template = find_template view_model_class.template_path path_key(options), options
       # Could I directly render the template?
       #
       if template

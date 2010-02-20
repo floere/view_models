@@ -28,7 +28,7 @@ class ViewModels::SubSubclass < ViewModels::Subclass
   end
   
   def capture_in_method &block
-    capture &block
+    self.capture &block
   end
   
 end

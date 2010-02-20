@@ -21,14 +21,14 @@ module ViewModels
     
     # Prepare the key for the next storing procedure.
     #
-    def prepare_store key
+    def prepare key
       @key = key
     end
     
     #
     #
-    def store path
-      self[@key] = path
+    def save options
+      self[@key] = options[:file]
     end
     
     #

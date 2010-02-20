@@ -7,30 +7,10 @@ module ViewModels
   #
   class MissingTemplateError < StandardError; end
   
-  # Extracts controllers for a living from unsuspecting views.
-  #
-  class ControllerExtractor
-    
-    attr_reader :context
-    
-    def initialize context
-      @context = context
-    end
-    
-    # Extracts a controller from the context.
-    #
-    def extract
-      context = self.context
-      context.respond_to?(:controller) ? context.controller : context
-    end
-    
-  end
-  
   # Base class from which all view_models inherit.
   #
   class Base
     
-    attr_accessor :format
     attr_reader   :model, :controller
     
     # Make helper and helper_method available
@@ -74,6 +54,8 @@ module ViewModels
       # Wrapper for add_template_helper in ActionController::Helpers, also
       # includes given helper in the view_model
       #
+      # TODO extract into module
+      #
       alias old_add_template_helper add_template_helper
       def add_template_helper helper_module
         include helper_module
@@ -91,26 +73,34 @@ module ViewModels
       #
       #
       def render view, options
-        path_store.prepare_store view.path_key(options)
+        store = self.path_store
+        store.prepare view.path_key(options)
         result = view.render_for self, options
-        path_store.store(options[:file]) if result
+        store.save options if result
         result
-      end
-      
-      # Returns the root of this view_models views with the template name appended.
-      # e.g. 'view_models/some/specific/path/to/template'
-      #
-      def template_path options
-        File.join(options.path || view_model_path, options.name)
       end
       
       # Return as render path either a stored path or a newly generated one.
       #
-      def render_path key, options
-        path_store[key] || template_path(options)
+      def template_path key, options
+        path_store[key] || generate_template_path_from(options)
       end
       
       protected
+        
+        # Returns the root of this view_models views with the template name appended.
+        # e.g. 'view_models/some/specific/path/to/template'
+        #
+        def generate_template_path_from options
+          File.join(generate_path_from(options), options.name)
+        end
+        
+        # If the path is explicitly defined, return it, otherwise
+        # generate a view model path from the class name.
+        #
+        def generate_path_from options
+          options.path || view_model_path
+        end
         
         # Returns the path from the view_model_view_paths to the actual templates.
         # e.g. "view_models/models/book"
@@ -127,10 +117,6 @@ module ViewModels
         end
         
     end # class << self
-    
-    #
-    #
-    attr_accessor :template_format
     
     # Delegate controller methods.
     #
@@ -184,18 +170,10 @@ module ViewModels
       def render options
         options.view_model = self
         view = view_instance_for options
-        # metaclass.send :define_method, :capture do |*args, &block|
-        #   view.capture *args, &block
-        # end
+        metaclass.send :define_method, :capture do |*args, &block|
+          view.capture *args, &block
+        end
         self.class.render view, options
-      end
-      
-      # Extracts the format from the options and returns it, or a saved one.
-      #
-      # Returns nil when no format option has been passed or no format is saved.
-      #
-      def format_for options
-        self.template_format = options.delete(:format) || self.template_format
       end
       
       # Creates a view instance with the given format.
@@ -211,6 +189,15 @@ module ViewModels
           view.template_format = format
         end
         view
+      end
+      
+      # Extracts the format from the options and returns it, or a saved one.
+      #
+      # Returns nil when no format option has been passed or no format is saved.
+      #
+      attr_accessor :template_format
+      def format_for options
+        self.template_format = options.delete(:format) || self.template_format
       end
       
   end
