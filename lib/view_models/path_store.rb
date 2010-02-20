@@ -2,7 +2,7 @@
 #
 module ViewModels
   
-  # TODO
+  # A simple path store. Designed to remove a bit of complexity from the base view model.
   #
   class PathStore
     
@@ -16,32 +16,29 @@ module ViewModels
     #
     #
     def self.install_in klass
-      p klass.name
       klass.path_store = PathStore.new klass
     end
     
     # Prepare the key for the next storing procedure.
     #
-    def prepare key
+    def prepare_store key
       @key = key
     end
-    
     #
     #
     def store path
       self[@key] = path
     end
-    
     #
     #
-    def [] view, name, options
-      @name_path_mapping[view.path_key(name)] || view_model_class.template_path(name, options) # TODO rewrite
+    def []= key, path
+      @name_path_mapping[key] ||= path
     end
     
     #
     #
-    def []= key, path # key, options
-      @name_path_mapping[key] ||= path # TODO rewrite
+    def [] key
+      @name_path_mapping[key]
     end
     
   end

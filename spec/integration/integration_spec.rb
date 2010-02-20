@@ -23,13 +23,7 @@ describe 'Integration' do
     @view_model       = ViewModels::SubSubclass.new @model, @view
   end
   
-  before(:all) do
-    puts "\n#{self.send(:description_args)[0]}:"
-  end
-  # after(:all) do
-  #   p [:sub, ViewModels::Subclass.instance_variable_get(:@name_partial_mapping)]
-  #   p [:subsub, ViewModels::SubSubclass.instance_variable_get(:@name_partial_mapping)]
-  # end
+  before(:all) { puts "\n#{self.send(:description_args)[0]}:" }
   
   describe 'capture in view model method' do
     xit 'should capture the content of the block' do

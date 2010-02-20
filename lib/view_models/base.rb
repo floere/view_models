@@ -91,10 +91,24 @@ module ViewModels
       #
       #
       def render view, name, options
-        path_store.prepare view.path_key(name)
+        options = include_name_into_options name, options
+        path_store.prepare_store view.path_key(name)
         result = view.render_for self, name, options
         path_store.store(options[:file]) if result
         result
+      end
+      
+      def include_name_into_options name, options
+        prefix = options.delete(:prefix)
+        # Specific path like 'view_models/somethingorother/foo.haml' given.
+        #
+        if name.to_s.include?('/')
+          options[:_path] = File.dirname(name)
+          options[:_name] = "#{prefix}#{File.basename(name)}"
+        else
+          options[:_name] = "#{prefix}#{name}"
+        end
+        options
       end
       
       # Returns the root of this view_models views with the template name appended.
@@ -102,19 +116,14 @@ module ViewModels
       #
       # TODO Split this method up!
       #
-      def template_path name, options
-        prefix = options[:prefix] # extract from this method
-        if name.to_s.include?('/') # Specific path like 'view_models/somethingorother/foo.haml' given.
-          File.join File.dirname(name), "#{prefix}#{File.basename(name)}"
-        else
-          File.join view_model_path, "#{prefix}#{name}"
-        end
+      def template_path options
+        File.join(options[:_path] || view_model_path, options[:_name])
       end
       
-      # The view gets its TODO
+      # Return as render path either a stored path or a newly generated one.
       #
-      def render_path view, name, options
-        path_store[view, name, options]
+      def render_path key, options
+        path_store[key] || template_path(options)
       end
       
       protected
