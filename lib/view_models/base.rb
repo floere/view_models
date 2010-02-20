@@ -183,9 +183,8 @@ module ViewModels
       #
       def view_instance_for options
         view = View.new controller, master_helper_module
-        if format = format_for(options)
-          view.template_format = format
-        end
+        format = format_for options
+        view.template_format = format if format
         view
       end
       
