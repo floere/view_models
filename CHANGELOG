@@ -1,3 +1,7 @@
+1.5.0 - 20.02.10 - floere: format propagates through collection rendering
+                           render_as, new sig: :partial => to explicitly define the partial. (Syntactic Discouragement)
+                           Added: render_with, an alias of render_as.
+                           Added: render_template, to render non-partials.
 1.4.2 - 10.02.10 - floere: render_as does not check the deprecated API anymore. Use the new options
                            form to pass a format.
                  - floere: MissingViewModelError is not thrown anymore.
