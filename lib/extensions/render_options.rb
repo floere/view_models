@@ -10,15 +10,15 @@ module ViewModels
       
       #
       #
-      def partial!
+      def partial= name
         self.prefix = :'_'
-        self
+        self.template_name = name
       end
       #
       #
-      def template!
+      def template= name
         self.prefix = nil
-        self
+        self.template_name = name
       end
       
       #

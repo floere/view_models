@@ -142,9 +142,7 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as name, options = {}
-      options.extend Extensions::RenderOptions
-      options.partial!
-      options.template_name = name
+      options.extend(Extensions::RenderOptions).partial = name
       render options
     end
     # render_the is used for small parts.
@@ -156,23 +154,23 @@ module ViewModels
     #
     alias render_the render_as
     
+    # TODO
+    #
     def render_template name, options = {}
-      options.extend Extensions::RenderOptions
-      options.template!
-      options.template_name = name
+      options.extend(Extensions::RenderOptions).template = name
       render options
     end
     
     protected
       
-      #
+      # TODO
       #
       def render options
         options.view_model = self
         view = view_instance_for options
-        metaclass.send :define_method, :capture do |*args, &block|
-          view.capture *args, &block
-        end
+        # metaclass.send(:define_method, :capture) do |*args, &block|
+        #   view.capture *args, &block
+        # end
         self.class.render view, options
       end
       
