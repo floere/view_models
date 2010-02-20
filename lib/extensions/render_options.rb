@@ -47,12 +47,6 @@ module ViewModels
           end
         end
         
-        # #
-        # #
-        # def specific_path? template_name
-        #   template_name.to_s.include?('/')
-        # end
-        
         #
         #
         def specific_path name

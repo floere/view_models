@@ -18,8 +18,7 @@ module ViewModels
     include ActionController::Helpers
     
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
-    # The context is usually a view or a controller.
-    # Note: But doesn't need to be one :)
+    # The context is usually a view or a controller, but doesn't need to be.
     # 
     def initialize model, context
       @model = model
