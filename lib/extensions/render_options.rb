@@ -30,14 +30,22 @@ module ViewModels
       #
       #
       def template_name= template_name
-        if template_name.kind_of?(Hash)
-          self.merge! template_name
-          template_name = self.delete :partial
-        end
+        template_name = deoptionize template_name
         template_name.to_s.include?('/') ? specific_path(template_name) : incomplete_path(template_name)
       end
       
       private
+        
+        #
+        #
+        def deoptionize template_name
+          if template_name.kind_of?(Hash)
+            self.merge! template_name
+            self.delete :partial
+          else
+            template_name
+          end
+        end
         
         #
         #
