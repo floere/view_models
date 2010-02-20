@@ -4,18 +4,20 @@ module ViewModels
       
       # Construct a view_model for a collection.
       #
-      def collection_view_model_for pagination_array, context = self
-        Collection.new pagination_array, context
+      def collection_view_model_for array_or_pagination, context = self
+        Collection.new array_or_pagination, context
       end
       
       # The Collection view_model helper has the purpose of presenting presentable collections.
       # * Render as list
       # * Render as table
       # * Render as collection
-      # * Render a Pagination
+      # * Render a pagination
       #
       class Collection
         
+        #
+        #
         methods_to_delegate = [
           Enumerable.instance_methods.map(&:to_sym),
           :length, :size, :empty?, :each, :exit,
@@ -40,16 +42,11 @@ module ViewModels
         # By default, uses:
         #   * The collection of the collection view_model to iterate over.
         #   * The original context given to the collection view_model to render in.
-        #   * Uses 'list_item' as the default element template.
+        #   * Uses :list_item as the default element template.
         #   * Uses a nil separator in html.
         #
         def list options = {}
-          default_options = {
-            :collection => @collection,
-            :context => @context,
-            :template_name => :list_item,
-            :separator => nil
-          }
+          default_options = { :collection => @collection, :template_name => :list_item, :separator => nil }
           
           render_partial :list, default_options.merge(options)
         end
@@ -66,17 +63,11 @@ module ViewModels
         #   separator => separator between each element
         # By default, uses:
         #   * The collection of the collection view_model to iterate over.
-        #   * The original context given to the collection view_model to render in.
-        #   * Uses 'collection_item' as the default element template.
+        #   * Uses :collection_item as the default element template.
         #   * Uses a nil separator.
         #
         def collection options = {}
-          default_options = {
-            :collection => @collection,
-            :context => @context,
-            :template_name => :collection_item,
-            :separator => nil
-          }
+          default_options = { :collection => @collection, :template_name => :collection_item, :separator => nil }
           
           render_partial :collection, default_options.merge(options)
         end
@@ -92,19 +83,13 @@ module ViewModels
         #   separator => separator between each element
         # By default, uses:
         #   * The collection of the collection view_model to iterate over.
-        #   * The original context given to the collection view_model to render in.
-        #   * Uses 'table_row' as the default element template.
+        #   * Uses :table_row as the default element template.
         #   * Uses a nil separator.
         #
         def table options = {}
-          options = {
-            :collection => @collection,
-            :context => @context,
-            :template_name => :table_row,
-            :separator => nil
-          }.merge(options)
+          default_options = { :collection => @collection, :template_name => :table_row, :separator => nil }
           
-          render_partial :table, options
+          render_partial :table, default_options.merge(options)
         end
         
         # Renders a pagination.
@@ -115,17 +100,12 @@ module ViewModels
         #   separator => separator between pages
         # By default, uses:
         #   * The collection of the collection view_model to iterate over.
-        #   * The original context given to the collection view_model to render in.
         #   * Uses | as separator.
         #
         def pagination options = {}
-          options = {
-            :collection => @collection,
-            :context => @context,
-            :separator => '|'
-          }.merge options
+          default_options = { :collection => @collection, :separator => '|' }
           
-          render_partial :pagination, options
+          render_partial :pagination, default_options.merge(options)
         end
         
         private
