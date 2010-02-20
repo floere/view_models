@@ -31,7 +31,7 @@ module ViewModels
       #
       def template_name= template_name
         template_name = deoptionize template_name
-        template_name.to_s.include?('/') ? specific_path(template_name) : incomplete_path(template_name)
+        specific_path?(template_name) ? specific_path(template_name) : incomplete_path(template_name)
       end
       
       private
@@ -45,6 +45,12 @@ module ViewModels
           else
             template_name
           end
+        end
+        
+        #
+        #
+        def specific_path? template_name
+          template_name.to_s.include? '/'
         end
         
         #
