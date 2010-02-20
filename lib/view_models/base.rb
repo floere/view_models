@@ -90,18 +90,15 @@ module ViewModels
       
       #
       #
-      def render view, name, options
-        options.internalize name
-        path_store.prepare_store view.path_key(name)
-        result = view.render_for self, name, options
+      def render view, options
+        path_store.prepare_store view.path_key(options)
+        result = view.render_for self, options
         path_store.store(options[:file]) if result
         result
       end
       
       # Returns the root of this view_models views with the template name appended.
       # e.g. 'view_models/some/specific/path/to/template'
-      #
-      # TODO Split this method up!
       #
       def template_path options
         File.join(options.path || view_model_path, options.name)
@@ -159,9 +156,10 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as name, options = {}
-      options = name and name = options.delete(:partial) if name.kind_of?(Hash)
       options.extend Extensions::RenderOptions
-      render name, options.partial!
+      options.partial!
+      options.template_name = name
+      render options
     end
     # render_the is used for small parts.
     #
@@ -174,18 +172,22 @@ module ViewModels
     
     def render_template name, options = {}
       options.extend Extensions::RenderOptions
-      render name, options.template!
+      options.template!
+      options.template_name = name
+      render options
     end
     
     protected
       
-      def render name, options
-        options.add_view_model self
+      #
+      #
+      def render options
+        options.view_model = self
         view = view_instance_for options
         # metaclass.send :define_method, :capture do |*args, &block|
         #   view.capture *args, &block
         # end
-        self.class.render view, name, options
+        self.class.render view, options
       end
       
       # Extracts the format from the options and returns it, or a saved one.

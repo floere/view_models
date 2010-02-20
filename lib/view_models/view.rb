@@ -13,19 +13,16 @@ module ViewModels
     # If it fails, it asks the next view_model_class for new render_options.
     #
     # Returns nil if there is no next view model class.
-    # 
-    # Note: I am not terribly happy about using Exceptions as control flow.
     #
-    def render_for view_model_class, name, options # view_model_class, options
-      path = view_model_class.render_path path_key(name), options
+    def render_for view_model_class, options
+      path = view_model_class.render_path path_key(options), options
       template = find_template path
       # Could I directly render the template?
       #
       if template
-        options.merge! :file => template.path
-        render options
+        render options.merge! :file => template.path
       else
-        render_for view_model_class.next, name, options
+        render_for view_model_class.next, options
       end
     end
     
@@ -37,8 +34,8 @@ module ViewModels
     
     # TODO
     #
-    def path_key name
-      [name, template_format]
+    def path_key options
+      [options.name, template_format]
     end
     
   end
