@@ -19,6 +19,14 @@ module ViewModels
       klass.path_store = PathStore.new klass
     end
     
+    #
+    #
+    def cached view, options, &block
+      prepare view.path_key(options)
+      result = block.call
+      save options and result if result
+    end
+    
     # Prepare the key for the next storing procedure.
     #
     def prepare key

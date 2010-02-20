@@ -73,11 +73,9 @@ module ViewModels
       #
       #
       def render view, options
-        store = self.path_store
-        store.prepare view.path_key(options)
-        result = view.render_for self, options
-        store.save options if result
-        result
+        path_store.cached view, options do
+          view.render_for self, options
+        end
       end
       
       # Return as render path either a stored path or a newly generated one.
