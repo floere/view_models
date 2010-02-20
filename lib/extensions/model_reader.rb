@@ -35,8 +35,7 @@ module ViewModels
         #
         def split options
           @filters = if options.last.kind_of?(Hash)
-            filter_options = options.pop
-            [*(filter_options[:filter_through])].reverse
+            [*(options.pop[:filter_through])].reverse
           else
             []
           end
