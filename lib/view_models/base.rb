@@ -11,7 +11,7 @@ module ViewModels
   #
   class Base
     
-    attr_reader   :model, :controller
+    attr_reader :model, :controller
     
     # Make helper and helper_method available
     #
