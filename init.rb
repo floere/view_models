@@ -1,5 +1,6 @@
 require 'extensions/active_record'
 require 'extensions/model_reader'
+require 'extensions/render_options'
 
 require 'view_models'
 require 'view_models/path_store'

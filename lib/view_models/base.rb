@@ -91,24 +91,11 @@ module ViewModels
       #
       #
       def render view, name, options
-        options = include_name_into_options name, options
+        options.internalize name
         path_store.prepare_store view.path_key(name)
         result = view.render_for self, name, options
         path_store.store(options[:file]) if result
         result
-      end
-      
-      def include_name_into_options name, options
-        prefix = options.delete(:prefix)
-        # Specific path like 'view_models/somethingorother/foo.haml' given.
-        #
-        if name.to_s.include?('/')
-          options[:_path] = File.dirname(name)
-          options[:_name] = "#{prefix}#{File.basename(name)}"
-        else
-          options[:_name] = "#{prefix}#{name}"
-        end
-        options
       end
       
       # Returns the root of this view_models views with the template name appended.
@@ -117,7 +104,7 @@ module ViewModels
       # TODO Split this method up!
       #
       def template_path options
-        File.join(options[:_path] || view_model_path, options[:_name])
+        File.join(options.path || view_model_path, options.name)
       end
       
       # Return as render path either a stored path or a newly generated one.
@@ -137,13 +124,16 @@ module ViewModels
         #   view_models/models/book
         #
         # Note: Remembers the result.
-        # TODO Use memoize?
         #
         def view_model_path
           @view_model_path || @view_model_path = self.name.underscore
         end
         
     end # class << self
+    
+    #
+    #
+    attr_accessor :template_format
     
     # Delegate controller methods.
     #
@@ -170,8 +160,8 @@ module ViewModels
     #
     def render_as name, options = {}
       options = name and name = options.delete(:partial) if name.kind_of?(Hash)
-      options[:prefix] = :'_'
-      render name, options
+      options.extend Extensions::RenderOptions
+      render name, options.partial!
     end
     # render_the is used for small parts.
     #
@@ -183,18 +173,15 @@ module ViewModels
     alias render_the render_as
     
     def render_template name, options = {}
-      options[:prefix] = nil
-      render name, options
+      options.extend Extensions::RenderOptions
+      render name, options.template!
     end
     
     protected
       
       def render name, options
-        options[:locals] = { :view_model => self }.merge options[:locals] || {}
-        view = View.new controller, master_helper_module
-        if format = format_for(options)
-          view.template_format = format
-        end
+        options.add_view_model self
+        view = view_instance_for options
         # metaclass.send :define_method, :capture do |*args, &block|
         #   view.capture *args, &block
         # end
@@ -205,23 +192,24 @@ module ViewModels
       #
       # Returns nil when no format option has been passed or no format is saved.
       #
-      attr_accessor :template_format
       def format_for options
         self.template_format = options.delete(:format) || self.template_format
       end
       
-      # # Creates a view instance with the given format.
-      # #
-      # # Examples:
-      # # * Calling view_instance_for :html will later render the haml
-      # #   template, calling view_instance_for :text will later render
-      # #   the erb.
-      # #
-      # def view_instance_for format
-      #   view = View.new controller, master_helper_module
-      #   view.template_format = format if format
-      #   view
-      # end
+      # Creates a view instance with the given format.
+      #
+      # Examples:
+      # * Calling view_instance_for :html will later render the haml
+      #   template, calling view_instance_for :text will later render
+      #   the erb.
+      #
+      def view_instance_for options
+        view = View.new controller, master_helper_module
+        if format = format_for(options)
+          view.template_format = format
+        end
+        view
+      end
       
   end
 end

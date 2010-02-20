@@ -24,11 +24,13 @@ module ViewModels
     def prepare_store key
       @key = key
     end
+    
     #
     #
     def store path
       self[@key] = path
     end
+    
     #
     #
     def []= key, path
