@@ -2,6 +2,7 @@ require 'extensions/active_record'
 require 'extensions/model_reader'
 
 require 'view_models'
+require 'view_models/path_store'
 require 'view_models/base'
 require 'view_models/view'
 

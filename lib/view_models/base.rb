@@ -7,25 +7,6 @@ module ViewModels
   #
   class MissingTemplateError < StandardError; end
   
-  class PathStore
-    
-    def initialize view_model_class
-      @view_model_class = view_model_class
-      @name_path_mapping = {}
-    end
-    
-    def render_path view, name, options
-      @name_partial_mapping ||= {} # rewrite
-      @name_partial_mapping[view.inheritance_mapping_key(name)] || template_path(name, options) # TODO rewrite
-    end
-    
-    def save_successful_render key, options
-      @name_partial_mapping ||= {} # rewrite
-      @name_partial_mapping[key] ||= options[:file] # TODO rewrite
-    end
-    
-  end
-  
   # Extracts controllers for a living from unsuspecting views.
   #
   class ControllerExtractor
@@ -67,6 +48,12 @@ module ViewModels
     
     class << self
       
+      def inherited subclass
+        ViewModels::PathStore.install_in subclass
+        super
+      end
+      attr_accessor :path_store
+      
       include Extensions::ModelReader
       
       # Delegates method calls to the controller.
@@ -96,15 +83,17 @@ module ViewModels
       # Returns the next view model class in the render hierarchy.
       #
       def next
-        raise MissingTemplateError.new if self == ViewModels::Base
-        superclass
+        next_class = superclass
+        raise MissingTemplateError.new if next_class == ViewModels::Base
+        next_class
       end
       
       #
       #
       def render view, name, options
+        path_store.prepare view.path_key(name)
         result = view.render_for self, name, options
-        save_successful_render view.inheritance_mapping_key(name), options if result
+        path_store.store(options[:file]) if result
         result
       end
       
@@ -125,14 +114,7 @@ module ViewModels
       # The view gets its TODO
       #
       def render_path view, name, options
-        @name_partial_mapping ||= {} # rewrite
-        @name_partial_mapping[view.inheritance_mapping_key(name)] || template_path(name, options) # TODO rewrite
-      end
-      # TODO
-      #
-      def save_successful_render key, options
-        @name_partial_mapping ||= {} # rewrite
-        @name_partial_mapping[key] ||= options[:file] # TODO rewrite
+        path_store[view, name, options]
       end
       
       protected

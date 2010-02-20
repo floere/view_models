@@ -29,14 +29,16 @@ module ViewModels
       end
     end
     
-    #
+    # TODO
     #
     def find_template path
       view_paths.find_template path, template_format rescue nil
     end
     
-    def inheritance_mapping_key name
-      [template_format, name]
+    # TODO
+    #
+    def path_key name
+      [name, template_format]
     end
     
   end
