@@ -99,18 +99,19 @@ describe 'Integration' do
     end
   end
   
+  describe "render_template" do
+    it "should render the right template" do
+      @view_model.render_template(:show).should == 'show.html.erb'
+    end
+    it "should render the right template with format" do
+      @view_model.render_template(:show, :format => :text).should == 'show.text.erb'
+    end
+  end
+  
   describe 'render_as' do
     describe 'render_the alias' do
       it 'should also render' do
         @view_model.render_the(:part_that_is_dependent_on_the_view_model).should == '_part_that_is_dependent_on_the_view_model.erb'
-      end
-    end
-    describe "explicit template rendering" do
-      it "should render the right template with format" do
-        @view_model.render_template(:show, :format => :text).should == 'show.text.erb'
-      end
-      it "should render the right template" do
-        @view_model.render_template(:show).should == 'show.html.erb'
       end
     end
     describe "explicit partial rendering" do
