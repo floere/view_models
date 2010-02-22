@@ -17,7 +17,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should call render_partial with the right parameters" do
       default_options = {
         :collection => @collection,
-        :context => @context,
         :template_name => :list_item,
         :separator => nil
       }
@@ -29,7 +28,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should override the default options if specific options are given" do
       specific_options = {
         :collection => :a,
-        :context => :b,
         :template_name => :c,
         :separator => :d
       }
@@ -49,7 +47,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should call render_partial with the right parameters" do
       default_options = {
         :collection => @collection,
-        :context => @context,
         :template_name => :collection_item,
         :separator => nil
       }
@@ -60,7 +57,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should override the default options if specific options are given" do
       specific_options = {
         :collection => :a,
-        :context => :b,
         :template_name => :c,
         :separator => :d
       }
@@ -80,7 +76,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should call render_partial with the right parameters" do
       default_options = {
         :collection => @collection,
-        :context => @context,
         :template_name => :table_row,
         :separator => nil
       }
@@ -92,7 +87,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should override the default options if specific options are given" do
       specific_options = {
         :collection => :a,
-        :context => :b,
         :template_name => :c,
         :separator => :d
       }
@@ -112,7 +106,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should call render_partial with the right parameters" do
       default_options = {
         :collection => @collection,
-        :context => @context,
         :separator => '|'
       }
       @collection_view_model.should_receive(:render_partial).once.with :pagination, default_options
@@ -122,7 +115,6 @@ describe ViewModels::Helpers::Rails::Collection do
     it "should override the default options if specific options are given" do
       specific_options = {
         :collection => :a,
-        :context => :b,
         :separator => :c
       }
       @collection_view_model.should_receive(:render_partial).once.with :pagination, specific_options
