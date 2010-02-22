@@ -1,5 +1,5 @@
 module ViewModels
-  module Helper
+  module Helpers
     module Rails
       
       # Construct a view_model for a collection.

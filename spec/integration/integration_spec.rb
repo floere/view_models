@@ -4,7 +4,7 @@ require File.join(File.dirname(__FILE__), 'models/subclass')
 require File.join(File.dirname(__FILE__), 'models/sub_subclass')
 
 require 'helpers/rails'
-ActionView::Base.send :include, ViewModels::Helper::Rails
+ActionView::Base.send :include, ViewModels::Helpers::Rails
 
 require 'view_models/base'
 require File.join(File.dirname(__FILE__), 'view_models/project')
