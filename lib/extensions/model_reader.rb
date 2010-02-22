@@ -17,13 +17,13 @@ module ViewModels
       #   model_reader :foobar, :filter_through => [:textilize, :h]   # first textilize, then html escape
       #
       def model_reader *attributes_and_options
-        options = ModelReaderOptions.new *attributes_and_options
+        options = Options.new *attributes_and_options
         FilteredDelegationInstaller.new(self, options).install
       end
       
       # Bundles the model reader options and extracts the relevant structured data.
       #
-      class ModelReaderOptions
+      class Options
         
         attr_reader :attributes, :filters
         
