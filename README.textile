@@ -168,7 +168,7 @@ class ViewModels::Project < ViewModels::Base
   
   # We want to be able to call view_model_for in our view_models.
   #
-  helper ViewModels::Helper::Rails
+  helper ViewModels::Helpers::Rails
   
   # Include all common view helpers.
   #

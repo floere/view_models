@@ -1,11 +1,11 @@
 require File.join(File.dirname(__FILE__), '../../spec_helper')
 
-describe ViewModels::Helper::Rails::Collection do
+describe ViewModels::Helpers::Rails::Collection do
   
   before(:each) do
     @collection = stub :collection
     @context    = stub :context
-    @collection_view_model = ViewModels::Helper::Rails::Collection.new @collection, @context
+    @collection_view_model = ViewModels::Helpers::Rails::Collection.new @collection, @context
   end
   
   describe "list" do
