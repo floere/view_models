@@ -25,6 +25,27 @@ describe 'Integration' do
   
   before(:all) { puts "\n#{self.send(:description_args)[0]}:" }
   
+  describe 'view_model_for' do
+    context 'view model' do
+      it 'should be available' do
+        lambda { @view_model.view_model_for @model }.should_not raise_error
+      end
+      it 'should return the right one' do
+        @view_model.view_model_for(@model).should be_kind_of(ViewModels::SubSubclass)
+      end
+    end
+  end
+  describe 'view_model_class_for' do
+    context 'view model' do
+      it 'should be available' do
+        lambda { @view_model.view_model_class_for @model }.should_not raise_error
+      end
+      it 'should return the right class' do
+        @view_model.view_model_class_for(@model).should == ViewModels::SubSubclass
+      end
+    end
+  end
+  
   describe 'capture in view model method' do
     xit 'should capture the content of the block' do
       @view_model.render_as(:capture_in_method).should == 'Capturing: A Pirate!'
