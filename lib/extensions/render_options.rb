@@ -27,14 +27,14 @@ module ViewModels
         self[:locals] = { :view_model => view_model }.merge self[:locals] || {}
       end
       
-      #
-      #
-      def template_name= template_name
-        template_name = deoptionize template_name
-        template_name.to_s.include?('/') ? specific_path(template_name) : incomplete_path(template_name)
-      end
-      
       private
+        
+        #
+        #
+        def template_name= template_name
+          template_name = deoptionize template_name
+          template_name.to_s.include?('/') ? specific_path(template_name) : incomplete_path(template_name)
+        end
         
         #
         #
