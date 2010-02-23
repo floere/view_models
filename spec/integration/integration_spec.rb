@@ -14,12 +14,17 @@ require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
 describe 'Integration' do
   
   before(:each) do
-    @logger           = stub :logger, :null_object => true
-    @controller_class = stub @controller.class, :view_paths => 'spec/integration/views', :controller_path => 'app/controllers/test'
-    @controller       = stub ActionController::Base.new, :class => @controller_class, :logger => @logger
-    @view             = ActionView::Base.new @controller.class.view_paths, {}, @controller
-    @model            = SubSubclass.new
-    @view_model       = ViewModels::SubSubclass.new @model, @view
+    begin
+      @logger           = stub :logger, :null_object => true
+      @controller       = ActionController::Base.new
+      @controller_class = stub @controller.class, :view_paths => 'spec/integration/views'
+      @controller       = stub @controller, :logger => @logger, :class => @controller_class
+      @view             = ActionView::Base.new @controller.class.view_paths, {}, @controller
+      @model            = SubSubclass.new
+      @view_model       = ViewModels::SubSubclass.new @model, @view
+    rescue Exception => e
+      p e.backtrace
+    end
   end
   
   before(:all) { puts "\n#{self.send(:description_args)[0]}:" }

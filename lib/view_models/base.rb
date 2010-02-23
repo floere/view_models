@@ -27,11 +27,11 @@ module ViewModels
     
     class << self
       
+      attr_accessor :path_store
       def inherited subclass
         ViewModels::PathStore.install_in subclass
         super
       end
-      attr_accessor :path_store
       
       include Extensions::ModelReader
       
@@ -75,7 +75,9 @@ module ViewModels
         end
       end
       
+      # Returns a template for the view with the given options.
       #
+      # If no template is found, traverses up the inheritance chain.
       #
       def template view, options
         inheritance_chain_ends? options
