@@ -64,9 +64,7 @@ module ViewModels
       # Returns the next view model class in the render hierarchy.
       #
       def next
-        next_class = superclass
-        raise MissingTemplateError.new if next_class == ViewModels::Base
-        next_class
+        superclass
       end
       
       #
@@ -77,13 +75,34 @@ module ViewModels
         end
       end
       
-      # Return as render path either a stored path or a newly generated one.
       #
-      def template_path key, options
-        path_store[key] || generate_template_path_from(options)
+      #
+      def template view, options
+        inheritance_chain_ends? options
+        
+        # TODO implement self.find_template view, options
+        template = view.find_template template_path(options, view.path_key(options.name))
+        
+        template || self.next.template(view, options)
       end
       
       protected
+        
+        # Check if the view lookup inheritance chain has ended.
+        #
+        # Raises a MissingTemplateError if yes.
+        #
+        def inheritance_chain_ends? options
+          raise MissingTemplateError.new("No template '#{template_path(options)}' found.") if self == ViewModels::Base
+        end
+        
+        # Return as render path either a stored path or a newly generated one.
+        #
+        # If nothing or nil is passed, the store is ignored.
+        #
+        def template_path options, key = nil
+          path_store[key] || generate_template_path_from(options)
+        end
         
         # Returns the root of this view_models views with the template name appended.
         # e.g. 'view_models/some/specific/path/to/template'
@@ -124,15 +143,15 @@ module ViewModels
     #
     ActionController::Routing::Routes.install_helpers self
     
-    # Renders the given view in the view_model's view root in the format given.
+    # Renders the given partial in the view_model's view root in the format given.
     #
     # Example:
     #   app/views/view_models/this/view_model/_partial.haml
     #   app/views/view_models/this/view_model/_partial.text.erb
     #
     # The following options are supported: 
-    # * :format - Calling view_model.render_as('template') will render the haml
-    #   partial, calling view_model.render_as('template', :format => :text) will render
+    # * :format - Calling view_model.render_as('partial') will render the haml
+    #   partial, calling view_model.render_as('partial', :format => :text) will render
     #   the text erb.
     # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
     #   view_model.render_as(:partial, :locals => { :name => :value })
@@ -151,7 +170,19 @@ module ViewModels
     #
     alias render_the render_as
     
-    # TODO
+    # Renders the given template in the view_model's view root in the format given.
+    #
+    # Example:
+    #   app/views/view_models/this/view_model/template.haml
+    #   app/views/view_models/this/view_model/template name.text.erb
+    #
+    # The following options are supported: 
+    # * :format - Calling view_model.render_template('template') will render the haml
+    #   partial, calling view_model.render_template('template', :format => :text) will render
+    #   the text erb.
+    # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
+    #   view_model.render_template(:template, :locals => { :name => :value })
+    # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_template name, options = {}
       options.extend(Extensions::RenderOptions).template = name
@@ -172,6 +203,8 @@ module ViewModels
       end
       
       # Creates a view instance with the given format.
+      #
+      # TODO Move the format to the class.
       #
       # Examples:
       # * Calling view_instance_for :html will later render the haml

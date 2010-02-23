@@ -3,6 +3,8 @@ module ViewModels
   #
   class View < ActionView::Base
     
+    # Include the helpers from the view model.
+    #
     def initialize controller, master_helper_module
       metaclass.send :include, master_helper_module
       super controller.class.view_paths, {}, controller
@@ -15,26 +17,21 @@ module ViewModels
     # Returns nil if there is no next view model class.
     #
     def render_for view_model_class, options
-      template = find_template view_model_class.template_path path_key(options), options
-      # Could I directly render the template?
-      #
-      if template
-        render options.merge! :file => template.path
-      else
-        render_for view_model_class.next, options
-      end
+      template = view_model_class.template self, options
+      
+      render options.merge! :file => template.path
     end
     
-    # TODO
+    # Finds the template in the view paths at the given path, with its format.
     #
     def find_template path
       view_paths.find_template path, template_format rescue nil
     end
     
-    # TODO
+    # Return a "unique" key for the template.
     #
-    def path_key options
-      [options.name, template_format]
+    def path_key name
+      [name, template_format]
     end
     
   end

@@ -145,7 +145,9 @@ describe ViewModels::Base do
           @view_model_class.stub :path_store => @path_store
         end
         it 'should return the path from the path store' do
-          @view_model_class.template_path(:some_key, nil).should == 'some/path'
+          in_the @view_model_class do
+            template_path(nil, :some_key).should == 'some/path'
+          end
         end
       end
       context 'path store does not have key' do
@@ -158,7 +160,9 @@ describe ViewModels::Base do
           
           @view_model_class.should_receive(:generate_template_path_from).once.with options
           
-          @view_model_class.template_path nil, options
+          in_the @view_model_class do
+            template_path options
+          end
         end
       end
     end

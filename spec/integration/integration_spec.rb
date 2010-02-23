@@ -159,7 +159,7 @@ describe 'Integration' do
         @view_model.render_as(:no_sub_subclass).should == '_no_sub_subclass.erb'
       end
       it 'should raise ViewModels::MissingTemplateError if template is not found' do
-        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError)
+        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError, 'No template _this_template_does_not_exist_at_allllll found.')
       end
     end
     describe 'format' do
