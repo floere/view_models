@@ -100,8 +100,10 @@ module ViewModels
         #
         # If nothing or nil is passed, the store is ignored.
         #
+        # TODO How or why can path_store be nil?
+        #
         def template_path options, key = nil
-          path_store[key] || generate_template_path_from(options)
+          path_store && path_store[key] || generate_template_path_from(options)
         end
         
         # Returns the root of this view_models views with the template name appended.
@@ -191,7 +193,8 @@ module ViewModels
     
     protected
       
-      # TODO
+      # Internal render method that uses the options to get a view instance
+      # and then referring to its class for rendering.
       #
       def render options
         options.view_model = self
