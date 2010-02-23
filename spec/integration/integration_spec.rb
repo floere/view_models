@@ -152,45 +152,45 @@ describe 'Integration' do
       end
     end
     describe 'template inheritance' do
-      it "should use its template" do
-        @view_model.render_as(:exists).should == 'html exists' # The default
+      it 'should raise ViewModels::MissingTemplateError if template is not found' do
+        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError, "No template 'view_models/base/_this_template_does_not_exist_at_allllll' found.")
+      end
+      it "should use its own template" do
+        @view_model.render_as(:exists).should == '_exists.html.erb' # The default
       end
       it "should use the subclass' template" do
         @view_model.render_as(:no_sub_subclass).should == '_no_sub_subclass.erb'
       end
-      it 'should raise ViewModels::MissingTemplateError if template is not found' do
-        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError, 'No template _this_template_does_not_exist_at_allllll found.')
-      end
     end
     describe 'format' do
       it 'should render html' do
-        @view_model.render_as(:exists, :format => nil).should == 'html exists' # the default
+        @view_model.render_as(:exists, :format => nil).should == '_exists.html.erb' # the default
       end
       it 'should render erb' do
-        @view_model.render_as(:exists, :format => '').should == 'exists'
+        @view_model.render_as(:exists, :format => '').should == '_exists.erb'
       end
       it 'should render text' do
-        @view_model.render_as(:exists, :format => :text).should == 'text exists'
+        @view_model.render_as(:exists, :format => :text).should == '_exists.text.erb'
       end
       it 'should render html' do
-        @view_model.render_as(:exists, :format => :html).should == 'html exists'
+        @view_model.render_as(:exists, :format => :html).should == '_exists.html.erb'
       end
     end
     describe 'locals' do
       it 'should render html' do
-        @view_model.render_as(:exists, :locals => { :local_name => :some_local }).should == 'html exists with some_local'
+        @view_model.render_as(:exists, :locals => { :local_name => :some_local }).should == '_exists.html.erb with some_local'
       end
       it 'should render html' do
-        @view_model.render_as(:exists, :format => nil, :locals => { :local_name => :some_local }).should == 'html exists with some_local'
+        @view_model.render_as(:exists, :format => nil, :locals => { :local_name => :some_local }).should == '_exists.html.erb with some_local'
       end
       it 'should render text' do
-        @view_model.render_as(:exists, :format => '', :locals => { :local_name => :some_local }).should == 'exists with some_local'
+        @view_model.render_as(:exists, :format => '', :locals => { :local_name => :some_local }).should == '_exists.erb with some_local'
       end
       it 'should render text' do
-        @view_model.render_as(:exists, :format => :text, :locals => { :local_name => :some_local }).should == 'text exists with some_local'
+        @view_model.render_as(:exists, :format => :text, :locals => { :local_name => :some_local }).should == '_exists.text.erb with some_local'
       end
       it 'should render html' do
-        @view_model.render_as(:exists, :format => :html, :locals => { :local_name => :some_local }).should == 'html exists with some_local'
+        @view_model.render_as(:exists, :format => :html, :locals => { :local_name => :some_local }).should == '_exists.html.erb with some_local'
       end
     end
     describe 'memoizing' do
