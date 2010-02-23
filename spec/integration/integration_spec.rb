@@ -17,8 +17,7 @@ describe 'Integration' do
     @logger           = stub :logger, :null_object => true
     @controller_class = stub @controller.class, :view_paths => 'spec/integration/views', :controller_path => 'app/controllers/test'
     @controller       = stub ActionController::Base.new, :class => @controller_class, :logger => @logger
-    @view_paths       = stub :view_paths
-    @view             = stub :view, :controller => @controller, :view_paths => @view_paths
+    @view             = ActionView::Base.new @controller.class.view_paths, {}, @controller
     @model            = SubSubclass.new
     @view_model       = ViewModels::SubSubclass.new @model, @view
   end
