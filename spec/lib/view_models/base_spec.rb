@@ -85,18 +85,6 @@ describe ViewModels::Base do
       ViewModels::Base.helper helper_module
     end
   end
-    
-  describe ".view_model_path" do
-    it "should call underscore on its name" do
-      name = stub :name
-      ViewModels::Base.should_receive(:name).once.and_return name
-      name.should_receive(:underscore).once.and_return :underscored_name
-      
-      in_the ViewModels::Base do
-        view_model_path.should == :underscored_name
-      end
-    end
-  end
   
   describe "#logger" do
     it "should delegate to the controller" do
