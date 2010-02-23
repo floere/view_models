@@ -61,13 +61,9 @@ module ViewModels
         old_add_template_helper helper_module
       end
       
-      # Returns the next view model class in the render hierarchy.
+      # Tries to render the given options.
       #
-      def next
-        superclass
-      end
-      
-      #
+      # Also caches.
       #
       def render view, options
         path_store.cached view, options do
@@ -89,6 +85,12 @@ module ViewModels
       end
       
       protected
+        
+        # Returns the next view model class in the render hierarchy.
+        #
+        def next
+          superclass
+        end
         
         # Check if the view lookup inheritance chain has ended.
         #
@@ -182,8 +184,8 @@ module ViewModels
     #
     # The following options are supported: 
     # * :format - Calling view_model.render_template('template') will render the haml
-    #   partial, calling view_model.render_template('template', :format => :text) will render
-    #   the text erb.
+    #   template, calling view_model.render_template('template', :format => :text) will render
+    #   the text erb template.
     # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
     #   view_model.render_template(:template, :locals => { :name => :value })
     # * If no format is given, it will render the default format, which is (currently) html.
