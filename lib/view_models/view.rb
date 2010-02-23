@@ -12,9 +12,7 @@ module ViewModels
     
     # This method tries to render with options obtained from the view model class.
     # 
-    # If it fails, it asks the next view_model_class for new render_options.
-    #
-    # Returns nil if there is no next view model class.
+    # It lets the view model class decide which template to use.
     #
     def render_for view_model_class, options
       template = view_model_class.template self, options
