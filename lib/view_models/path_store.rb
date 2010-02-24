@@ -23,8 +23,8 @@ module ViewModels
     
     # Cache the result of the rendering.
     #
-    def cached view, options, &block
-      prepare view.path_key(options.name)
+    def cached options, &block
+      prepare options.path_key
       result = block.call
       save options and result if result
     end
@@ -40,7 +40,7 @@ module ViewModels
     # Saves the options for the prepared key.
     #
     def save options
-      self[@key] = options[:file]
+      self[@key] = options.file
     end
     
     # Does not save values for nil keys.

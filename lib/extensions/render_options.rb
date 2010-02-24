@@ -1,12 +1,19 @@
-# Makes certain AR Model methods available to the view model.
 #
-# Useful when the model is an AR Model.
 #
 module ViewModels
   module Extensions
+    
     module RenderOptions
       
       attr_accessor :path, :name, :prefix
+      
+      # def format
+      #   self[:format]
+      # end
+      # 
+      # def format= format
+      #   self[:format] ||= format
+      # end
       
       #
       #

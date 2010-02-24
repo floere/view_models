@@ -1,8 +1,10 @@
+# require 'active_support'
 require 'extensions/active_record'
 require 'extensions/model_reader'
-require 'extensions/render_options'
+# require 'extensions/render_options'
 
 require 'view_models'
+require 'view_models/render_options'
 require 'view_models/controller_extractor'
 require 'view_models/path_store'
 require 'view_models/base'

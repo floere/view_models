@@ -66,39 +66,26 @@ module ViewModels
       # Also caches.
       #
       def render view, options
-        path_store.cached view, options do
-          view.render_for self, options
+        options.format! view
+        path_store.cached options do
+          options.file = template_path view, options
+          view.render_for options
         end
       end
       
-      # Returns a template for the view with the given options.
+      # Returns a template path for the view with the given options.
       #
       # If no template is found, traverses up the inheritance chain.
       #
-      def template view, options
-        inheritance_chain_ends? options
+      def template_path view, options
+        raise_template_error_with options if inheritance_chain_ends?
         
-        # TODO implement self.find_template view, options
-        template = view.find_template template_path(options, view.path_key(options.name))
+        template = view.find_template tentative_template_path(options)
         
-        template || self.next.template(view, options)
+        template && template.path || self.next.template_path(view, options)
       end
       
       protected
-        
-        # Returns the next view model class in the render hierarchy.
-        #
-        def next
-          superclass
-        end
-        
-        # Check if the view lookup inheritance chain has ended.
-        #
-        # Raises a MissingTemplateError if yes.
-        #
-        def inheritance_chain_ends? options
-          raise MissingTemplateError.new("No template '#{template_path(options)}' found.") if self == ViewModels::Base
-        end
         
         # Return as render path either a stored path or a newly generated one.
         #
@@ -106,8 +93,28 @@ module ViewModels
         #
         # TODO How or why can path_store be nil?
         #
-        def template_path options, key = nil
-          path_store && path_store[key] || generate_template_path_from(options)
+        def tentative_template_path options
+          path_store && path_store[options.path_key] || generate_template_path_from(options)
+        end
+        
+        # Returns the next view model class in the render hierarchy.
+        #
+        def next
+          superclass
+        end
+        
+        # Just raises a fitting template error.
+        #
+        def raise_template_error_with options
+          raise MissingTemplateError.new("No template '#{tentative_template_path(options)}' found.")
+        end
+        
+        # Check if the view lookup inheritance chain has ended.
+        #
+        # Raises a MissingTemplateError if yes.
+        #
+        def inheritance_chain_ends?
+           self == ViewModels::Base
         end
         
         # Returns the root of this view_models views with the template name appended.
@@ -164,8 +171,7 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_as name, options = {}
-      options.extend(Extensions::RenderOptions).partial = name
-      render options
+      render RenderOptions::Partial.new(name, options)
     end
     # render_the is used for small parts.
     #
@@ -191,8 +197,7 @@ module ViewModels
     # * If no format is given, it will render the default format, which is (currently) html.
     #
     def render_template name, options = {}
-      options.extend(Extensions::RenderOptions).template = name
-      render options
+      render RenderOptions::Template.new(name, options)
     end
     
     protected
@@ -202,11 +207,10 @@ module ViewModels
       #
       def render options
         options.view_model = self
-        view = view_instance_for options
-        # metaclass.send(:define_method, :capture) do |*args, &block|
-        #   view.capture *args, &block
-        # end
-        self.class.render view, options
+        
+        determine_format options
+        
+        self.class.render view_instance, options
       end
       
       # Creates a view instance with the given format.
@@ -218,21 +222,35 @@ module ViewModels
       #   template, calling view_instance_for :text will later render
       #   the erb.
       #
-      def view_instance_for options
-        view = View.new controller, master_helper_module
-        format = format_for options
-        view.template_format = format if format
-        view
+      # def view_instance_for options
+      #   view = View.new controller, master_helper_module
+      #   format = format_for options
+      #   view.template_format = format if format
+      #   view
+      # end
+      
+      def view_instance
+        View.new controller, master_helper_module
       end
+      
+      def determine_format options
+        options.format = @template_format = options.format || @template_format
+      end
+      
+      # attr_reader :template_format
+      # def template_format= format
+      #   @template_format = format if format
+      # end
       
       # Extracts the format from the options and returns it, or a saved one.
       #
       # Returns nil when no format option has been passed or no format is saved.
       #
-      attr_accessor :template_format
-      def format_for options
-        self.template_format = options.delete(:format) || self.template_format
-      end
+      
+      # attr_accessor :template_format
+      # def format_for options
+      #   self.template_format = options.delete(:format) || self.template_format
+      # end
       
   end
 end

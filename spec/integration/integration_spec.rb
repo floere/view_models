@@ -22,8 +22,6 @@ describe 'Integration' do
       @view             = ActionView::Base.new @controller.class.view_paths, {}, @controller
       @model            = SubSubclass.new
       @view_model       = ViewModels::SubSubclass.new @model, @view
-    rescue Exception => e
-      p e.backtrace
     end
   end
   

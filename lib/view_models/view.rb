@@ -14,22 +14,14 @@ module ViewModels
     # 
     # It lets the view model class decide which template to use.
     #
-    def render_for view_model_class, options
-      template = view_model_class.template self, options
-      
-      render options.merge! :file => template.path
+    def render_for options
+      render options.to_render_options
     end
     
     # Finds the template in the view paths at the given path, with its format.
     #
     def find_template path
       view_paths.find_template path, template_format rescue nil
-    end
-    
-    # Return a "unique" key for the template.
-    #
-    def path_key name
-      [name, template_format]
     end
     
   end
