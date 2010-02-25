@@ -221,7 +221,7 @@ module ViewModels
       def render options
         options.view_model = self
         
-        determine_format options
+        determine_and_set_format options
         
         self.class.render view_instance, options
       end
@@ -240,7 +240,7 @@ module ViewModels
       #       if none is explicitly set in the options.
       #       This propagates the format to further render_xxx calls.
       #
-      def determine_format options
+      def determine_and_set_format options
         options.format = @template_format = options.format || @template_format
       end
       
