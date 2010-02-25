@@ -69,7 +69,7 @@ module ViewModels
         options.format! view
         path_store.cached options do
           options.file = template_path view, options
-          view.render_for options
+          view.render options.to_render_options
         end
       end
       

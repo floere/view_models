@@ -10,14 +10,6 @@ module ViewModels
       super controller.class.view_paths, {}, controller
     end
     
-    # This method tries to render with options obtained from the view model class.
-    # 
-    # It lets the view model class decide which template to use.
-    #
-    def render_for options
-      render options.to_render_options
-    end
-    
     # Finds the template in the view paths at the given path, with its format.
     #
     def find_template path
