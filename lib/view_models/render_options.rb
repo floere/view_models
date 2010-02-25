@@ -10,8 +10,6 @@ module ViewModels
       
       attr_accessor :path, :name, :prefix, :file, :view_model, :format
       
-      #
-      #
       def initialize prefix, name, options
         @prefix = prefix
         @options = options
