@@ -1,3 +1,4 @@
+1.5.2 - 25.02.10 - floere: The capture method - if included per Capturehelper - works now in view models.
 1.5.1 - 22.02.10 - floere: Renamed ViewModels::Helper to ViewModels::Helpers.
 1.5.0 - 20.02.10 - floere: format propagates through collection rendering
                            render_as, new sig: :partial => to explicitly define the partial. (Syntactic Discouragement)
