@@ -1,0 +1,4 @@
+<%- block = lambda do -%>
+<%= "A Pirate!" -%>
+<%- end -%>
+Capturing: <%= view_model.capture_block &block -%>

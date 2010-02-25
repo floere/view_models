@@ -7,14 +7,20 @@ class ViewModels::SubSubclass < ViewModels::Subclass
   model_reader :some_doubly_doubled_attribute, :filter_through => [:doubled]*2
   model_reader :some_mangled_attribute, :filter_through => [:reverse, :cutoff, :doubled, :upcase]
   
+  # h as we know it.
+  #
   def h v
     CGI.escape v
   end
   
+  # Multiplies the text by 2.
+  #
   def doubled text
     text*2
   end
   
+  # Cuts off the last 2 characters. Or all, if less than size 2.
+  #
   def cutoff text
     text[0..-2]
   end
@@ -27,8 +33,10 @@ class ViewModels::SubSubclass < ViewModels::Subclass
     text.upcase
   end
   
-  def capture_in_method &block
-    self.capture &block
+  # Captures the block as a string.
+  #
+  def capture_block &block
+    capture &block
   end
   
 end

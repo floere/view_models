@@ -1,7 +1,7 @@
 # require 'active_support'
 require 'extensions/active_record'
 require 'extensions/model_reader'
-# require 'extensions/render_options'
+require 'extensions/view'
 
 require 'view_models'
 require 'view_models/render_options'

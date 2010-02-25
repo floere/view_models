@@ -31,6 +31,12 @@ describe 'Integration' do
       @controller.request  = @request
       @controller.response = @response
       
+      # TODO Make separate contexts, one where the controller has rendered, one where it has not.
+      #
+      # Lets the Controller generate a view instance.
+      #
+      # @controller.process @request, @response
+      
       @view                = ActionView::Base.new @controller.class.view_paths, {}, @controller
       @model               = SubSubclass.new
       @view_model          = ViewModels::SubSubclass.new @model, @view
@@ -64,8 +70,15 @@ describe 'Integration' do
   end
   
   describe 'capture in view model method' do
-    xit 'should capture the content of the block' do
-      @view_model.render_as(:capture_in_method).should == 'Capturing: A Pirate!'
+    context 'template' do
+      it 'should capture the content of the block' do
+        @view_model.render_as(:capture_in_template).should == 'Capturing: A Pirate!'
+      end
+    end
+    context 'in view model' do
+      it 'should capture the content of the block' do
+        @view_model.render_as(:capture_in_view_model).should == 'Capturing: A Pirate!'
+      end
     end
   end
   

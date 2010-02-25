@@ -11,7 +11,13 @@ module ViewModels
   #
   class Base
     
+    # Model and Controller are accessible from outside.
+    #
     attr_reader :model, :controller
+    
+    # CaptureHelper needs this.
+    #
+    attr_accessor :output_buffer
     
     # Make helper and helper_method available
     #
@@ -231,7 +237,13 @@ module ViewModels
       # TODO Try getting a view instance from the controller.
       #
       def view_instance
-        View.new controller, master_helper_module
+        # view = if controller.response.template
+        #   controller.response.template
+        # else
+          View.new controller, master_helper_module
+        # end
+        
+        # view.extend Extensions::View
       end
       
       # Determines what format to use for rendering.
