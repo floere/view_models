@@ -89,7 +89,7 @@ module ViewModels
       # inheritance chain traversal.
       #
       def template_path view, options
-        raise_template_error_with options if inheritance_chain_ends?
+        raise_template_error_with options,error_message if inheritance_chain_ends?
         
         template = view.find_template tentative_template_path(options)
         
@@ -110,8 +110,8 @@ module ViewModels
         
         # Just raises a fitting template error.
         #
-        def raise_template_error_with options
-          raise MissingTemplateError.new "No template #{options.error_message} found."
+        def raise_template_error_with message
+          raise MissingTemplateError.new "No template #{message} found."
         end
         
         # Check if the view lookup inheritance chain has ended.
