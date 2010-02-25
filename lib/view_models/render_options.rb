@@ -19,6 +19,20 @@ module ViewModels
         @format = @options.delete :format
       end
       
+      # Generate a suitable error message for the error options.
+      #
+      def error_message
+        "'#{error_path}#{name}' with #{error_format}"
+      end
+      def error_path
+        path = self.path
+        path ? "#{path}/" : ""
+      end
+      def error_format
+        format = self.format
+        format ? "format #{format}" : "default format"
+      end
+      
       # Used when rendering.
       #
       def to_render_options

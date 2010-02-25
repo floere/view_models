@@ -77,7 +77,7 @@ module ViewModels
         options.format! view
         path_store.cached options do
           options.file = template_path view, options
-          view.render options.to_render_options
+          view.render_with options
         end
       end
       
@@ -111,7 +111,7 @@ module ViewModels
         # Just raises a fitting template error.
         #
         def raise_template_error_with options
-          raise MissingTemplateError.new "No template '#{tentative_template_path(options)}' found."
+          raise MissingTemplateError.new "No template #{options.error_message} found."
         end
         
         # Check if the view lookup inheritance chain has ended.
