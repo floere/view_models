@@ -126,10 +126,8 @@ module ViewModels
         #
         # If nothing or nil is passed, the store is ignored.
         #
-        # TODO How or why can path_store be nil?
-        #
         def tentative_template_path options
-          path_store && path_store[options.path_key] || generate_template_path_from(options)
+          path_store[options.path_key] || generate_template_path_from(options)
         end
         
         # Returns the root of this view_models views with the template name appended.
