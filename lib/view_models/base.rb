@@ -89,7 +89,7 @@ module ViewModels
       # inheritance chain traversal.
       #
       def template_path view, options
-        raise_template_error_with options,error_message if inheritance_chain_ends?
+        raise_template_error_with options.error_message if inheritance_chain_ends?
         
         template = view.find_template tentative_template_path(options)
         

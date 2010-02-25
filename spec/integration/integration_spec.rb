@@ -11,17 +11,32 @@ require File.join(File.dirname(__FILE__), 'view_models/project')
 require File.join(File.dirname(__FILE__), 'view_models/subclass')
 require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
 
+require 'action_controller'
+require 'action_controller/test_process'
+
+class TestController < ActionController::Base; end
+
 describe 'Integration' do
   
   before(:each) do
     begin
-      @logger           = stub :logger, :null_object => true
-      @controller       = ActionController::Base.new
-      @controller_class = stub @controller.class, :view_paths => 'spec/integration/views'
-      @controller       = stub @controller, :logger => @logger, :class => @controller_class
-      @view             = ActionView::Base.new @controller.class.view_paths, {}, @controller
-      @model            = SubSubclass.new
-      @view_model       = ViewModels::SubSubclass.new @model, @view
+      @controller          = TestController.new
+      @controller.class.view_paths = ['spec/integration/views']
+      
+      @logger              = stub :logger, :null_object => true
+      @controller.logger   = @logger
+      
+      @request             = ActionController::TestRequest.new
+      @response            = ActionController::TestResponse.new
+      @controller.request  = @request
+      @controller.response = @response
+      
+      @view                = ActionView::Base.new @controller.class.view_paths, {}, @controller
+      @model               = SubSubclass.new
+      @view_model          = ViewModels::SubSubclass.new @model, @view
+    rescue Exception => e
+      puts e.message
+      puts e.backtrace
     end
   end
   
@@ -155,7 +170,13 @@ describe 'Integration' do
     end
     describe 'template inheritance' do
       it 'should raise ViewModels::MissingTemplateError if template is not found' do
-        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError, "No template 'view_models/base/_this_template_does_not_exist_at_allllll' found.")
+        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError, "No template '_this_template_does_not_exist_at_allllll' with default format found.")
+      end
+      it 'should raise ViewModels::MissingTemplateError if template is not found, with specific path' do
+        lambda { @view_model.render_as(:partial => 'view_models/sub_subclass/this_template_does_not_exist_at_allllll') }.should raise_error(ViewModels::MissingTemplateError, "No template 'view_models/sub_subclass/_this_template_does_not_exist_at_allllll' with default format found.")
+      end
+      it 'should raise ViewModels::MissingTemplateError if template is not found, with format' do
+        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll, :format => :gaga) }.should raise_error(ViewModels::MissingTemplateError, "No template '_this_template_does_not_exist_at_allllll' with format gaga found.")
       end
       it "should use its own template" do
         @view_model.render_as(:exists).should == '_exists.html.erb' # The default
