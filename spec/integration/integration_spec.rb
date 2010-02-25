@@ -33,7 +33,7 @@ describe 'Integration' do
       
       # TODO Make separate contexts, one where the controller has rendered, one where it has not.
       #
-      # Lets the Controller generate a view instance.
+      # Let the Controller generate a view instance.
       #
       # @controller.process @request, @response
       
