@@ -13,11 +13,9 @@ module ViewModels
     
     # Model and Controller are accessible from outside.
     #
-    attr_reader :model, :controller
-    
-    # CaptureHelper needs this.
+    # TODO but they actually shouldn't be. Try to migrate into protected area.
     #
-    attr_accessor :output_buffer
+    attr_reader :model, :controller
     
     # Make helper and helper_method available
     #
@@ -220,6 +218,10 @@ module ViewModels
     end
     
     protected
+      
+      # CaptureHelper needs this.
+      #
+      attr_accessor :output_buffer
       
       # Internal render method that uses the options to get a view instance
       # and then referring to its class for rendering.
