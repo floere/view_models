@@ -81,21 +81,6 @@ module ViewModels
         end
       end
       
-      # Returns a template path for the view with the given options.
-      #
-      # If no template is found, traverses up the inheritance chain.
-      #
-      # Raises a MissingTemplateError if none is found during
-      # inheritance chain traversal.
-      #
-      def template_path view, options
-        raise_template_error_with options.error_message if inheritance_chain_ends?
-        
-        template = view.find_template tentative_template_path(options)
-        
-        template && template.path || self.next.template_path(view, options)
-      end
-      
       protected
         
         # Returns the next view model class in the render hierarchy.
@@ -120,6 +105,21 @@ module ViewModels
         #
         def inheritance_chain_ends?
            self == ViewModels::Base
+        end
+        
+        # Returns a template path for the view with the given options.
+        #
+        # If no template is found, traverses up the inheritance chain.
+        #
+        # Raises a MissingTemplateError if none is found during
+        # inheritance chain traversal.
+        #
+        def template_path view, options
+          raise_template_error_with options.error_message if inheritance_chain_ends?
+          
+          template = view.find_template tentative_template_path(options)
+          
+          template && template.path || self.next.template_path(view, options)
         end
         
         # Return as render path either a stored path or a newly generated one.
