@@ -1,3 +1,7 @@
+def require_if task, name
+  require name if ARGV[0] =~ %r{^#{task}}
+end
+
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
@@ -5,7 +9,7 @@ require 'rake/rdoctask'
 require 'spec/rake/spectask'
 require 'spec/rake/verify_rcov'
 
-require 'metric_fu'
+require_if :metrics, 'metric_fu'
 
 task :default => :spec
 
