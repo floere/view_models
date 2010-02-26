@@ -5,6 +5,8 @@ require 'rake/rdoctask'
 require 'spec/rake/spectask'
 require 'spec/rake/verify_rcov'
 
+require 'metric_fu'
+
 task :default => :spec
 
 # run with rake spec
