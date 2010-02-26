@@ -27,4 +27,5 @@ Spec::Rake::SpecTask.new(:rcov) do |t|
   t.warning = false
   t.rcov = true
   puts "Open coverage/index.html for the rcov results."
+  system 'open coverage/index.html'
 end
