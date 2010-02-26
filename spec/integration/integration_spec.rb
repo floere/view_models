@@ -39,14 +39,27 @@ describe 'Integration' do
       
       @view                = ActionView::Base.new @controller.class.view_paths, {}, @controller
       @model               = SubSubclass.new
+      @model.id            = :some_id
       @view_model          = ViewModels::SubSubclass.new @model, @view
-    rescue Exception => e
-      puts e.message
-      puts e.backtrace
+    # rescue Exception => e
+    #   puts e.message
+    #   puts e.backtrace
     end
   end
   
   before(:all) { puts "\n#{self.send(:description_args)[0]}:" }
+  
+  describe 'ActiveRecord Extensions' do
+    before(:each) do
+      @view_model.extend ViewModels::Extensions::ActiveRecord
+    end
+    it 'should delegate the id' do
+      @view_model.id.should == :some_id
+    end
+    it 'should delegate the id' do
+      @view_model.dom_id.should == 'sub_subclass_some_id'
+    end
+  end
   
   describe 'view_model_for' do
     context 'view model' do

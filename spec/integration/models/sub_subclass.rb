@@ -1,5 +1,7 @@
 class SubSubclass
   
+  attr_accessor :id
+  
   attr_reader :some_untouched_attribute, :some_filtered_attribute, :some_doubly_doubled_attribute, :some_mangled_attribute
   
   def initialize

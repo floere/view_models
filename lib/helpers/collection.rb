@@ -18,11 +18,9 @@ module ViewModels
         
         #
         #
-        methods_to_delegate = [
-          Enumerable.instance_methods.map(&:to_sym),
-          :length, :size, :empty?, :each, :exit,
-          { :to => :@collection }
-        ].flatten
+        methods_to_delegate = [Enumerable.instance_methods.map(&:to_sym),
+                               :length, :size, :empty?, :each, :exit,
+                               { :to => :@collection }].flatten
         self.delegate *methods_to_delegate
         def select *args, &block # active_support fail?
           @collection.select *args, &block
