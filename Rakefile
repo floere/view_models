@@ -14,7 +14,7 @@ require_if :metrics, 'metric_fu'
 task :default => :spec
 
 # run with rake spec
-Spec::Rake::SpecTask.new do |t|
+Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
   t.spec_files = Dir.glob('spec/**/*_spec.rb')
   t.warning = false
@@ -27,5 +27,4 @@ Spec::Rake::SpecTask.new(:rcov) do |t|
   t.warning = false
   t.rcov = true
   puts "Open coverage/index.html for the rcov results."
-  system 'open coverage/index.html'
 end
