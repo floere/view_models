@@ -97,7 +97,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://floere.github.com/view_models}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{A model proxy for Rails views. Helps you keep the representation of a model and the model itself separate.}
   s.test_files = [
     "spec/integration/integration_spec.rb",
