@@ -121,9 +121,15 @@ module ViewModels
         def template_path view, options
           raise_template_error_with options.error_message if inheritance_chain_ends?
           
+          template_path_from(view, options) || self.next.template_path(view, options)
+        end
+        
+        # Accesses the view to find a suitable template path.
+        #
+        def template_path_from view, options
           template = view.find_template tentative_template_path(options)
           
-          template && template.path || self.next.template_path(view, options)
+          template && template.path
         end
         
         # Return as render path either a stored path or a newly generated one.
