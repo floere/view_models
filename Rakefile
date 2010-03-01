@@ -39,7 +39,7 @@ begin
     gemspec.description = "The view models gem adds the missing R (Representation) to Rails' MVC. It provides simple proxy functionality for your models and thus helps you keep the model and view representations of a model separate, as it should be. Also, you can define helper methods on the (view) model instead of globally to keep them focused, more quickly understood and more easily testable. View Models also introduce hierarchical rendering for your hierarchical models. If the account view is not defined for the subclass FemaleUser, it checks if it is defined for User, for example, to see when there is no specific view, if there is a general view. So, in other words: Polymorphism not just in the model, but also in the view."
     gemspec.authors = ["Florian Hanke", "Kaspar Schiess", "Niko Dittmann", "Andreas Schacke"]
     gemspec.rdoc_options = ["--inline-source", "--charset=UTF-8"]
-    gemspec.files = FileList["[A-Z]*", "{lib,spec,generators}/**/*"]
+    gemspec.files = FileList["[A-Z]*", "{generators,lib,rails,spec}/**/*"]
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError => e
