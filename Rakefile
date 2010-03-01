@@ -40,6 +40,8 @@ begin
     gemspec.authors = ["Florian Hanke", "Kaspar Schiess", "Niko Dittmann", "Andreas Schacke"]
     gemspec.rdoc_options = ["--inline-source", "--charset=UTF-8"]
     gemspec.files = FileList["[A-Z]*", "{generators,lib,rails,spec}/**/*"]
+    gemspec.add_dependency 'rails', '>= 2.2.0'
+    gemspec.add_development_dependency 'rspec', '>=1.2.9'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError => e
