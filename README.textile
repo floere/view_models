@@ -20,7 +20,19 @@ Important note: These guys rock! :)
 
 h2. Installation
 
+h3. Rails Plugin
+
 @script/plugin install git://github.com/floere/view_models.git@
+
+h3. Gem for use in Rails
+
+@gem install view_models@
+
+and then adding the line
+
+@config.gem 'view_models'@
+
+in your environment.rb.
 
 h2. Description
 
