@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
      "generators/view_models/templates/views/view_models/collection/_table.html.haml",
      "generators/view_models/templates/views/view_models/collection/_table.text.erb",
      "generators/view_models/view_models_generator.rb",
+     "init.rb",
      "lib/extensions/active_record.rb",
      "lib/extensions/model_reader.rb",
      "lib/extensions/view.rb",
@@ -49,6 +50,7 @@ Gem::Specification.new do |s|
      "lib/view_models/path_store.rb",
      "lib/view_models/render_options.rb",
      "lib/view_models/view.rb",
+     "rails/init.rb",
      "spec/integration/integration_spec.rb",
      "spec/integration/models/sub_subclass.rb",
      "spec/integration/models/subclass.rb",
@@ -91,7 +93,8 @@ Gem::Specification.new do |s|
      "spec/lib/view_models/base_spec.rb",
      "spec/lib/view_models/view_spec.rb",
      "spec/spec_helper.rb",
-     "spec/spec_helper_extensions.rb"
+     "spec/spec_helper_extensions.rb",
+     "view_models.gemspec"
   ]
   s.homepage = %q{http://floere.github.com/view_models}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
