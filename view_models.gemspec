@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{view_models}
-  s.version = "1.5.3"
+  s.version = "1.5.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Florian Hanke", "Kaspar Schiess", "Niko Dittmann", "Andreas Schacke"]
-  s.date = %q{2010-03-01}
+  s.date = %q{2010-03-02}
   s.description = %q{The view models gem adds the missing R (Representation) to Rails' MVC. It provides simple proxy functionality for your models and thus helps you keep the model and view representations of a model separate, as it should be. Also, you can define helper methods on the (view) model instead of globally to keep them focused, more quickly understood and more easily testable. View Models also introduce hierarchical rendering for your hierarchical models. If the account view is not defined for the subclass FemaleUser, it checks if it is defined for User, for example, to see when there is no specific view, if there is a general view. So, in other words: Polymorphism not just in the model, but also in the view. Have fun!}
   s.email = %q{florian.hanke@gmail.com}
   s.extra_rdoc_files = [
