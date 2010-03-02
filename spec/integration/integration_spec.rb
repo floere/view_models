@@ -41,9 +41,6 @@ describe 'Integration' do
       @model               = SubSubclass.new
       @model.id            = :some_id
       @view_model          = ViewModels::SubSubclass.new @model, @view
-    # rescue Exception => e
-    #   puts e.message
-    #   puts e.backtrace
     end
   end
   
