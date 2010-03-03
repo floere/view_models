@@ -4,6 +4,8 @@ module ViewModels
       
       # Construct a view_model for a collection.
       #
+      # TODO Think about moving it into view_model_for, or renaming it view_models_for.
+      #
       def collection_view_model_for array_or_pagination, context = self
         Collection.new array_or_pagination, context
       end
@@ -16,16 +18,12 @@ module ViewModels
       #
       class Collection
         
+        # Delegate collection relevant methods to the collection.
         #
-        #
-        methods_to_delegate = [Enumerable.instance_methods.map(&:to_sym),
-                               :length, :size, :empty?, :each, :exit,
-                               { :to => :@collection }].flatten
-        self.delegate *methods_to_delegate
-        def select *args, &block # active_support fail?
-          @collection.select *args, &block
-        end
+        self.delegate *[Enumerable.instance_methods, :length, :size, :empty?, :each, :exit, { :to => :@collection }].flatten
         
+        #
+        #
         def initialize collection, context
           @collection, @context = collection, context
         end
