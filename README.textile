@@ -2,7 +2,7 @@ h1. ViewModels
 
 h2. Description
 
-A view model/representer solution:
+A view model/representer solution for Rails:
 
 * Polymorph view model objects that correspond to model objects.
 * Helper methods directly on the view models.
