@@ -5,6 +5,8 @@ h2. Description
 A view model/representer solution for Rails:
 
 * Polymorph view model objects that correspond to model objects.
+* View model specific templates.
+* Hierarchical Template Rendering: Allows generalized templates for a class tree of view models.
 * Helper methods directly on the view models.
 * No view related code in the models.
 * A clean API for use in Rails.
