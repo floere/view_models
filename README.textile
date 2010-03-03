@@ -1,8 +1,8 @@
 h1. ViewModels
 
-h2. Description
+A view model/representer solution for Rails.
 
-A view model/representer solution for Rails:
+h2. Features
 
 * Polymorph view model objects that correspond to model objects.
 * View model specific templates.
