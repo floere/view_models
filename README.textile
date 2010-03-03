@@ -30,7 +30,7 @@ in your environment.rb.
 
 h2. Links Galore!
 
-"Usage [Wiki]":http://wiki.github.com/floere/view_models/
+"Usage, Examples, In-depth Infos [Wiki]":http://wiki.github.com/floere/view_models/
 "Reference [RDoc]":http://rdoc.info/projects/floere/view_models
 "Gem [RubyGems.org]":http://rubygems.org/gems/view_models
 "Mailing List":http://groups.google.com/group/view_models/topics
