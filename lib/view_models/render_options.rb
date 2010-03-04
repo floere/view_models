@@ -45,8 +45,8 @@ module ViewModels
       
       # Used for caching.
       #
-      def path_key
-        [self.path, self.name, self.format]
+      def path_key view_model_class
+        [view_model_class, self.path, self.name, self.format]
       end
       
       private

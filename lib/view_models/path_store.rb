@@ -23,8 +23,8 @@ module ViewModels
     
     # Cache the result of the rendering.
     #
-    def cached options, &block
-      prepare options.path_key
+    def cached view_model_class, options, &block
+      prepare options.path_key(view_model_class)
       result = block.call
       save options and result if result
     end

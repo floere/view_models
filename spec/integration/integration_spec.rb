@@ -208,13 +208,13 @@ describe 'Integration' do
     end
     describe 'template inheritance' do
       it 'should raise ViewModels::MissingTemplateError if template is not found' do
-        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::MissingTemplateError, "No template '_this_template_does_not_exist_at_allllll' with default format found.")
+        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll) }.should raise_error(ViewModels::Renderer::MissingTemplateError, "No template '_this_template_does_not_exist_at_allllll' with default format found.")
       end
       it 'should raise ViewModels::MissingTemplateError if template is not found, with specific path' do
-        lambda { @view_model.render_as(:partial => 'view_models/sub_subclass/this_template_does_not_exist_at_allllll') }.should raise_error(ViewModels::MissingTemplateError, "No template 'view_models/sub_subclass/_this_template_does_not_exist_at_allllll' with default format found.")
+        lambda { @view_model.render_as(:partial => 'view_models/sub_subclass/this_template_does_not_exist_at_allllll') }.should raise_error(ViewModels::Renderer::MissingTemplateError, "No template 'view_models/sub_subclass/_this_template_does_not_exist_at_allllll' with default format found.")
       end
       it 'should raise ViewModels::MissingTemplateError if template is not found, with format' do
-        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll, :format => :gaga) }.should raise_error(ViewModels::MissingTemplateError, "No template '_this_template_does_not_exist_at_allllll' with format gaga found.")
+        lambda { @view_model.render_as(:this_template_does_not_exist_at_allllll, :format => :gaga) }.should raise_error(ViewModels::Renderer::MissingTemplateError, "No template '_this_template_does_not_exist_at_allllll' with format gaga found.")
       end
       it "should use its own template" do
         @view_model.render_as(:exists).should == '_exists.html.erb' # The default
@@ -255,14 +255,20 @@ describe 'Integration' do
       end
     end
     describe 'memoizing' do
-      it 'should memoize and not generate always a new path' do
-        @view_model.class.should_receive(:generate_template_path_from).once
-        
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
-        @view_model.render_as :not_found_in_sub_subclass
+      context 'path generation' do
+        before(:each) do
+          @renderer = ViewModels::Renderer::Hierarchical.new @view_model, {}
+          ViewModels::Renderer::Hierarchical.stub! :new => @renderer
+        end
+        it 'should memoize and not generate always a new path' do
+          @renderer.should_receive(:generate_template_path).once
+          
+          @view_model.render_as :not_found_in_sub_subclass
+          @view_model.render_as :not_found_in_sub_subclass
+          @view_model.render_as :not_found_in_sub_subclass
+          @view_model.render_as :not_found_in_sub_subclass
+          @view_model.render_as :not_found_in_sub_subclass
+        end
       end
       it 'should render the right one' do
         @view_model.render_as :exists_in_both
