@@ -9,7 +9,7 @@ module ModulesInRenderHierarchy
     def include_with_superclass_override mod
       original_superclass = superclass
       self.send :include_without_superclass_override, mod
-      M.metaclass.send :define_method, :superclass do
+      mod.metaclass.send :define_method, :superclass do
         original_superclass
       end
       metaclass.send :define_method, :superclass do

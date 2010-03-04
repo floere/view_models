@@ -1,5 +1,7 @@
 require File.join(File.dirname(__FILE__), '../spec_helper')
 
+# require File.join(File.dirname(__FILE__), '../../lib/experimental/modules_in_render_hierarchy')
+
 require File.join(File.dirname(__FILE__), 'models/subclass')
 require File.join(File.dirname(__FILE__), 'models/sub_subclass')
 
@@ -10,6 +12,7 @@ require 'view_models/base'
 require File.join(File.dirname(__FILE__), 'view_models/project')
 require File.join(File.dirname(__FILE__), 'view_models/subclass')
 require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
+require File.join(File.dirname(__FILE__), 'view_models/module_for_rendering')
 
 require 'action_controller'
 require 'action_controller/test_process'
@@ -46,6 +49,18 @@ describe 'Integration' do
   
   before(:all) { puts "\n#{self.send(:description_args)[0]}:" }
   
+  # context 'experimental inclusion of module in render hierarchy' do
+  #   before(:each) do
+  #     ViewModels::Base.send :include, ModulesInRenderHierarchy
+  #     @view_model.class.send :include, ModuleForRendering
+  #   end
+  #   describe 'render_as' do
+  #     it 'should description' do
+  #       @view_model.render_as(:not_found_in_sub_subclass_but_in_module).should == '_not_found_in_sub_subclass_but_in_module.erb'
+  #     end
+  #   end
+  # end
+
   describe 'ActiveRecord Extensions' do
     before(:each) do
       @view_model.extend ViewModels::Extensions::ActiveRecord
