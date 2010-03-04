@@ -1,3 +1,5 @@
+# require 'experimental/modules_in_render_hierarchy'
+
 require 'extensions/active_record'
 require 'extensions/model_reader'
 
@@ -12,7 +14,5 @@ require 'helpers/view'
 require 'helpers/rails'
 require 'helpers/collection'
 
-# 
-# ActionController::Base.send :helper, ViewModels::Helpers::Rails
 ActionController::Base.send :include, ViewModels::Helpers::Rails
 ActionView::Base.send       :include, ViewModels::Helpers::Rails

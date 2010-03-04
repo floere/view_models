@@ -93,7 +93,7 @@ module ViewModels
         #
         # TODO Think about raising the MissingTemplateError here.
         #
-        def next
+        def next_in_render_hierarchy
           superclass
         end
         
@@ -121,7 +121,7 @@ module ViewModels
         def template_path view, options
           raise_template_error_with options.error_message if inheritance_chain_ends?
           
-          template_path_from(view, options) || self.next.template_path(view, options)
+          template_path_from(view, options) || self.next_in_render_hierarchy.template_path(view, options)
         end
         
         # Accesses the view to find a suitable template path.

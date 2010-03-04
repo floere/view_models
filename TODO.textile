@@ -1,0 +1,4 @@
+h1. Next up
+
+* Explore possibilities to include Modules in hierarchical rendering.
+* Encapsule the rather bloated hierarchical rendering in a HierarchicalRendering object that mediates the whole rendering process.
