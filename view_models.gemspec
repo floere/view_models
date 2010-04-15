@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{view_models}
-  s.version = "1.5.5"
+  s.version = "1.5.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Florian Hanke", "Kaspar Schiess", "Niko Dittmann", "Andreas Schacke"]
-  s.date = %q{2010-03-03}
+  s.date = %q{2010-04-15}
   s.description = %q{The view models gem adds the missing R (Representation) to Rails' MVC. It provides simple proxy functionality for your models and thus helps you keep the model and view representations of a model separate, as it should be. Also, you can define helper methods on the (view) model instead of globally to keep them focused, more quickly understood and more easily testable. View Models also introduce hierarchical rendering for your hierarchical models. If the account view is not defined for the subclass FemaleUser, it checks if it is defined for User, for example, to see when there is no specific view, if there is a general view. So, in other words: Polymorphism not just in the model, but also in the view. Have fun!}
   s.email = %q{florian.hanke@gmail.com}
   s.extra_rdoc_files = [
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
      "MIT-LICENSE",
      "README.textile",
      "Rakefile",
+     "TODO.textile",
      "VERSION.yml",
      "generators/view_models/USAGE",
      "generators/view_models/templates/README",
@@ -37,6 +38,8 @@ Gem::Specification.new do |s|
      "generators/view_models/templates/views/view_models/collection/_table.html.haml",
      "generators/view_models/templates/views/view_models/collection/_table.text.erb",
      "generators/view_models/view_models_generator.rb",
+     "lib/experimental/README.textile",
+     "lib/experimental/modules_in_render_hierarchy.rb",
      "lib/extensions/active_record.rb",
      "lib/extensions/model_reader.rb",
      "lib/extensions/view.rb",
@@ -53,6 +56,7 @@ Gem::Specification.new do |s|
      "spec/integration/integration_spec.rb",
      "spec/integration/models/sub_subclass.rb",
      "spec/integration/models/subclass.rb",
+     "spec/integration/view_models/module_for_rendering.rb",
      "spec/integration/view_models/project.rb",
      "spec/integration/view_models/sub_subclass.rb",
      "spec/integration/view_models/subclass.rb",
@@ -60,6 +64,7 @@ Gem::Specification.new do |s|
      "spec/integration/views/view_models/collection/_collection.text.erb",
      "spec/integration/views/view_models/collection/_list.html.erb",
      "spec/integration/views/view_models/collection/_list.text.erb",
+     "spec/integration/views/view_models/module_for_rendering/_not_found_in_sub_subclass_but_in_module.erb",
      "spec/integration/views/view_models/sub_subclass/_capture_in_template.erb",
      "spec/integration/views/view_models/sub_subclass/_capture_in_view_model.erb",
      "spec/integration/views/view_models/sub_subclass/_collection_example.html.erb",
@@ -103,6 +108,7 @@ Gem::Specification.new do |s|
     "spec/integration/integration_spec.rb",
      "spec/integration/models/sub_subclass.rb",
      "spec/integration/models/subclass.rb",
+     "spec/integration/view_models/module_for_rendering.rb",
      "spec/integration/view_models/project.rb",
      "spec/integration/view_models/sub_subclass.rb",
      "spec/integration/view_models/subclass.rb",
