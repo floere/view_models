@@ -4,7 +4,7 @@ module ViewModels
   #
   module RenderOptions
     
-    # Hold a number of options for rendering.
+    # Base class for Partial and Template.
     #
     class Base
       
@@ -57,7 +57,33 @@ module ViewModels
           template_name.to_s.include?('/') ? specific_path(template_name) : incomplete_path(template_name)
         end
         
+        # Specific path is a specifically named view path, with slashes.
         #
+        def specific_path name
+          self.path             = File.dirname name
+          self.name_with_prefix = File.basename name
+        end
+        
+        # Incomplete path is a view path without slashes. The view models will
+        # try to find out where to take the template from.
+        #
+        def incomplete_path name
+          self.path             = nil
+          self.name_with_prefix = name
+        end
+        
+        # Add the prefix to the template name.
+        #
+        # Note: Will add an underscore if it's a partial.
+        #
+        def name_with_prefix= name
+          self.name = "#{self.prefix}#{name}"
+        end
+        
+        # Extracts the template name from the given parameter.
+        #
+        # If it's a hash, it will remove and use the :partial option.
+        # If not, it will use that.
         #
         def deoptionize template_name
           if template_name.kind_of?(Hash)
@@ -66,24 +92,6 @@ module ViewModels
           else
             template_name
           end
-        end
-        
-        #
-        #
-        def specific_path name
-          self.path             = File.dirname name
-          self.name_with_prefix = File.basename name
-        end
-        
-        #
-        #
-        def incomplete_path name
-          self.path             = nil
-          self.name_with_prefix = name
-        end
-        
-        def name_with_prefix= name
-          self.name = "#{self.prefix}#{name}"
         end
         
       end
