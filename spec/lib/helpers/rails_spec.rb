@@ -32,8 +32,6 @@ describe ViewModels::Helpers::Rails do
         specific_view_model_mapping.should == {}
       end
       it "should raise an ArgumentError on an non-mapped model" do
-        # TODO really clear enough that one should provide a ViewModel with an initializer with 2 params?
-        #
         class SomeViewModelClass; end
         specific_view_model_mapping[String] = SomeViewModelClass
         lambda {
@@ -43,8 +41,6 @@ describe ViewModels::Helpers::Rails do
     end
     describe "no specific mapping" do
       it "should raise on an non-mapped model" do
-        # TODO really clear enough that the view model class is missing?
-        #
         lambda {
           view_model_for(42)
         }.should raise_error(NameError, "uninitialized constant ViewModels::Fixnum")
