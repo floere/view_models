@@ -1,6 +1,6 @@
 class ViewModels::SubSubclass < ViewModels::Subclass
   
-  controller_method :logger
+  app_method :logger
   
   model_reader :some_untouched_attribute
   model_reader :some_filtered_attribute, :filter_through => :h

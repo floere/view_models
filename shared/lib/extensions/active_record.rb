@@ -2,6 +2,8 @@
 #
 # Useful when the model is an AR Model.
 #
+# TODO Split into id delegations and AR/AC specific stuff.
+#
 module ViewModels
   module Extensions
     module ActiveRecord

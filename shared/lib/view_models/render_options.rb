@@ -2,6 +2,8 @@ module ViewModels
   
   # Container object for render options.
   #
+  # TODO Make a rails exclusive.
+  # 
   module RenderOptions
     
     # Base class for Partial and Template.
@@ -39,6 +41,18 @@ module ViewModels
         @options.reverse_merge :file => file
       end
       
+      # TODO Move.
+      #
+      def to_padrino_render_params
+        p [self.path, self.name, self.format]
+        template_path = self.path ? File.join(self.path, self.name) : self.name
+        options = [template_path]
+        options.unshift self.format if self.format
+        options
+      end
+      
+      # TODO Rails specific.
+      #
       def format! view
         view.template_format = @format if @format
       end

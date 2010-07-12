@@ -5,13 +5,14 @@ require File.join(File.dirname(__FILE__), 'models/sub_subclass')
 
 # require 'helpers/padrino'
 
-require 'view_models/base'
 require File.join(File.dirname(__FILE__), 'view_models/project')
 require File.join(File.dirname(__FILE__), 'view_models/subclass')
 require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
 require File.join(File.dirname(__FILE__), 'view_models/module_for_rendering')
 
-class TestController < ActionController::Base; end
+class TestApp < Padrino::Application
+  
+end 
 
 describe 'Integration' do
   
@@ -19,9 +20,7 @@ describe 'Integration' do
     begin
       # @controller          = TestController.new
       # @controller.class.view_paths = ['rails/spec/integration/views']
-      # 
-      # @logger              = stub :logger, :null_object => true
-      # @controller.logger   = @logger
+      #
       # 
       # @request             = ActionController::TestRequest.new
       # @response            = ActionController::TestResponse.new
@@ -36,9 +35,17 @@ describe 'Integration' do
       # 
       # @view                = ActionView::Base.new @controller.class.view_paths, {}, @controller
       
-      @model               = SubSubclass.new
-      @model.id            = :some_id
-      @view_model          = ViewModels::SubSubclass.new @model, @app
+      @app = stub :app
+      TestApp.new(@app) do |some_app|
+        @context = some_app
+      end
+      
+      @logger                         = stub :logger, :null_object => true
+      Thread.current[:padrino_logger] = @logger
+      
+      @model      = SubSubclass.new
+      @model.id   = :some_id
+      @view_model = ViewModels::SubSubclass.new @model, @context
     end
   end
   
@@ -55,7 +62,9 @@ describe 'Integration' do
   #     end
   #   end
   # end
-
+  
+  # TODO Not ActiveRecord Extensions.
+  #
   describe 'ActiveRecord Extensions' do
     before(:each) do
       @view_model.extend ViewModels::Extensions::ActiveRecord
@@ -63,9 +72,9 @@ describe 'Integration' do
     it 'should delegate the id' do
       @view_model.id.should == :some_id
     end
-    it 'should delegate the id' do
-      @view_model.dom_id.should == 'sub_subclass_some_id'
-    end
+    # it 'should delegate the id' do
+    #   @view_model.dom_id.should == 'sub_subclass_some_id'
+    # end
   end
   
   describe 'view_model_for' do
@@ -102,25 +111,27 @@ describe 'Integration' do
     end
   end
   
-  describe 'controller context' do
-    it 'should work' do
-      controller = ActionController::Base.new
-      
-      lambda {
-        ViewModels::SubSubclass.new @model, controller
-      }.should_not raise_error
-    end
-  end
+  # TODO Write similar.
+  # describe 'app context' do
+  #   it 'should work' do
+  #     controller = ActionController::Base.new
+  #     
+  #     lambda {
+  #       ViewModels::SubSubclass.new @model, controller
+  #     }.should_not raise_error
+  #   end
+  # end
   
-  describe 'view_model_for inclusion in view' do
-    it 'should be included' do
-      view = ActionView::Base.new
-      
-      lambda {
-        view.view_model_for @model
-      }.should_not raise_error
-    end
-  end
+  # TODO Write anew.
+  # describe 'view_model_for inclusion in view' do
+  #   it 'should be included' do
+  #     view = ActionView::Base.new
+  #     
+  #     lambda {
+  #       view.view_model_for @model
+  #     }.should_not raise_error
+  #   end
+  # end
   
   describe 'collection rendering' do
     context 'default format' do
@@ -164,7 +175,7 @@ describe 'Integration' do
     end
   end
   
-  describe 'controller_method' do
+  describe 'app_method' do
     it 'should delegate to the context' do
       @view_model.logger.should == @logger
     end

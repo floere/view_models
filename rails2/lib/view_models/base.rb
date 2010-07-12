@@ -17,31 +17,17 @@ module ViewModels
       # [path, name, format] tuples, pointing to a template path,
       # so the view models don't have to traverse the inheritance chain always.
       #
+      # Note: Only needed in Rails.
+      #
       attr_accessor :path_store
       def inherited subclass
         ViewModels::PathStore.install_in subclass
         super
       end
       
-      # Installs the model_reader Method for filtered
-      # model method delegation.
+      # Alias the context_method to the rails-centric controller_method.
       #
-      include Extensions::ModelReader
-      
-      # Delegates method calls to the controller.
-      #
-      # Examples:
-      #   controller_method :current_user
-      #   controller_method :current_user, :current_profile  # multiple methods to be delegated
-      #
-      # In the view_model:
-      #   self.current_user
-      # will call
-      #   controller.current_user
-      #
-      def controller_method *methods
-        delegate *methods << { :to => :controller }
-      end
+      alias context_method controller_method
       
       # Wrapper for add_template_helper in ActionController::Helpers, also
       # includes given helper in the view_model
@@ -67,30 +53,6 @@ module ViewModels
       end
       
       protected
-        
-        # Returns the next view model class in the render hierarchy.
-        #
-        # Note: Just returns the superclass.
-        #
-        # TODO Think about raising the MissingTemplateError here.
-        #
-        def next_in_render_hierarchy
-          superclass
-        end
-        
-        # Just raises a fitting template error.
-        #
-        def raise_template_error_with message
-          raise MissingTemplateError.new "No template #{message} found."
-        end
-        
-        # Check if the view lookup inheritance chain has ended.
-        #
-        # Raises a MissingTemplateError if yes.
-        #
-        def inheritance_chain_ends?
-           self == ViewModels::Base
-        end
         
         # Returns a template path for the view with the given options.
         #
@@ -151,73 +113,26 @@ module ViewModels
         
     end # class << self
     
-    # Delegate controller methods.
+    # Delegate context methods.
     #
-    controller_method :logger, :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token
+    context_method :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token
     
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model
     #
     ActionController::Routing::Routes.install_helpers self
     
-    # Renders the given partial in the view_model's view root in the format given.
-    #
-    # Example:
-    #   app/views/view_models/this/view_model/_partial.haml
-    #   app/views/view_models/this/view_model/_partial.text.erb
-    #
-    # The following options are supported: 
-    # * :format - Calling view_model.render_as('partial') will render the haml
-    #   partial, calling view_model.render_as('partial', :format => :text) will render
-    #   the text erb.
-    # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
-    #   view_model.render_as(:partial, :locals => { :name => :value })
-    # * If no format is given, it will render the default format, which is (currently) html.
-    #
-    def render_as name, options = {}
-      render RenderOptions::Partial.new(name, options)
-    end
-    # render_the is used for small parts.
-    #
-    # Example:
-    # # If the view_model is called window, the following
-    # # is more legible than window.render_as :menubar
-    # * window.render_the :menubar
-    #
-    alias render_the render_as
-    
-    # Renders the given template in the view_model's view root in the format given.
-    #
-    # Example:
-    #   app/views/view_models/this/view_model/template.haml
-    #   app/views/view_models/this/view_model/template name.text.erb
-    #
-    # The following options are supported: 
-    # * :format - Calling view_model.render_template('template') will render the haml
-    #   template, calling view_model.render_template('template', :format => :text) will render
-    #   the text erb template.
-    # * All other options are passed on to the render call. I.e. if you want to specify locals you can call
-    #   view_model.render_template(:template, :locals => { :name => :value })
-    # * If no format is given, it will render the default format, which is (currently) html.
-    #
-    def render_template name, options = {}
-      render RenderOptions::Template.new(name, options)
-    end
-    
     protected
+      
+      alias controller context
       
       # CaptureHelper needs this.
       #
       attr_accessor :output_buffer
       
-      # Internal render method that uses the options to get a view instance
-      # and then referring to its class for rendering.
+      # Rails specific render call.
       #
       def render options
-        options.view_model = self
-        
-        determine_and_set_format options
-        
         self.class.render view_instance, options
       end
       
@@ -233,16 +148,6 @@ module ViewModels
         # end
         
         # view.extend Extensions::View
-      end
-      
-      # Determines what format to use for rendering.
-      #
-      # Note: Uses the template format of the view model instance
-      #       if none is explicitly set in the options.
-      #       This propagates the format to further render_xxx calls.
-      #
-      def determine_and_set_format options
-        options.format = @template_format = options.format || @template_format
       end
       
   end
