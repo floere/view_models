@@ -13,9 +13,10 @@ require_if :metrics, 'metric_fu'
 
 task :default => :spec
 
-task :spec => [:'rails:spec', :'padrino:spec']
+task :spec => [:'shared:spec', :'rails:spec', :'padrino:spec']
+task :'rails:spec' => [:'rails2:spec'] # TODO Add Rails 3 here
 
-%w|rails padrino|.collect!(&:to_sym).each do |framework|
+%w|shared rails2 padrino|.collect!(&:to_sym).each do |framework|
   namespace framework do
     
     # run with rake spec
