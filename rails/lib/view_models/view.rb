@@ -6,7 +6,7 @@ module ViewModels
     # Include the helpers from the view model.
     #
     def initialize controller, master_helper_module
-      metaclass.send :include, master_helper_module
+      singleton_class.send :include, master_helper_module
       super controller.class.view_paths, {}, controller
     end
     

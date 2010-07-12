@@ -13,20 +13,28 @@ require_if :metrics, 'metric_fu'
 
 task :default => :spec
 
-# run with rake spec
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
-  t.spec_files = Dir.glob('spec/**/*_spec.rb')
-  t.warning = false
-end
+task :spec => [:'rails:spec', :'padrino:spec']
 
-# run with rake rcov
-Spec::Rake::SpecTask.new(:rcov) do |t|
-  t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
-  t.spec_files = Dir.glob('spec/**/*_spec.rb')
-  t.warning = false
-  t.rcov = true
-  puts "Open coverage/index.html for the rcov results."
+%w|rails padrino|.collect!(&:to_sym).each do |space|
+  namespace space do
+    
+    # run with rake spec
+    Spec::Rake::SpecTask.new(:spec) do |t|
+      t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
+      t.spec_files = Dir.glob("#{space}/spec/**/*_spec.rb")
+      t.warning = false
+    end
+    
+    # run with rake rcov
+    Spec::Rake::SpecTask.new(:rcov) do |t|
+      t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
+      t.spec_files = Dir.glob("#{space}/spec/**/*_spec.rb")
+      t.warning = false
+      t.rcov = true
+      puts "Open coverage/index.html for the rcov results."
+    end
+  
+  end
 end
 
 begin

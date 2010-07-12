@@ -24,7 +24,7 @@ describe 'Integration' do
   before(:each) do
     begin
       @controller          = TestController.new
-      @controller.class.view_paths = ['spec/integration/views']
+      @controller.class.view_paths = ['rails/spec/integration/views']
       
       @logger              = stub :logger, :null_object => true
       @controller.logger   = @logger
