@@ -2,32 +2,13 @@
 #
 module ViewModels
   
-  # Gets raised when render_as, render_the, or render_template cannot
-  # find the named template, not even in the hierarchy.
-  #
-  class MissingTemplateError < StandardError; end
-  
   # Base class from which all view_models inherit.
   #
   class Base
     
-    # Model and Controller are accessible from outside.
-    #
-    # TODO but they actually shouldn't be. Try to migrate into protected area.
-    #
-    attr_reader :model, :controller
-    
     # Make helper and helper_method available
     #
     include ActionController::Helpers
-    
-    # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
-    # The context is usually a view or a controller, but doesn't need to be.
-    # 
-    def initialize model, context
-      @model = model
-      @controller = ControllerExtractor.new(context).extract
-    end
     
     class << self
       

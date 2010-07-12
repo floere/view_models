@@ -1,8 +1,7 @@
 require File.join(File.dirname(__FILE__), '../../spec_helper')
 
-# TODO Move to shared.
-#
 describe ViewModels::Helpers::Mapping::Collection do
+  include ViewModels::Helpers::Mapping
   
   before(:each) do
     @collection = stub :collection
