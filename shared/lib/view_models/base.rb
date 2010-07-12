@@ -17,14 +17,15 @@ module ViewModels
     #
     # TODO Rename controller => context, then alias context as controller.
     #
-    attr_reader :model, :controller
+    attr_reader :model, :context
+    alias controller context
     
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
     # The context is usually a view, a controller, or an app, but doesn't need to be.
     # 
-    def initialize model, context # TODO Rename to view_or_controller_or_app
-      @model = model
-      @controller = ControllerExtractor.new(context).extract # TODO Rename ContextExtractor
+    def initialize model, view_or_controller
+      @model   = model
+      @context = ContextExtractor.new(view_or_controller).extract
     end
       
   end

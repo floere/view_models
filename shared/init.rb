@@ -1,6 +1,6 @@
-require 'view_models'
-require 'view_models/controller_extractor'
-require 'view_models/base'
+require File.join(File.dirname(__FILE__), '/lib/view_models')
+require File.join(File.dirname(__FILE__), '/lib/view_models/context_extractor')
+require File.join(File.dirname(__FILE__), '/lib/view_models/base')
 
-require 'helpers/mapping'
-require 'helpers/collection'
+require File.join(File.dirname(__FILE__), '/lib/helpers/mapping')
+require File.join(File.dirname(__FILE__), '/lib/helpers/collection')

@@ -4,7 +4,7 @@ class ViewModels::Project < ViewModels::Base
   
   # helper ActionView::Helpers::CaptureHelper
   
-  helper ViewModels::Helpers::Rails
+  helper ViewModels::Helpers::Mapping
   helper ViewModels::Helpers::View
   
   # def output_buffer= b

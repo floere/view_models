@@ -4,7 +4,9 @@ module ViewModels
   
   # Extracts controllers for a living from unsuspecting views.
   #
-  class ControllerExtractor
+  # Note: This is actually only needed in Rails. In Padrino, the context is always the app.
+  #
+  class ContextExtractor
     
     attr_reader :context
     
