@@ -11,8 +11,7 @@ require 'view_models/base'
 require 'view_models/view'
 
 require 'helpers/view'
-require 'helpers/rails'
-require 'helpers/collection'
+require File.join(File.dirname(__FILE__), '/../shared/init')
 
-ActionController::Base.send :include, ViewModels::Helpers::Rails
-ActionView::Base.send       :include, ViewModels::Helpers::Rails
+ActionController::Base.send :include, ViewModels::Helpers::Mapping
+ActionView::Base.send       :include, ViewModels::Helpers::Mapping

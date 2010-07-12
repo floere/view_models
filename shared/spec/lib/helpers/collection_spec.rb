@@ -1,11 +1,25 @@
 require File.join(File.dirname(__FILE__), '../../spec_helper')
 
-describe ViewModels::Helpers::Rails::Collection do
+# TODO Move to shared.
+#
+describe ViewModels::Helpers::Mapping::Collection do
   
   before(:each) do
     @collection = stub :collection
     @context    = stub :context
-    @collection_view_model = ViewModels::Helpers::Rails::Collection.new @collection, @context
+    @collection_view_model = ViewModels::Helpers::Mapping::Collection.new @collection, @context
+  end
+  
+  describe "collection_view_model_for" do
+    it "should return kind of a ViewModels::Collection" do
+      collection_view_model_for([]).should be_kind_of ViewModels::Helpers::Mapping::Collection
+    end
+    it "should pass any parameters directly through" do
+      collection = stub :collection
+      context = stub :context
+      ViewModels::Helpers::Mapping::Collection.should_receive(:new).with(collection, context).once
+      collection_view_model_for collection, context
+    end
   end
   
   describe "list" do

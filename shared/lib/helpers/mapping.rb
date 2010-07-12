@@ -1,6 +1,6 @@
 module ViewModels
   module Helpers
-    module Rails
+    module Mapping
       
       mattr_accessor :specific_view_model_mapping
       self.specific_view_model_mapping = {}
@@ -9,6 +9,9 @@ module ViewModels
       # with the given arguments.
       #
       # Note: Will emit an ArgumentError if the view model class doesn't support 2 arguments.
+      #
+      # Padrino: context is an app instance.
+      # Rails 2: context is either a view instance or a controller instance.
       #
       def view_model_for model, context = self
         view_model_class_for(model).new model, context

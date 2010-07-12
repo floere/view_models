@@ -1,6 +1,6 @@
 module ViewModels
   module Helpers
-    module Rails
+    module Mapping
       
       # Construct a view_model for a collection.
       #
