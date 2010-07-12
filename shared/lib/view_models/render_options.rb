@@ -44,7 +44,6 @@ module ViewModels
       # TODO Move.
       #
       def to_padrino_render_params
-        p [self.path, self.name, self.format]
         template_path = self.path ? File.join(self.path, self.name) : self.name
         options = [template_path]
         options.unshift self.format if self.format
