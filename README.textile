@@ -1,6 +1,6 @@
 h1. ViewModels
 
-A view model/representer solution for Rails.
+A view model/representer solution for Padrino and Rails.
 
 h2. Features
 
@@ -9,16 +9,26 @@ h2. Features
 * Hierarchical Template Rendering: Allows generalized templates for a class tree of view models.
 * Helper methods directly on the view models.
 * No view related code in the models.
-* A clean API for use in Rails.
+* A clean API for use in Padrino/Rails.
 * 100% rcov coverage, nice metrics, gallons of blood and sweat by excellent contributors.
 
 h2. Installation
+
+h3. Padrino (Gem)
+
+@gem install view_models@
+
+and then adding the line
+
+@gem 'view_models'@
+
+in your Gemfile.
 
 h3. Rails Plugin
 
 @script/plugin install git://github.com/floere/view_models.git@
 
-h3. Gem (for use in Rails)
+h3. Rails (Gem)
 
 @gem install view_models@
 
