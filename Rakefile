@@ -15,20 +15,20 @@ task :default => :spec
 
 task :spec => [:'rails:spec', :'padrino:spec']
 
-%w|rails padrino|.collect!(&:to_sym).each do |space|
-  namespace space do
+%w|rails padrino|.collect!(&:to_sym).each do |framework|
+  namespace framework do
     
     # run with rake spec
     Spec::Rake::SpecTask.new(:spec) do |t|
       t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
-      t.spec_files = Dir.glob("#{space}/spec/**/*_spec.rb")
+      t.spec_files = Dir.glob("#{framework}/spec/**/*_spec.rb")
       t.warning = false
     end
     
     # run with rake rcov
     Spec::Rake::SpecTask.new(:rcov) do |t|
       t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
-      t.spec_files = Dir.glob("#{space}/spec/**/*_spec.rb")
+      t.spec_files = Dir.glob("#{framework}/spec/**/*_spec.rb")
       t.warning = false
       t.rcov = true
       puts "Open coverage/index.html for the rcov results."
@@ -47,8 +47,7 @@ begin
     gemspec.description = "The view models gem adds the missing R (Representation) to Rails' MVC. It provides simple proxy functionality for your models and thus helps you keep the model and view representations of a model separate, as it should be. Also, you can define helper methods on the (view) model instead of globally to keep them focused, more quickly understood and more easily testable. View Models also introduce hierarchical rendering for your hierarchical models. If the account view is not defined for the subclass FemaleUser, it checks if it is defined for User, for example, to see when there is no specific view, if there is a general view. So, in other words: Polymorphism not just in the model, but also in the view. Have fun!"
     gemspec.authors = ["Florian Hanke", "Kaspar Schiess", "Niko Dittmann", "Andreas Schacke"]
     gemspec.rdoc_options = ["--inline-source", "--charset=UTF-8"]
-    gemspec.files = FileList["[A-Z]*", "{generators,lib,rails,spec}/**/*"]
-    gemspec.add_dependency 'rails', '>= 2.2.0'
+    gemspec.files = FileList["[A-Z]*", "{padrino,rails}/**/*"]
     gemspec.add_development_dependency 'rspec', '>=1.2.9'
   end
   Jeweler::GemcutterTasks.new
