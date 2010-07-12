@@ -1,12 +1,9 @@
 require File.join(File.dirname(__FILE__), '../spec_helper')
 
-# require File.join(File.dirname(__FILE__), '../../lib/experimental/modules_in_render_hierarchy')
-
 require File.join(File.dirname(__FILE__), 'models/subclass')
 require File.join(File.dirname(__FILE__), 'models/sub_subclass')
 
-require 'helpers/rails'
-ActionView::Base.send :include, ViewModels::Helpers::Rails
+# require 'helpers/padrino'
 
 require 'view_models/base'
 require File.join(File.dirname(__FILE__), 'view_models/project')
@@ -14,36 +11,34 @@ require File.join(File.dirname(__FILE__), 'view_models/subclass')
 require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
 require File.join(File.dirname(__FILE__), 'view_models/module_for_rendering')
 
-require 'action_controller'
-require 'action_controller/test_process'
-
 class TestController < ActionController::Base; end
 
 describe 'Integration' do
   
   before(:each) do
     begin
-      @controller          = TestController.new
-      @controller.class.view_paths = ['rails/spec/integration/views']
+      # @controller          = TestController.new
+      # @controller.class.view_paths = ['rails/spec/integration/views']
+      # 
+      # @logger              = stub :logger, :null_object => true
+      # @controller.logger   = @logger
+      # 
+      # @request             = ActionController::TestRequest.new
+      # @response            = ActionController::TestResponse.new
+      # @controller.request  = @request
+      # @controller.response = @response
+      # 
+      # # TODO Make separate contexts, one where the controller has rendered, one where it has not.
+      # #
+      # # Let the Controller generate a view instance.
+      # #
+      # # @controller.process @request, @response
+      # 
+      # @view                = ActionView::Base.new @controller.class.view_paths, {}, @controller
       
-      @logger              = stub :logger, :null_object => true
-      @controller.logger   = @logger
-      
-      @request             = ActionController::TestRequest.new
-      @response            = ActionController::TestResponse.new
-      @controller.request  = @request
-      @controller.response = @response
-      
-      # TODO Make separate contexts, one where the controller has rendered, one where it has not.
-      #
-      # Let the Controller generate a view instance.
-      #
-      # @controller.process @request, @response
-      
-      @view                = ActionView::Base.new @controller.class.view_paths, {}, @controller
       @model               = SubSubclass.new
       @model.id            = :some_id
-      @view_model          = ViewModels::SubSubclass.new @model, @view
+      @view_model          = ViewModels::SubSubclass.new @model, @app
     end
   end
   
