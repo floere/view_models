@@ -12,19 +12,6 @@ module ViewModels
     
     class << self
       
-      # Installs a path store, a specific store for
-      # template inheritance, to remember specific
-      # [path, name, format] tuples, pointing to a template path,
-      # so the view models don't have to traverse the inheritance chain always.
-      #
-      # Note: Only needed in Rails.
-      #
-      attr_accessor :path_store
-      def inherited subclass
-        ViewModels::PathStore.install_in subclass
-        super
-      end
-      
       # Alias the context_method to the rails-centric controller_method.
       #
       alias controller_method context_method
@@ -60,14 +47,6 @@ module ViewModels
           template = renderer.find_template tentative_template_path(options)
           
           template && template.path
-        end
-        
-        # Return as render path either a stored path or a newly generated one.
-        #
-        # If nothing or nil is passed, the store is ignored.
-        #
-        def tentative_template_path options
-          path_store[options.path_key] || generate_template_path_from(options)
         end
         
     end # class << self

@@ -39,18 +39,7 @@ module ViewModels
         @options[:locals] ||= {}
         @options[:locals].reverse_merge! :view_model => view_model
         @options.reverse_merge :file => file
-      end
-      
-      # TODO Move.
-      #
-      def to_padrino_render_params
-        template_path = self.path ? File.join(self.path, self.name) : self.name
-        options = [template_path]
-        options.unshift self.format if self.format
-        options
-      end
-      def locals
-        @options[:locals]
+        @options
       end
       
       # TODO Rails specific.

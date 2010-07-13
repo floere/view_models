@@ -22,18 +22,12 @@ module ViewModels
       #
       def render renderer, options
         # options.format! view
-        # path_store.cached options do
-          renderer.instance_variable_set(:@_content_type, options.format || :html)
-          # options.file = template_path renderer, options
-          # view.render_with options
+        renderer.instance_variable_set(:@_content_type, options.format || :html)
+        path_store.cached options do
           path = template_path renderer, options
-          # options.to_render_options
-          # renderer.send :render, :erb, path.to_s, options.locals
-          
-          options = options.to_render_options
-          
-          renderer.send :render, path.to_s, options
-        # end
+          options.file = path
+          renderer.send :render, path.to_s, options.to_render_options
+        end
       end
       
       protected
@@ -44,22 +38,11 @@ module ViewModels
         #
         def template_path_from renderer, options
           template = renderer.send :resolve_template, tentative_template_path(options)
-          
           # TODO!
           #
-          template && template.first # was .path
+          template && template.first.to_s # was .path
         rescue Padrino::Rendering::TemplateNotFound => t
           nil
-        end
-        
-        # Return as render path either a stored path or a newly generated one.
-        #
-        # If nothing or nil is passed, the store is ignored.
-        #
-        def tentative_template_path options
-          # TODO Use Padrino template cache!
-          # path_store[options.path_key] || generate_template_path_from(options)
-          generate_template_path_from options
         end
         
     end

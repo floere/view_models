@@ -255,7 +255,7 @@ describe 'Integration' do
     end
     describe 'memoizing' do
       it 'should memoize and not generate always a new path' do
-        @view_model.class.should_receive(:generate_template_path_from).once
+        @view_model.class.should_receive(:generate_template_path_from).once.and_return "view_models/sub_subclass/_not_found_in_sub_subclass"
         
         @view_model.render_as :not_found_in_sub_subclass
         @view_model.render_as :not_found_in_sub_subclass
