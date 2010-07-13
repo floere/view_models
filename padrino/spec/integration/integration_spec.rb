@@ -3,8 +3,6 @@ require File.join(File.dirname(__FILE__), '../spec_helper')
 require File.join(File.dirname(__FILE__), 'models/subclass')
 require File.join(File.dirname(__FILE__), 'models/sub_subclass')
 
-# require 'helpers/padrino'
-
 require File.join(File.dirname(__FILE__), 'view_models/project')
 require File.join(File.dirname(__FILE__), 'view_models/subclass')
 require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
@@ -12,7 +10,9 @@ require File.join(File.dirname(__FILE__), 'view_models/module_for_rendering')
 
 class TestApp < Padrino::Application
   
-end 
+end
+
+TestApp.helpers ViewModels::Helpers::Mapping
 
 describe 'Integration' do
   

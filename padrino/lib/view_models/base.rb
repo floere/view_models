@@ -26,7 +26,13 @@ module ViewModels
           # options.file = template_path renderer, options
           # view.render_with options
           path = template_path renderer, options
-          renderer.send :render, path.to_s
+          # options.to_render_options
+          # renderer.send :render, :erb, path.to_s, options.locals
+          renderer.instance_variable_set(:@_content_type, options.format) if options.format
+          
+          options = options.to_render_options
+          
+          renderer.send :render, path.to_s, options
         # end
       end
       
@@ -34,12 +40,16 @@ module ViewModels
         
         # Accesses the view to find a suitable template path.
         #
+        # Returns nil if a template cannot be found.
+        #
         def template_path_from renderer, options
           template = renderer.send :resolve_template, tentative_template_path(options)
           
           # TODO!
           #
           template && template.first # was .path
+        rescue Padrino::Rendering::TemplateNotFound => t
+          nil
         end
         
         # Return as render path either a stored path or a newly generated one.

@@ -49,6 +49,9 @@ module ViewModels
         options.unshift self.format if self.format
         options
       end
+      def locals
+        @options[:locals]
+      end
       
       # TODO Rails specific.
       #
