@@ -23,12 +23,12 @@ module ViewModels
       def render renderer, options
         # options.format! view
         # path_store.cached options do
+          renderer.instance_variable_set(:@_content_type, options.format || :html)
           # options.file = template_path renderer, options
           # view.render_with options
           path = template_path renderer, options
           # options.to_render_options
           # renderer.send :render, :erb, path.to_s, options.locals
-          renderer.instance_variable_set(:@_content_type, options.format) if options.format
           
           options = options.to_render_options
           
