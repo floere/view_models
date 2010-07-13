@@ -27,7 +27,7 @@ module ViewModels
       
       # Alias the context_method to the rails-centric controller_method.
       #
-      alias context_method controller_method
+      alias controller_method context_method
       
       # Wrapper for add_template_helper in ActionController::Helpers, also
       # includes given helper in the view_model

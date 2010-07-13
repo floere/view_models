@@ -11,7 +11,9 @@ describe ViewModels::Base do
         @view_model = ViewModels::Base.new @model, nil
       end
       it "should have a reader" do
-        @view_model.model.should == @model
+        in_the @view_model do
+          model.should == @model
+        end
       end
     end
     describe "controller" do
@@ -20,7 +22,9 @@ describe ViewModels::Base do
         @view_model = ViewModels::Base.new nil, @context
       end
       it "should have a reader" do
-        @view_model.controller.should == @context
+        in_the @view_model do
+          controller.should == @context
+        end
       end
     end
   end
@@ -32,7 +36,9 @@ describe ViewModels::Base do
         @view_model = ViewModels::Base.new nil, @view
       end
       it "should get the controller from the view" do
-        @view_model.controller.should == 'controller'
+        in_the @view_model do
+          controller.should == 'controller'
+        end
       end
     end
     describe "context is a controller" do
@@ -41,7 +47,10 @@ describe ViewModels::Base do
         @view_model = ViewModels::Base.new nil, @controller
       end
       it "should just use it for the controller" do
-        @view_model.controller.should == @controller
+        expected = @controller
+        in_the @view_model do
+          controller.should == expected
+        end
       end
     end
   end
@@ -60,8 +69,8 @@ describe ViewModels::Base do
   end
   
   describe ".controller_method" do
-    it "should set up delegate calls to the controller" do
-      ViewModels::Base.should_receive(:delegate).once.with(:method1, :method2, :to => :controller)
+    it "should set up delegate calls to the context/controller" do
+      ViewModels::Base.should_receive(:delegate).once.with(:method1, :method2, :to => :context)
       
       ViewModels::Base.controller_method :method1, :method2
     end

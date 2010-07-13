@@ -32,7 +32,6 @@ task :'rails:spec' => [:'rails2:spec'] # TODO Add Rails 3 here
       t.spec_files = Dir.glob("#{framework}/spec/**/*_spec.rb")
       t.warning = false
       t.rcov = true
-      puts "Open coverage/index.html for the rcov results."
     end
   
   end

@@ -18,7 +18,7 @@ module ViewModels
     #
     def extract
       context = self.context
-      context.respond_to?(:controller) ? context.controller : context
+      context.respond_to?(:controller) ? context.send(:controller) : context
     end
     
   end
