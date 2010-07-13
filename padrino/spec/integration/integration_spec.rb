@@ -98,18 +98,18 @@ describe 'Integration' do
     end
   end
   
-  describe 'capture in view model method' do
-    context 'template' do
-      it 'should capture the content of the block' do
-        @view_model.render_as(:capture_in_template).should == 'Capturing: A Pirate!'
-      end
-    end
-    context 'in view model' do
-      it 'should capture the content of the block' do
-        @view_model.render_as(:capture_in_view_model).should == 'Capturing: A Pirate!'
-      end
-    end
-  end
+  # describe 'capture in view model method' do
+  #   context 'template' do
+  #     it 'should capture the content of the block' do
+  #       @view_model.render_as(:capture_in_template).should == 'Capturing: A Pirate!'
+  #     end
+  #   end
+  #   context 'in view model' do
+  #     it 'should capture the content of the block' do
+  #       @view_model.render_as(:capture_in_view_model).should == 'Capturing: A Pirate!'
+  #     end
+  #   end
+  # end
   
   # TODO Write similar.
   # describe 'app context' do
