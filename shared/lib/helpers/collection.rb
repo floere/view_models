@@ -103,18 +103,6 @@ module ViewModels
           
           render_partial :pagination, default_options.merge(options)
         end
-        
-        private
-          
-          # Helper method that renders a partial in the context of the context instance.
-          #
-          # Example:
-          #   If the collection view_model helper has been instantiated in the context
-          #   of a controller, render will be called in the controller.
-          #
-          def render_partial name, locals
-            @context.instance_eval { render :partial => "view_models/collection/#{name}", :locals => locals }
-          end
       end
       
     end

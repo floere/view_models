@@ -11,7 +11,7 @@ require 'view_models/base'
 
 # require 'helpers/view'
 # require 'helpers/rails'
-# require 'helpers/collection'
+require 'helpers/collection'
 
 # ActionController::Base.send :include, ViewModels::Helpers::Rails
 # ActionView::Base.send       :include, ViewModels::Helpers::Rails

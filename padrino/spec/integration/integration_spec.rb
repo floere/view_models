@@ -136,26 +136,26 @@ describe 'Integration' do
   describe 'collection rendering' do
     context 'default format' do
       it 'should render a html list' do
-        @view_model.render_as(:list_example).should == "<ol class=\"collection\"><li>_list_item.html.erb</li><li>_list_item.html.erb</li></ol>"
+        @view_model.render_as(:list_example).should == "\n\n<ol class=\"collection\"><li>_list_item.html.erb</li><li>_list_item.html.erb</li></ol>"
       end
       it 'should render a html collection' do
-        @view_model.render_as(:collection_example).should == "<ul class=\"collection\"><li>_collection_item.html.erb</li><li>_collection_item.html.erb</li></ul>"
+        @view_model.render_as(:collection_example).should == "\n\n<ul class=\"collection\"><li>_collection_item.html.erb</li><li>_collection_item.html.erb</li></ul>"
       end
     end
     context 'format html' do
       it 'should render a html list' do
-        @view_model.render_as(:list_example, :format => :html).should == "<ol class=\"collection\"><li>_list_item.html.erb</li><li>_list_item.html.erb</li></ol>"
+        @view_model.render_as(:list_example, :format => :html).should == "\n\n<ol class=\"collection\"><li>_list_item.html.erb</li><li>_list_item.html.erb</li></ol>"
       end
       it 'should render a html collection' do
-        @view_model.render_as(:collection_example, :format => :html).should == "<ul class=\"collection\"><li>_collection_item.html.erb</li><li>_collection_item.html.erb</li></ul>"
+        @view_model.render_as(:collection_example, :format => :html).should == "\n\n<ul class=\"collection\"><li>_collection_item.html.erb</li><li>_collection_item.html.erb</li></ul>"
       end
     end
     context 'format text' do
       it 'should render a text list' do
-        @view_model.render_as(:list_example, :format => :text).should == '_list_item.text.erb\n_list_item.text.erb'
+        @view_model.render_as(:list_example, :format => :text).should == "\n\n_list_item.text.erb\\n_list_item.text.erb"
       end
       it 'should render a text collection' do
-        @view_model.render_as(:collection_example, :format => :text).should == '_collection_item.text.erb_collection_item.text.erb'
+        @view_model.render_as(:collection_example, :format => :text).should == "\n\n_collection_item.text.erb_collection_item.text.erb"
       end
     end
   end
@@ -262,7 +262,7 @@ describe 'Integration' do
     end
     describe 'memoizing' do
       it 'should memoize and not generate always a new path' do
-        @view_model.class.should_receive(:generate_template_path_from).once
+        @view_model.class.should_receive(:generate_template_path_from).once.and_return "view_models/sub_subclass/_not_found_in_sub_subclass"
         
         @view_model.render_as :not_found_in_sub_subclass
         @view_model.render_as :not_found_in_sub_subclass
@@ -274,7 +274,7 @@ describe 'Integration' do
         @view_model.render_as :exists_in_both
         @view_model.render_as(:exists_in_both).should == 'in sub subclass'
         
-        other_view_model = ViewModels::Subclass.new Subclass.new, @view
+        other_view_model = ViewModels::Subclass.new Subclass.new, @context
         other_view_model.render_as :exists_in_both
         other_view_model.render_as(:exists_in_both).should == 'in subclass'
         
