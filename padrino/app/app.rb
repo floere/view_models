@@ -4,6 +4,6 @@ class Application < Padrino::Application
   
   register Padrino::Mailer
   register Padrino::Helpers
-  register ViewModels::Helpers
+  register ViewModels
   
 end
