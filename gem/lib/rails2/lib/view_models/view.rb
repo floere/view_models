@@ -5,12 +5,12 @@ module ViewModels
     
     # Shut up, opinionated funkers.
     #
-    alias_method :metaclass, :singleton_class if method(:singleton_class)
+    alias singleton_class metaclass unless instance_methods.include?(:singleton_class)
     
     # Include the helpers from the view model.
     #
     def initialize controller, master_helper_module
-      metaclass.send :include, master_helper_module
+      singleton_class.send :include, master_helper_module
       super controller.class.view_paths, {}, controller
     end
     
