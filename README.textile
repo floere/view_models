@@ -27,7 +27,7 @@ in your Gemfile, followed by your app file(s):
 <pre><code>require 'view_models'
 ...
 class MyApplication < Padrino::Application
-  register ViewModels::Helpers
+  register ViewModels
   ...
 end
 </code></pre>
