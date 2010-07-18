@@ -5,8 +5,8 @@ require File.join(File.dirname(__FILE__), '/../../gem/init.rb')
 
 class Application < Padrino::Application
   
-  register ViewModels::Helpers
   register Padrino::Mailer
   register Padrino::Helpers
+  register ViewModels::Helpers
   
 end
