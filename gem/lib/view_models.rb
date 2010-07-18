@@ -4,7 +4,7 @@
 #
 if defined?(Padrino)
   # Bundler.setup :padrino
-  require File.dirname(__FILE__) + '/padrino/init'
+  require File.join(File.dirname(__FILE__), '/padrino/init')
 else
-  require File.dirname(__FILE__) + '/rails2/init'
+  require File.join(File.dirname(__FILE__), '/rails2/init')
 end

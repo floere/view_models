@@ -1,7 +1,5 @@
-# TODO Replace with
-#      require 'view_models'
-#
-require File.join(File.dirname(__FILE__), '/../../gem/init.rb')
+require 'view_models'
+# require File.join(File.dirname(__FILE__), '/../../gem/view_models.rb')
 
 class Application < Padrino::Application
   

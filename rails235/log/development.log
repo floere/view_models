@@ -1132,3 +1132,16 @@ Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 13:33:40) [GET]
 Rendering examples/index
 Rendered view_models/collection/_list (9.8ms)
 Completed in 46ms (View: 20, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:00:26) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (2.3ms)
+Rendered view_models/item/_not_in_book (1.8ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (2.2ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (27.2ms)
+Completed in 146ms (View: 119, DB: 0) | 200 OK [http://localhost/examples]
