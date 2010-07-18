@@ -16,13 +16,13 @@ task :default => :spec
 task :spec => [:'shared:spec', :'rails:spec', :'padrino:spec']
 task :'rails:spec' => [:'rails2:spec'] # TODO Add Rails 3 here
 
-%w|shared rails2 padrino|.collect!(&:to_sym).each do |framework|
+%w|shared padrino rails2|.collect!(&:to_sym).each do |framework|
   namespace framework do
     
     # run with rake spec
     Spec::Rake::SpecTask.new(:spec) do |t|
       t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
-      t.spec_files = Dir.glob("#{framework}/spec/**/*_spec.rb")
+      t.spec_files = Dir.glob("lib/#{framework}/spec/**/*_spec.rb")
       t.warning = false
     end
     
