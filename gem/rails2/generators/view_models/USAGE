@@ -1,0 +1,6 @@
+Usage:
+  script/generate view_models <view model class name>
+  script/generate view_models User
+  
+  script/generate view_models <view model class name> <partials for render_as, separated by space>
+  script/generate view_models User compact extensive list_item table_item

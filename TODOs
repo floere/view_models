@@ -1,0 +1,2 @@
+- Fix Rails render_as.
+- Fix Padrino render_as template discovery.
