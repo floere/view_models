@@ -1,4 +1,4 @@
-# source :rubygems
+source :rubygems
 
 # Project requirements
 gem 'rake'
