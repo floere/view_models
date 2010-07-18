@@ -204,7 +204,7 @@ module ViewModels
         options.view_model = self
         
         determine_and_set_format options
-        
+                
         self.class.render renderer, options
       end
       

@@ -39,7 +39,6 @@ module ViewModels
         @options[:locals] ||= {}
         @options[:locals].reverse_merge! :view_model => view_model
         @options.reverse_merge :file => file
-        @options
       end
       
       # TODO Rails specific.
