@@ -19,9 +19,17 @@
 = '> '
 = view_model.render_as :list_item
 
+%h2 render_as with special format
+= '> '
+= view_model.render_as :specific, :format => :special
+
 %h2 render_as with hierarchical rendering
 = '> '
 = view_model.render_as :not_in_book
+
+%h2 render_as with hierarchical rendering and special format
+= '> '
+= view_model.render_as :not_in_book, :format => :special
 
 %h2 collection_view_model_for
 - collection = collection_view_model_for @items
