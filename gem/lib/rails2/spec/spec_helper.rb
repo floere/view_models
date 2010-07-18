@@ -2,7 +2,6 @@ require 'rubygems'
 require 'spec'
 
 require 'active_support'
-
 require 'action_controller'
 
 $:.unshift File.dirname(__FILE__)
