@@ -8,6 +8,8 @@ module ViewModels
     
     # Make helper and helper_method available
     #
+    # TODO Rewrite Padrino style.
+    #
     # include ActionController::Helpers
     
     class << self
