@@ -1,5 +1,6 @@
-1.6.0 - 15.06.10 - floere: Added Arduino to the frameworks.
-                           Changed visibility of methods model, context from public to protected.
+1.6.0 - 15.06.10 - floere: Added Padrino to the frameworks.
+                           Changed visibility of methods model, context (controller, app) from public to protected.
+                           (Opinionated Discouragement – make them public if you feel accessing the model directly is ok.)
 1.5.2 - 25.02.10 - floere: The capture method - if included per Capturehelper - works now in view models.
 1.5.1 - 22.02.10 - floere: Renamed ViewModels::Helper to ViewModels::Helpers.
 1.5.0 - 20.02.10 - floere: format propagates through collection rendering
