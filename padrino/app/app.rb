@@ -1,5 +1,4 @@
 require 'view_models'
-# require File.join(File.dirname(__FILE__), '/../../gem/view_models.rb')
 
 class Application < Padrino::Application
   
