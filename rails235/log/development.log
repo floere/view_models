@@ -1120,3 +1120,15 @@ Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 13:31:59) [GET]
 Rendering examples/index
 Rendered view_models/collection/_list (9.1ms)
 Completed in 59ms (View: 34, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 13:33:40) [GET]
+Rendering examples/index
+Rendered view_models/collection/_list (9.6ms)
+Completed in 60ms (View: 34, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 13:33:40) [GET]
+Rendering examples/index
+Rendered view_models/collection/_list (9.8ms)
+Completed in 46ms (View: 20, DB: 0) | 200 OK [http://localhost/examples]
