@@ -15,17 +15,17 @@
 %h2 model_reader with filter (html_escape-d)
 %p= "> The book's header: #{view_model.header}"
 
-%h2 render_as
-= '> '
-= view_model.render_as :list_item
-
-%h2 render_as with hierarchical rendering
-= '> '
-= view_model.render_as :not_in_book
-
-%h2 collection_view_model_for
-- collection = collection_view_model_for @items
-= "> The items in the #{@items.class} are wrapped in a collection view model instance of #{collection.class}"
-
-%h2 Collection View Model
-= collection.list
+/ %h2 render_as
+/ = '> '
+/ = view_model.render_as :list_item
+/ 
+/ %h2 render_as with hierarchical rendering
+/ = '> '
+/ = view_model.render_as :not_in_book
+/ 
+/ %h2 collection_view_model_for
+/ - collection = collection_view_model_for @items
+/ = "> The items in the #{@items.class} are wrapped in a collection view model instance of #{collection.class}"
+/ 
+/ %h2 Collection View Model
+/ = collection.list

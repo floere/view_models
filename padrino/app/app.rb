@@ -1,6 +1,13 @@
 require File.join(File.dirname(__FILE__), '/../../gem/init.rb')
 
+# TODO This needs to be done automatically!
+#
+require File.join(File.dirname(__FILE__), '/view_models/item.rb')
+require File.join(File.dirname(__FILE__), '/view_models/book.rb')
+require File.join(File.dirname(__FILE__), '/view_models/toy.rb')
+
 class Application < Padrino::Application
+  
   register Padrino::Mailer
   register Padrino::Helpers
 
