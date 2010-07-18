@@ -14,7 +14,7 @@ h2. Features
 
 h2. Installation
 
-h3. Padrino (Gem)
+h3. Padrino (via Gem)
 
 @gem install view_models@
 
@@ -22,13 +22,16 @@ and then adding the line
 
 @gem 'view_models'@
 
-in your Gemfile.
+in your Gemfile, followed by your app file(s):
 
-h3. Rails Plugin
+  require 'view_models'
+  ...
+  class MyApplication < Padrino::Application
+    register ViewModels::Helpers
+    ...
+  end
 
-@script/plugin install git://github.com/floere/view_models.git@
-
-h3. Rails (Gem)
+h3. Rails (via Gem)
 
 @gem install view_models@
 
