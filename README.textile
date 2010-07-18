@@ -32,6 +32,8 @@ class MyApplication < Padrino::Application
 end
 </code></pre>
 
+Note: Adheres to the Padrino style by explicitly registering. 
+
 h3. Rails (via Gem)
 
 @gem install view_models@
