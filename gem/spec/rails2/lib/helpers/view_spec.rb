@@ -1,6 +1,4 @@
-require File.join(File.dirname(__FILE__), '../../spec_helper')
-
-require 'helpers/view'
+require File.join(File.dirname(__FILE__), '/../../spec_helper')
 
 describe ViewModels::Helpers::View do
   

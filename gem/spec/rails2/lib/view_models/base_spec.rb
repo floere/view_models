@@ -1,6 +1,4 @@
-require File.join(File.dirname(__FILE__), '../../spec_helper')
-
-require 'view_models/base'
+require File.join(File.dirname(__FILE__), '/../../spec_helper')
 
 describe ViewModels::Base do
   
