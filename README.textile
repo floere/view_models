@@ -24,12 +24,13 @@ and then adding the line
 
 in your Gemfile, followed by your app file(s):
 
-  require 'view_models'
+<pre><code>require 'view_models'
+...
+class MyApplication < Padrino::Application
+  register ViewModels::Helpers
   ...
-  class MyApplication < Padrino::Application
-    register ViewModels::Helpers
-    ...
-  end
+end
+</code></pre>
 
 h3. Rails (via Gem)
 
