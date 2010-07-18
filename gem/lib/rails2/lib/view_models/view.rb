@@ -3,6 +3,10 @@ module ViewModels
   #
   class View < ActionView::Base
     
+    # Shut up, opinionated funkers.
+    #
+    alias_method :metaclass, :singleton_class if method(:singleton_class)
+    
     # Include the helpers from the view model.
     #
     def initialize controller, master_helper_module
