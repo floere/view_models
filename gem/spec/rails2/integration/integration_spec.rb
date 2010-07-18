@@ -1,17 +1,18 @@
-require File.join(File.dirname(__FILE__), '../spec_helper')
+this = File.dirname(__FILE__)
 
-# require File.join(File.dirname(__FILE__), '../../lib/experimental/modules_in_render_hierarchy')
+require File.join(this, '../spec_helper')
 
-require File.join(File.dirname(__FILE__), 'models/subclass')
-require File.join(File.dirname(__FILE__), 'models/sub_subclass')
+# require File.join(this, '../../lib/experimental/modules_in_render_hierarchy')
+
+require File.join(this, 'models/subclass')
+require File.join(this, 'models/sub_subclass')
 
 ActionView::Base.send :include, ViewModels::Helpers::Mapping
 
-require 'view_models/base'
-require File.join(File.dirname(__FILE__), 'view_models/project')
-require File.join(File.dirname(__FILE__), 'view_models/subclass')
-require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
-require File.join(File.dirname(__FILE__), 'view_models/module_for_rendering')
+require File.join(this, 'view_models/project')
+require File.join(this, 'view_models/subclass')
+require File.join(this, 'view_models/sub_subclass')
+require File.join(this, 'view_models/module_for_rendering')
 
 require 'action_controller'
 require 'action_controller/test_process'

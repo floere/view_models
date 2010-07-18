@@ -1145,3 +1145,380 @@ Rendered view_models/item/_list_item (0.4ms)
 Rendered view_models/item/_list_item (0.4ms)
 Rendered view_models/collection/_list (27.2ms)
 Completed in 146ms (View: 119, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:01:41) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/collection/_list (13.3ms)
+Completed in 51ms (View: 26, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:09:32) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (2.2ms)
+Rendered view_models/item/_not_in_book (1.6ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (2.2ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/collection/_list (26.5ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/collection/_list (12.7ms)
+Completed in 128ms (View: 103, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:11:30) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.0ms)
+Completed in 70ms (View: 44, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:11:43) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_hierarchical (1.3ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (14.4ms)
+Completed in 79ms (View: 54, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:11:48) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_hierarchical (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.3ms)
+Completed in 53ms (View: 27, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:11:57) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (12.9ms)
+Completed in 66ms (View: 40, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:12:37) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_hierarchical (1.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (14.2ms)
+Completed in 168ms (View: 142, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:12:38) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_hierarchical (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.6ms)
+Completed in 53ms (View: 28, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:12:58) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+
+ActionView::TemplateError (No template '_hierarchical' with format text found.) on line #28 of app/views/examples/index.haml:
+25: 
+26: %h2 render_as with hierarchical rendering and special format
+27: = '> '
+28: = view_model.render_as :hierarchical, :format => :text
+29: 
+30: %h2 collection_view_model_for
+31: - collection = collection_view_model_for @items
+
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/./shared/lib/view_models/base.rb:72:in `raise_template_error_with'
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/./shared/lib/view_models/base.rb:94:in `template_path'
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/./shared/lib/view_models/base.rb:96:in `template_path'
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/lib/view_models/base.rb:37
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/./shared/lib/view_models/path_store.rb:28:in `call'
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/./shared/lib/view_models/path_store.rb:28:in `cached'
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/lib/view_models/base.rb:36:in `render'
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/./shared/lib/view_models/base.rb:208:in `render_internal'
+    /usr/local/lib/ruby/gems/1.8/gems/view_models-2.0.0/lib/rails2/./shared/lib/view_models/base.rb:160:in `render_as'
+    app/views/examples/index.haml:28:in `_run_haml_app47views47examples47index46haml'
+    haml (3.0.13) rails/./lib/haml/helpers/action_view_mods.rb:13:in `render'
+    haml (3.0.13) rails/./lib/sass/plugin/rack.rb:41:in `call'
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /usr/local/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /usr/local/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (201.7ms)
+Rendered rescues/_request_and_response (3.7ms)
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:13:05) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_hierarchical (1.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.0ms)
+Completed in 76ms (View: 50, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:13:06) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_hierarchical (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (12.5ms)
+Completed in 51ms (View: 26, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:13:43) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.2ms)
+Completed in 159ms (View: 134, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:13:50) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_not_in_book (1.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.5ms)
+Completed in 77ms (View: 51, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:14:16) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (2.8ms)
+Rendered view_models/item/_not_in_book (1.6ms)
+Rendered view_models/item/_not_in_book (1.5ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (2.2ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/collection/_list (26.2ms)
+Completed in 128ms (View: 101, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:16:56) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (2.8ms)
+Rendered view_models/book/_specific (2.1ms)
+Rendered view_models/item/_not_in_book (1.4ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (2.2ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (27.1ms)
+Completed in 129ms (View: 104, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:18:06) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/book/_specific (0.4ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.6ms)
+Completed in 54ms (View: 29, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:20:25) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/book/_specific (0.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/item/_list_item (1.6ms)
+Rendered view_models/book/_list_item (0.5ms)
+Rendered view_models/item/_list_item (0.6ms)
+Rendered view_models/item/_list_item (0.5ms)
+Rendered view_models/collection/_list (226.9ms)
+Completed in 511ms (View: 393, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:21:03) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (1.7ms)
+Rendered view_models/book/_specific (0.4ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.3ms)
+Rendered view_models/collection/_list (12.9ms)
+Completed in 64ms (View: 37, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:21:30) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/book/_specific (0.5ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (12.3ms)
+Completed in 53ms (View: 27, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:51:10) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (2.3ms)
+Rendered view_models/book/_specific (1.5ms)
+Rendered view_models/item/_not_in_book (1.4ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (1.6ms)
+Rendered view_models/book/_list_item (0.8ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.3ms)
+Rendered view_models/collection/_list (25.7ms)
+Completed in 127ms (View: 101, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:52:09) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/book/_specific (0.4ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.3ms)
+Rendered view_models/item/_list_item (0.3ms)
+Rendered view_models/collection/_list (12.7ms)
+Completed in 54ms (View: 28, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:52:28) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (2.4ms)
+Rendered view_models/book/_specific (0.4ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (14.0ms)
+Completed in 154ms (View: 38, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 17:52:33) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (1.6ms)
+Rendered view_models/book/_specific (0.4ms)
+Rendered view_models/item/_not_in_book (0.3ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/book/_list_item (0.3ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/collection/_list (13.0ms)
+Completed in 63ms (View: 37, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-18 18:14:26) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (1.6ms)
+Rendered view_models/book/_specific (1.5ms)
+Rendered view_models/item/_not_in_book (1.5ms)
+Rendered view_models/item/_not_in_book (0.4ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (1.6ms)
+Rendered view_models/book/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.4ms)
+Rendered view_models/item/_list_item (0.3ms)
+Rendered view_models/collection/_list (26.0ms)
+Completed in 127ms (View: 101, DB: 0) | 200 OK [http://localhost/examples]

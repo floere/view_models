@@ -1,7 +1,5 @@
 require File.join(File.dirname(__FILE__), '../../spec_helper')
 
-require 'extensions/model_reader'
-
 describe ViewModels::Extensions::ModelReader do
 
   class ModelReaderModel < Struct.new(:some_model_value); end
