@@ -21,10 +21,12 @@ module ViewModels
       #
       # TODO extract into module
       #
-      alias old_add_template_helper add_template_helper
-      def add_template_helper helper_module
-        include helper_module
-        old_add_template_helper helper_module
+      unless instance_methods.include?('old_add_template_helper')
+        alias old_add_template_helper add_template_helper
+        def add_template_helper helper_module
+          include helper_module
+          old_add_template_helper helper_module
+        end
       end
       
       # Sets the view format and tries to render the given options.

@@ -1,6 +1,6 @@
 this = File.dirname(__FILE__)
 
-require File.join(this, '../spec_helper')
+require File.join(this, '/../spec_helper')
 
 require File.join(this, 'models/subclass')
 require File.join(this, 'models/sub_subclass')
