@@ -1,4 +1,4 @@
-%h1 Rails 2.3.5 Test Page
+%h1 Rails 2 Test Page
 %p (for visual approval ;) Actual tests are in the gem)
 
 %h2 The model
@@ -16,24 +16,20 @@
 %p= "> The book's header: #{view_model.header}"
 
 %h2 render_as
-= '> '
-= view_model.render_as :list_item
+%p= "> #{view_model.render_as :list_item}"
 
 %h2 render_as with special format
-= '> '
-= view_model.render_as :specific, :format => :special
+%p= "> #{view_model.render_as :specific, :format => :special}"
 
 %h2 render_as with hierarchical rendering
-= '> '
-= view_model.render_as :not_in_book
+%p= "> #{view_model.render_as :not_in_book}"
 
 %h2 render_as with hierarchical rendering and special format
-= '> '
-= view_model.render_as :not_in_book, :format => :special
+%p= "> #{view_model.render_as :not_in_book, :format => :special}"
 
 %h2 collection_view_model_for
 - collection = collection_view_model_for @items
-= "> The items in the #{@items.class} are wrapped in a collection view model instance of #{collection.class}"
+%p= "> The items in the #{@items.class} are wrapped in a collection view model instance of #{collection.class}"
 
 %h2 Collection View Model
-= collection.list
+%p= collection.list
