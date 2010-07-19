@@ -20,7 +20,7 @@ h3. Padrino (via Gem)
 
 and then adding the line
 
-@gem 'view_models'@
+@gem 'view_models', '>=2.0.0'@
 
 in your Gemfile, followed by your app file(s):
 
