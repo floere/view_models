@@ -1,5 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../gem/lib/padrino/init')
-# require 'view_models'
+require 'view_models'
 
 class Application < Padrino::Application
   
