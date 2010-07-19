@@ -14,6 +14,8 @@ module ViewModels
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
     # The context is usually a view, a controller, or an app, but doesn't need to be.
     # 
+    # TODO Include this.
+    # 
     def initialize model, app_or_controller_or_view
       @model   = model
       @context = ContextExtractor.new(app_or_controller_or_view).extract

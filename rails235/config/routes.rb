@@ -1,6 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
-
+  
+  map.resource :view_models do |vm|
+    vm.resource :book
+  end
+  
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action

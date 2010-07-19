@@ -10,6 +10,17 @@ module ViewModels
     #
     include ActionController::Helpers
     
+    # This is really only needed because some Rails helpers access
+    # @controller directly.
+    # It's really bad.
+    #
+    # TODO Make it call super.
+    # 
+    def initialize model, controller_or_view
+      @model                 = model
+      @context = @controller = ContextExtractor.new(controller_or_view).extract
+    end
+    
     class << self
       
       # Alias the context_method to the rails-centric controller_method.
