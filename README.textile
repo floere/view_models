@@ -16,11 +16,13 @@ h2. Installation
 
 h3. Padrino (via Gem)
 
+Note: The Padrino API might change as I get acquainted with the Padrino way of doing things. Basic calls like render_as without all its options will stay the same, and so will view_model_for.
+
 @gem install view_models@
 
 and then adding the line
 
-@gem 'view_models', '>=2.0.0'@
+@gem 'view_models', '>=2.0.0' # for example@
 
 in your Gemfile, followed by your app file(s):
 
