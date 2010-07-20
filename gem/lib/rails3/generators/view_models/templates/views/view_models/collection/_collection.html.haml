@@ -1,0 +1,8 @@
+%ul.collection
+  - collection.each do |item|
+    - view_model = view_model_for item
+    %li
+      - options = (template_format ? { :format => template_format } : {})
+      = view_model.render_as template_name, options
+    = separator unless item == collection.entries.last
+        
