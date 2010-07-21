@@ -13,6 +13,12 @@ describe ViewModels::Extensions::ActiveRecord do
       
       @view_model.to_param
     end
+
+    it "should delegate to_key to the model" do
+      @model.should_receive(:to_key).once
+      
+      @view_model.to_key
+    end
     
     it "should delegate id to the model" do
       @model.should_receive(:id).once
