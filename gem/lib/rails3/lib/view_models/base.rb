@@ -8,7 +8,7 @@ module ViewModels
     
     # Make helper and helper_method available
     #
-    include ActionController::Helpers
+    include AbstractController::Helpers
     
     # This is really only needed because some Rails helpers access
     # @controller directly.
@@ -59,7 +59,7 @@ module ViewModels
         def template_path_from renderer, options
           template = renderer.find_template tentative_template_path(options)
           
-          template && template.path
+          template && template.virtual_path
         end
         
     end # class << self
@@ -71,7 +71,7 @@ module ViewModels
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model
     #
-    ActionController::Routing::Routes.install_helpers self
+    Rails.application.routes.install_helpers self
     
     protected
       
@@ -89,7 +89,7 @@ module ViewModels
         # view = if controller.response.template
         #   controller.response.template
         # else
-          View.new controller, master_helper_module
+          View.new controller, self._helpers
         # end
         
         # view.extend Extensions::View
