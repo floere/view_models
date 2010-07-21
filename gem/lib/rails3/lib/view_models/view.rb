@@ -5,7 +5,7 @@ module ViewModels
     
     # Shut up, opinionated funkers.
     #
-    alias singleton_class metaclass unless instance_methods.include?('singleton_class')
+    alias singleton_class metaclass unless instance_methods.include?(:singleton_class) || instance_methods.include?('singleton_class')
     
     # Include the helpers from the view model.
     #

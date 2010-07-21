@@ -1,2 +1,4 @@
+source :gemcutter
+
 gem 'rails',       '3.0.0.beta4'
-# gem 'view_models', '>=2.0.0'
+gem 'haml'

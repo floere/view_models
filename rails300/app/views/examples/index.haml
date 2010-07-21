@@ -1,9 +1,9 @@
-%h1 Rails 2 Test Page
+%h1 Rails 3 Test Page
 %p (for visual approval ;) Actual tests are in the gem)
 
 %h2 The model
 - model = Book.new 'This is my <script> Name', 100
-= "> A book with name '#{h(model.name)}' and # of pages #{model.pages}"
+= "> A book with name '#{model.name}' and # of pages #{model.pages}"
 
 %h2 view_model_for
 - view_model = view_model_for model
