@@ -1522,3 +1522,48 @@ Rendered view_models/item/_list_item (0.4ms)
 Rendered view_models/item/_list_item (0.3ms)
 Rendered view_models/collection/_list (26.0ms)
 Completed in 127ms (View: 101, DB: 0) | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-21 10:45:05) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (1.2ms)
+Rendered view_models/book/_specific (0.9ms)
+Rendered view_models/item/_not_in_book (0.7ms)
+Rendered view_models/item/_not_in_book (0.1ms)
+Rendered view_models/book/_list_item (0.7ms)
+Rendered view_models/item/_list_item (0.8ms)
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/item/_list_item (0.1ms)
+Rendered view_models/item/_list_item (0.1ms)
+Rendered view_models/collection/_list (12.7ms)
+Completed in 68ms (View: 56 | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-21 10:45:06) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/book/_specific (0.2ms)
+Rendered view_models/item/_not_in_book (0.2ms)
+Rendered view_models/item/_not_in_book (0.1ms)
+Rendered view_models/book/_list_item (0.7ms)
+Rendered view_models/item/_list_item (0.2ms)
+Rendered view_models/book/_list_item (0.7ms)
+Rendered view_models/item/_list_item (0.2ms)
+Rendered view_models/item/_list_item (0.1ms)
+Rendered view_models/collection/_list (8.3ms)
+Completed in 24ms (View: 17 | 200 OK [http://localhost/examples]
+
+
+Processing ExamplesController#index (for 127.0.0.1 at 2010-07-21 10:45:46) [GET]
+Rendering examples/index
+Rendered view_models/book/_list_item (1.2ms)
+Rendered view_models/book/_specific (0.7ms)
+Rendered view_models/item/_not_in_book (0.7ms)
+Rendered view_models/item/_not_in_book (0.1ms)
+Rendered view_models/book/_list_item (0.7ms)
+Rendered view_models/item/_list_item (0.8ms)
+Rendered view_models/book/_list_item (0.6ms)
+Rendered view_models/item/_list_item (0.2ms)
+Rendered view_models/item/_list_item (0.6ms)
+Rendered view_models/collection/_list (13.6ms)
+Completed in 66ms (View: 58 | 200 OK [http://localhost/examples]
