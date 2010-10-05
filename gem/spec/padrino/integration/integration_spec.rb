@@ -1,12 +1,13 @@
-require File.join(File.dirname(__FILE__), '../spec_helper')
+dir = File.dirname __FILE__
+require File.expand_path '../spec_helper', dir
 
-require File.join(File.dirname(__FILE__), 'models/subclass')
-require File.join(File.dirname(__FILE__), 'models/sub_subclass')
+require File.expand_path 'models/subclass', dir
+require File.expand_path 'models/sub_subclass', dir
 
-require File.join(File.dirname(__FILE__), 'view_models/project')
-require File.join(File.dirname(__FILE__), 'view_models/subclass')
-require File.join(File.dirname(__FILE__), 'view_models/sub_subclass')
-require File.join(File.dirname(__FILE__), 'view_models/module_for_rendering')
+require File.expand_path 'view_models/project', dir
+require File.expand_path 'view_models/subclass', dir
+require File.expand_path 'view_models/sub_subclass', dir
+require File.expand_path 'view_models/module_for_rendering', dir
 
 class TestApp < Padrino::Application
   

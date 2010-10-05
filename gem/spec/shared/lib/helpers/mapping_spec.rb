@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '../../spec_helper')
+require File.expand_path File.join(File.dirname(__FILE__), '../../spec_helper')
 
 describe ViewModels::Helpers::Mapping do
   include ViewModels::Helpers::Mapping
@@ -19,12 +19,10 @@ describe ViewModels::Helpers::Mapping do
       it "should return an empty hash by default" do
         specific_view_model_mapping.should == {}
       end
-      it "should raise an ArgumentError on an non-mapped model" do
+      it "should raise an ArgumentError on a mapped model" do
         class SomeViewModelClass; end
         specific_view_model_mapping[String] = SomeViewModelClass
-        lambda {
-          view_model_for("Some String")
-        }.should raise_error(ArgumentError, "wrong number of arguments (2 for 0)")
+        view_model_for("Some String").should be_kind_of(SomeViewModelClass)
       end
     end
     describe "no specific mapping" do

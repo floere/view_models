@@ -88,7 +88,7 @@ module ViewModels
         # Combines left parentheses and filters.
         #
         def filtered_left_parentheses
-          filters.zip(left_parentheses).to_s
+          filters.zip(left_parentheses).join
         end
         
         # Generates the needed amount of parentheses to match the left parentheses.

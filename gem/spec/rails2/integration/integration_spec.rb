@@ -1,14 +1,14 @@
 this = File.dirname(__FILE__)
 
-require File.join(this, '/../spec_helper')
+require File.expand_path File.join(this, '/../spec_helper')
 
-require File.join(this, 'models/subclass')
-require File.join(this, 'models/sub_subclass')
+require File.expand_path File.join(this, 'models/subclass')
+require File.expand_path File.join(this, 'models/sub_subclass')
 
-require File.join(this, 'view_models/project')
-require File.join(this, 'view_models/subclass')
-require File.join(this, 'view_models/sub_subclass')
-require File.join(this, 'view_models/module_for_rendering')
+require File.expand_path File.join(this, 'view_models/project')
+require File.expand_path File.join(this, 'view_models/subclass')
+require File.expand_path File.join(this, 'view_models/sub_subclass')
+require File.expand_path File.join(this, 'view_models/module_for_rendering')
 
 require 'action_controller'
 require 'action_controller/test_process'

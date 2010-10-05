@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../spec_helper')
+require File.expand_path File.join(File.dirname(__FILE__), '/../../spec_helper')
 
 describe ViewModels::Extensions::ModelReader do
 
@@ -25,7 +25,7 @@ describe ViewModels::Extensions::ModelReader do
       @view_model.some_model_value.should == 's'
     end
     it "should call filters in a given pattern" do
-      @view_model.class.model_reader [:some_model_value], :filter_through => [:a, :b, :a, :a]
+      @view_model.class.model_reader :some_model_value, :filter_through => [:a, :b, :a, :a]
     
       @view_model.some_model_value.should == 'sabaa'
     end
@@ -35,7 +35,7 @@ describe ViewModels::Extensions::ModelReader do
       lambda { @view_model.some_model_value }.should_not raise_error
     end
     it "should handle an array of readers" do
-      @view_model.class.model_reader [:some_model_value, :some_other_model_value], :filter_through => :a
+      @view_model.class.model_reader :some_model_value, :some_other_model_value, :filter_through => :a
     
       lambda { @view_model.some_model_value }.should_not raise_error
     end

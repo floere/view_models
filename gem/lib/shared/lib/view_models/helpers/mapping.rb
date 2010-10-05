@@ -14,6 +14,7 @@ module ViewModels
       # Rails 2: context is either a view instance or a controller instance.
       #
       def view_model_for model, context = self
+        # p [:view_model_for, view_model_class_for(model)]
         view_model_class_for(model).new model, context
       end
       
