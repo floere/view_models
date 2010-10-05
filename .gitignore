@@ -3,6 +3,5 @@ log/*.log
 tmp
 coverage
 pkg
-*.gemspec
 
 rails235/log/*.log
