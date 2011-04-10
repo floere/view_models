@@ -71,7 +71,7 @@ module ViewModels
         # Just raises a fitting template error.
         #
         def raise_template_error_with message
-          raise MissingTemplateError.new "No template #{message} found."
+          raise MissingTemplateError.new("No template #{message} found.")
         end
         # Check if the view lookup inheritance chain has ended.
         #
