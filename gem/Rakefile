@@ -18,14 +18,14 @@ task :'rails:spec' => [:'rails2:spec'] # TODO Add Rails 3 here
 
 %w|shared padrino rails2|.collect!(&:to_sym).each do |framework|
   namespace framework do
-    
+
     # run with rake spec
     Spec::Rake::SpecTask.new(:spec) do |t|
       t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
       t.spec_files = Dir.glob("spec/#{framework}/**/*_spec.rb")
       t.warning = false
     end
-    
+
     # run with rake rcov
     Spec::Rake::SpecTask.new(:rcov) do |t|
       t.spec_opts = %w{--colour --format progress --loadby mtime --reverse}
@@ -33,25 +33,6 @@ task :'rails:spec' => [:'rails2:spec'] # TODO Add Rails 3 here
       t.warning = false
       t.rcov = true
     end
-  
-  end
-end
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "view_models"
-    gemspec.summary = "A model proxy for Rails views. Helps you keep the representation of a model and the model itself separate."
-    gemspec.email = "florian.hanke@gmail.com"
-    gemspec.homepage = "http://floere.github.com/view_models"
-    gemspec.description = "For Padrino and Rails 2 views. Adds the missing R (Representation) to Rails' MVC. Provides simple proxy functionality for your models, thus helps you keep the model and view representation separate. Define focused helper methods on the (view) model, more quickly understood and more easily testable. Also: Hierarchical rendering for your hierarchical models. So, in a nutshell: Polymorphism not just in the model, but also in the view. Have fun!"
-    gemspec.authors = ["Florian Hanke", "Kaspar Schiess", "Niko Dittmann", "Andreas Schacke"]
-    gemspec.rdoc_options = ["--inline-source", "--charset=UTF-8"]
-    gemspec.files = FileList["lib/*", "lib/{shared,padrino,rails2}/**/*"]
-    gemspec.add_dependency 'activesupport', '>=2.2.0' # Padrino and Rails 2 omitted.
-    gemspec.add_development_dependency 'rspec', '>=1.2.9'
   end
-  Jeweler::GemcutterTasks.new
-rescue LoadError => e
-  puts "Jeweler not available (#{e}). Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end

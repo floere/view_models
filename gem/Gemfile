@@ -1,4 +1,14 @@
-gem 'activesupport', '>=2.2.0'
+source :gemcutter
+
+gem 'activesupport', '<= 2.3.8'
+gem 'padrino', '= 0.9.15'
+gem 'sinatra', '= 1.0.0'
+
+group :test do
+  gem 'rake'
+  gem 'rspec', '< 2.0.0'
+  gem 'rspec-rails', '< 2.0.0'
+end
 
 # group :padrino do
 #   gem 'padrino', '>=0.9.14'
