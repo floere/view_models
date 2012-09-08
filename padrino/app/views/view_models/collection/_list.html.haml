@@ -1,7 +1,0 @@
-%ol.collection
-  - collection.each do |item|
-    - view_model = view_model_for item
-    %li
-      - options = (content_type ? { :format => content_type } : {})
-      = view_model.render_as template_name, options
-    = separator unless item == collection.last

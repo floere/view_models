@@ -1,0 +1,12 @@
+require 'spec_helper'
+
+describe ViewModels::View do
+  
+  it "should be initializable" do
+    controller_class = stub :controller_class, :view_paths => ActionView::PathSet.new
+    controller       = stub :controller, :class => controller_class, :_prefixes => nil
+    
+    ViewModels::View.new controller, Module.new
+  end
+  
+end
