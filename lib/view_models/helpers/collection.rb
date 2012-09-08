@@ -23,7 +23,7 @@ module ViewModels
         # when this file is loaded in the spec, require active_support is installed before view_models are loaded
         # Load Order ? Rails Blagic?
         #
-        self.delegate *Enumerable.instance_methods, :as_json, :length, :size, :empty?, :each, :exit, :to => :@collection
+        self.delegate *[Enumerable.instance_methods, :length, :size, :empty?, :each, :exit, :as_json, { :to => :@collection }].flatten
         
         #
         #

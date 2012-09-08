@@ -96,7 +96,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rails (>= 3.0.0)
+  rails (>= 3.2.0)
   rake
   rspec (>= 2.0.0)
   rspec-rails (>= 2.0.0)
