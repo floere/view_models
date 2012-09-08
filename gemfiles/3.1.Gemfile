@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '>= 3.2.0'
+gem 'rails', '~> 3.1.0'
 
 group :test do
   gem 'rake'

@@ -3,6 +3,7 @@ log/*.log
 tmp
 coverage
 pkg
+.rmvrc
 *.gemspec
 
-rails235/log/*.log
+rails/log/*.log
