@@ -18,12 +18,12 @@ describe ViewModels::Helpers::Mapping do
       it "should return an empty hash by default" do
         specific_view_model_mapping.should == {}
       end
-      it "should raise an ArgumentError on an non-mapped model" do
-        class SomeViewModelClass; end
+      it "should raise an ArgumentError on model that does not support 2 arguments" do
+        class SomeViewModelClass; def initialize; end; end
         specific_view_model_mapping[String] = SomeViewModelClass
         lambda {
           view_model_for("Some String")
-        }.should raise_error(ArgumentError)
+        }.should raise_error(ArgumentError, /2 for 0/)
       end
     end
     describe "no specific mapping" do
