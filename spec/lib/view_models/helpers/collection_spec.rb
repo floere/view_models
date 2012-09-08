@@ -156,7 +156,6 @@ describe ViewModels::Helpers::Mapping::Collection do
   
   describe "delegation" do
     describe "enumerable" do
-      puts Enumerable.instance_methods.inspect
       Enumerable.instance_methods.map(&:to_sym).each do |method|
         it "should delegate #{method} to the collection" do
           @collection.should_receive(method).once
