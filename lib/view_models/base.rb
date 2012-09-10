@@ -1,7 +1,6 @@
 # Base Module for ViewModels.
 #
-module ViewModels
-  
+module ViewModels  
   # Gets raised when render_as, render_the, or render_template cannot
   # find the named template, not even in the hierarchy.
   #

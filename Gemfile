@@ -1,9 +1,13 @@
-source :gemcutter
+source :rubygems
 
-gem 'rails', '>= 3.0.0'
+gemspec
 
-group :test do
-  gem 'rake'
-  gem 'rspec', '>= 2.0.0'
-  gem 'rspec-rails', '>= 2.0.0'
-end
+gem 'sqlite3', :platform => :ruby
+
+# Can't wrap in platform :jruby do...end block because appraisal doesn't support
+# it
+gem 'activerecord-jdbc-adapter',        :platform => :jruby
+gem 'activerecord-jdbcsqlite3-adapter', :platform => :jruby
+gem 'jdbc-sqlite3',                     :platform => :jruby
+gem 'jruby-openssl',                    :platform => :jruby
+gem 'therubyrhino',                     :platform => :jruby
