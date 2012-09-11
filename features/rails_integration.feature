@@ -6,7 +6,8 @@ Feature: integrate with Rails
     And  I configure the application to use the view_models gem from this project
     And  I configure the application to use the following gems
       | Name                  | Version   | Require |
-      | factory_girl_rails    | ~> 4.0.0  |         |
+      | factory_girl_rails    | ~> 1.7.0  |         |
+      | factory_girl          | ~> 2.6.4  |         |
       | cucumber-rails        | ~> 1.3.0  | false   |
       | rspec-rails           | ~> 2.11.0 |         |
       | capybara              | ~> 1.1.2  |         |
