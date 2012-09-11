@@ -7,5 +7,5 @@ Testapp::Application.configure do
   # controller
   config.action_controller.allow_forgery_protection = true
   # views
-  config.action_view.cache_template_loading = true
+  # config.action_view.cache_template_loading = true
 end

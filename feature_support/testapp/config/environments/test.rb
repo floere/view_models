@@ -23,5 +23,5 @@ Testapp::Application.configure do
   config.active_record.mass_assignment_sanitizer = :strict
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  config.action_view.cache_template_loading = false
+  # config.action_view.cache_template_loading = false
 end
