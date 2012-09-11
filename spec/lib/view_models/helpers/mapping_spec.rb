@@ -23,7 +23,7 @@ describe ViewModels::Helpers::Mapping do
         specific_view_model_mapping[String] = SomeViewModelClass
         lambda {
           view_model_for("Some String")
-        }.should raise_error(ArgumentError, /2 for 0/)
+        }.should raise_error(ArgumentError, /2\sfor\s0|given\s2\,\sexpected\s0/)
       end
     end
     describe "no specific mapping" do

@@ -3,6 +3,6 @@ log/*.log
 tmp
 coverage
 pkg
-.rmvrc
+.rbx
 
 rails/log/*.log
