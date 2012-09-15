@@ -29,6 +29,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl',        '~> 2.6.4'
   s.add_development_dependency 'slim-rails',          '~> 1.0.0'
   s.add_development_dependency 'rails',               '>= 3.0'
-  s.add_development_dependency 'rake',                '=> 0.9.2'
+  s.add_development_dependency 'rake',                '>= 0.9.2'
   s.add_development_dependency 'rspec-rails',         '~> 2.11.0'
 end
