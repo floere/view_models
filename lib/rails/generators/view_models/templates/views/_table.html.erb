@@ -1,0 +1,10 @@
+<table class="collection">
+  <tbody>
+  <%- collection.each do |item| -%>
+    <tr>
+      <%- view_model = view_model_for item -%>
+      <%= view_model.render_as template_name -%>
+    </tr>
+  <%- end -%>
+  </tbody>
+</table>

@@ -1,46 +1,42 @@
-class ViewModelsGenerator < Rails::Generator::NamedBase
-  def manifest
-    record do |m|
-      
-      # Check for class naming collisions.
-      #
-      m.class_collisions "ViewModels::#{class_name}"
-      
-      # ViewModels
-      #
-      m.directory 'app/view_models'
-      m.template "view_models/view_model.rb", "app/view_models/#{file_name}.rb"
-      
-      # Specs
-      #
-      m.directory "spec/app/view_models"
-      m.template "spec/view_model_spec.rb", "spec/app/view_models/#{file_name}_spec.rb"
-      
-      # Views
-      #
-      m.directory "app/views/view_models"
-      m.directory "app/views/view_models/#{file_name}"
-      actions << 'list_item' if actions.empty?
-      actions.each do |action|
-        m.template "views/_empty.html.haml", "app/views/view_models/#{file_name}/_#{action}.html.haml"
+class ViewModelsGenerator < Rails::Generators::Base
+  source_root File.expand_path('../templates', __FILE__)
+  argument :class_name, :type => :string
+  class_option :views, :type => :string, :default => 'erb', :desc => "Render view files in erb, haml or slim (use the language name as the argument)"
+
+  def generate_view_models
+    file_name = class_name.underscore
+    # ViewModels
+    #
+    create_file "app/view_models/#{file_name}.rb", <<-FILE
+class ViewModels::#{class_name} < ViewModels::Project
+
+  # model_reader :icon, :filter_through => [:h]
+
+end
+    FILE
+    
+    # Specs
+    #
+    create_file "spec/view_models/#{file_name}_spec.rb", <<-FILE
+require 'spec_helper'
+
+describe ViewModels::#{class_name} do
+
+end
+    FILE
+    
+    # Views
+    #
+    if options.views.present?
+      %W(list_item main_item).each do |view|
+        create_file "app/views/#{file_name.pluralize}/_#{view}.html.#{options.views.downcase}", File.read(File.join(File.expand_path('../templates', __FILE__), "/views/_empty.html.#{options.views.downcase}"))
       end
-      
+    
       # Copy collection views.
       #
-      m.directory "app/views/view_models/collection"
-      m.file "views/view_models/collection/_collection.html.haml", "app/views/view_models/collection/_collection.html.haml"
-      m.file "views/view_models/collection/_collection.text.erb",  "app/views/view_models/collection/_collection.text.erb"
-      m.file "views/view_models/collection/_list.html.haml",       "app/views/view_models/collection/_list.html.haml"
-      m.file "views/view_models/collection/_list.text.erb",        "app/views/view_models/collection/_list.text.erb"
-      m.file "views/view_models/collection/_pagination.html.haml", "app/views/view_models/collection/_pagination.html.haml"
-      m.file "views/view_models/collection/_pagination.text.erb",  "app/views/view_models/collection/_pagination.text.erb"
-      m.file "views/view_models/collection/_table.html.haml",      "app/views/view_models/collection/_table.html.haml"
-      m.file "views/view_models/collection/_table.text.erb",       "app/views/view_models/collection/_table.text.erb"
-      
-      # Show README.
-      #
-      m.readme "README"
-      
+      %W(collection list pagination table).each do |view|
+        create_file "app/views/#{file_name.pluralize}/_#{view}.html.#{options.views.downcase}", File.read(File.join(File.expand_path('../templates', __FILE__), "/views/_#{view}.html.#{options.views.downcase}"))
+      end
     end
   end
 
