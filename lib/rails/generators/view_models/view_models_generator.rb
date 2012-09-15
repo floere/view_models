@@ -5,18 +5,39 @@ class ViewModelsGenerator < Rails::Generators::Base
 
   def generate_view_models
     file_name = class_name.underscore
+    
+    create_model class_name, file_name
+    
+    create_views file_name if options.views.present?
+    end
+  end
+  
+  def create_views file_name
+    %W(list_item main_item).each do |view|
+      create_file "app/views/#{file_name.pluralize}/_#{view}.html.#{options.views.downcase}", File.read(File.join(File.expand_path('../templates', __FILE__), "/views/_empty.html.#{options.views.downcase}"))
+    end
+  
+    # Copy collection views.
+    #
+    %W(collection list pagination table).each do |view|
+      create_file "app/views/#{file_name.pluralize}/_#{view}.html.#{options.views.downcase}", File.read(File.join(File.expand_path('../templates', __FILE__), "/views/_#{view}.html.#{options.views.downcase}"))
+    end
+  end
+  
+  def create_model class_name, file_name
     # ViewModels
     #
     create_file "app/view_models/#{file_name}.rb", <<-FILE
 class ViewModels::#{class_name} < ViewModels::Project
 
-  # model_reader :icon, :filter_through => [:h]
+# model_reader :icon, :filter_through => [:h]
 
 end
     FILE
-    
+
     # Specs
     #
+    
     create_file "spec/view_models/#{file_name}_spec.rb", <<-FILE
 require 'spec_helper'
 
@@ -24,20 +45,7 @@ describe ViewModels::#{class_name} do
 
 end
     FILE
-    
-    # Views
-    #
-    if options.views.present?
-      %W(list_item main_item).each do |view|
-        create_file "app/views/#{file_name.pluralize}/_#{view}.html.#{options.views.downcase}", File.read(File.join(File.expand_path('../templates', __FILE__), "/views/_empty.html.#{options.views.downcase}"))
-      end
-    
-      # Copy collection views.
-      #
-      %W(collection list pagination table).each do |view|
-        create_file "app/views/#{file_name.pluralize}/_#{view}.html.#{options.views.downcase}", File.read(File.join(File.expand_path('../templates', __FILE__), "/views/_#{view}.html.#{options.views.downcase}"))
-      end
+
     end
   end
-
 end
