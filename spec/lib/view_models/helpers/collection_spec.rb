@@ -137,6 +137,7 @@ describe ViewModels::Helpers::Mapping::Collection do
     it "should call render_partial with the right parameters" do
       default_options = {
         :collection => @collection,
+        :template_name => :pagination,
         :separator => '|'
       }
       @collection_view_model.should_receive(:render_partial).once.with :pagination, default_options
@@ -146,6 +147,7 @@ describe ViewModels::Helpers::Mapping::Collection do
     it "should override the default options if specific options are given" do
       specific_options = {
         :collection => :a,
+        :template_name => :b,
         :separator => :c
       }
       @collection_view_model.should_receive(:render_partial).once.with :pagination, specific_options

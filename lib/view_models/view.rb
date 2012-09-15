@@ -20,6 +20,12 @@ module ViewModels
     def render_with options
       render options.to_render_options
     end
+    
+    # Rails 3 calls it with 2 arguments
+    #
+    def find_template path, second=nil
+      lookup_context.find_template path rescue nil
+    end
 
   end
 end

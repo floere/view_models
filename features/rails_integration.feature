@@ -17,5 +17,5 @@ Feature: integrate with Rails
     
   Scenario:
     When I successfully run `bundle exec rake cucumber`
-    Then the output should contain "1 scenario (1 passed)"
-    And the output should contain "8 steps (8 passed)"
+    Then the output should contain "2 scenarios (2 passed)"
+    And the output should contain "17 steps (17 passed)"

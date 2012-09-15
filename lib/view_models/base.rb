@@ -128,7 +128,7 @@ module ViewModels
         # Raises a MissingTemplateError if none is found during
         # inheritance chain traversal.
         #
-        def template_path renderer, options
+        def template_path renderer, options          
           raise_template_error_with options.error_message if inheritance_chain_ends?
           
           template_path_from(renderer, options) || self.next_in_render_hierarchy.template_path(renderer, options)
@@ -140,14 +140,12 @@ module ViewModels
         def template_path_from renderer, options
           template = renderer.find_template tentative_template_path(options)
           
-          template && template.path
+          template && template.virtual_path.to_s
         end
         
         # Return as render path either a stored path or a newly generated one.
         #
         # If nothing or nil is passed, the store is ignored.
-        #
-        # TODO Think about using the built-in Padrino template store.
         #
         def tentative_template_path options
           path_store[options.path_key] || generate_template_path_from(options)
@@ -178,7 +176,7 @@ module ViewModels
         # Note: Remembers the result since it is dependent on the Class name only.
         #
         def view_model_path
-          @view_model_path || @view_model_path = self.name.underscore
+          @view_model_path ||= self.name.gsub(/^ViewModels::|(\w+)(::)?/) { $1.downcase.pluralize + ($2 ? '/' : '').to_s if $1 }
         end
         
     end
@@ -261,7 +259,7 @@ module ViewModels
         # view = if controller.response.template
         #   controller.response.template
         # else
-          View.new controller, self._helpers
+          View.new context, self._helpers
         # end
         
         # view.extend Extensions::View

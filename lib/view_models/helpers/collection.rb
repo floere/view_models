@@ -44,10 +44,8 @@ module ViewModels
         #   * Uses :list_item as the default element template.
         #   * Uses a nil separator in html.
         #
-        def list options = {}
-          default_options = { :collection => @collection, :template_name => :list_item, :separator => nil }
-          
-          render_partial :list, default_options.merge(options)
+        def list options = {}          
+          render_partial :list, template_locals(:list_item, options)
         end
         
         # Renders a collection.
@@ -65,10 +63,8 @@ module ViewModels
         #   * Uses :collection_item as the default element template.
         #   * Uses a nil separator.
         #
-        def collection options = {}
-          default_options = { :collection => @collection, :template_name => :collection_item, :separator => nil }
-          
-          render_partial :collection, default_options.merge(options)
+        def collection options = {}          
+          render_partial :collection, template_locals(:collection_item, options)
         end
         
         # Renders a table.
@@ -85,10 +81,8 @@ module ViewModels
         #   * Uses :table_row as the default element template.
         #   * Uses a nil separator.
         #
-        def table options = {}
-          default_options = { :collection => @collection, :template_name => :table_row, :separator => nil }
-          
-          render_partial :table, default_options.merge(options)
+        def table options = {}          
+          render_partial :table, template_locals(:table_row, options)
         end
         
         # Renders a pagination.
@@ -101,10 +95,8 @@ module ViewModels
         #   * The collection of the collection view_model to iterate over.
         #   * Uses | as separator.
         #
-        def pagination options = {}
-          default_options = { :collection => @collection, :separator => '|' }
-          
-          render_partial :pagination, default_options.merge(options)
+        def pagination options = {}          
+          render_partial :pagination, template_locals(:pagination, {:separator => '|'}.merge(options))
         end
         
         private
@@ -117,6 +109,12 @@ module ViewModels
           #
           def render_partial name, locals
             @context.instance_eval { render :partial => "view_models/collection/#{name}", :locals => locals }
+          end
+          
+          # Helper method that constructs locals for render_partial
+          #
+          def template_locals template_name, supersed_options 
+            { :collection => @collection, :template_name => template_name, :separator => nil }.merge supersed_options
           end
           
       end
