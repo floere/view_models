@@ -35,17 +35,6 @@ When /^I copy the generic app files from the support folder into the generated a
   FileUtils.cp_r File.join(PROJECT_ROOT, 'feature_support/testapp'), File.join(PROJECT_ROOT, 'tmp/aruba'), :remove_destination => true
 end
 
-When 'I reload Factory Girl to get the latest factories' do
-  FactoryGirl.definition_file_paths = [File.join(PROJECT_ROOT, 'tmp/aruba', APP_NAME, 'spec/factories')]
-  FactoryGirl.reload
-end
-
-Given /^the following (.+) exists?:$/ do |model, table|
-  table.hashes.each do |hash|
-    FactoryGirl.create(model.singularize.to_sym, hash)
-  end
-end
-
 When /^I configure the application to use the (.+) gem from this project$/ do |name|
   append_to_gemfile "gem '#{name}', :path => '#{PROJECT_ROOT}'"
 end
