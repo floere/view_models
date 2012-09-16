@@ -7,7 +7,7 @@ rvm:
   - rbx-19mode
   - jruby
 
-script: "bundle exec rake"
+script: "bundle install && bundle exec rake spec cucumber"
 
 gemfile:
   - Gemfile
