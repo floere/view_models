@@ -21,8 +21,11 @@ module ViewModels
     # The @context = @controller is really only needed because some Rails helpers access
     # @controller directly.
     # It's really bad.
-    #
-    # TODO Include this | Make it call super
+    # @param [ActiveRecord] model The model which the view model is based upon
+    # @param [ActionView, ActionController, Rails.application] app_or_controller_or_view The context of the view model
+    # @todo Include this | Make it call super
+    # @example Initialize a view model without the mapping helper
+    #   ViewModel::YourModel.new(@model, @context)
     # 
     def initialize model, app_or_controller_or_view
       @model                 = model
@@ -35,6 +38,7 @@ module ViewModels
       # template inheritance, to remember specific
       # [path, name, format] tuples, pointing to a template path,
       # so the view models don't have to traverse the inheritance chain always.
+      # @param [ViewModel] subclass The subclass of the view model
       #
       attr_accessor :path_store
       def inherited subclass
@@ -43,15 +47,16 @@ module ViewModels
       end
       
       # Delegates method calls to the context.
-      #
-      # Examples:
-      #   context_method :current_user
-      #   context_method :current_user, :current_profile  # multiple methods to be delegated
-      #
       # In the view_model:
       #   self.current_user
       # will call
       #   context.current_user
+      #
+      # @params [Symbol] methods A list of symbols representing methods to be delegated
+      # @example delegate one method to the context
+      #   context_method :current_user
+      # @example delegate multiple methods to the context
+      #   context_method :current_user, :current_profile
       #
       def context_method *methods
         delegate *methods << { :to => :context }
@@ -69,7 +74,8 @@ module ViewModels
       # Wrapper for add_template_helper in ActionController::Helpers, also
       # includes given helper in the view_model
       #
-      # TODO extract into module
+      # @todo extract into module
+      # @params [Module] helper_module the helper to be added
       #
       unless instance_methods.include?('old_add_template_helper')
         alias old_add_template_helper add_template_helper
@@ -81,7 +87,7 @@ module ViewModels
       
       # Sets the view format and tries to render the given options.
       #
-      # Note: Also caches [path, name, format] => template path.
+      # @note Also caches [path, name, format] => template path.
       #
       def render renderer, options
         options.format! renderer
@@ -100,19 +106,24 @@ module ViewModels
         #
         # Note: Just returns the superclass.
         #
-        # TODO Think about raising the MissingTemplateError here.
+        # @todo Think about raising the MissingTemplateError here.
+        # @returns The superclass of the view model, which ends with ViewModel::Base
         #
         def next_in_render_hierarchy
           superclass
         end
-        # Just raises a fitting template error.
+        
+        # Raises the fitting template error with the given message
+        # @params [String,Symbol] message The message with which the template error should be raised
+        # @raises [MissingTemplateError] A template error indicating that the template is missing
         #
         def raise_template_error_with message
           raise MissingTemplateError.new("No template #{message} found.")
         end
+        
         # Check if the view lookup inheritance chain has ended.
-        #
         # Raises a MissingTemplateError if yes.
+        # @returns wether the current class is ViewModel::Base and therefore at the end of the inheritance chain
         #
         def inheritance_chain_ends?
            self == ViewModels::Base
@@ -127,6 +138,7 @@ module ViewModels
         #
         # Raises a MissingTemplateError if none is found during
         # inheritance chain traversal.
+        # @param 
         #
         def template_path renderer, options          
           raise_template_error_with options.error_message if inheritance_chain_ends?
@@ -171,7 +183,7 @@ module ViewModels
         # If the class is named
         #   ViewModels::Models::Book
         # this method will yield
-        #   view_models/models/book
+        #   models/book
         #
         # Note: Remembers the result since it is dependent on the Class name only.
         #
