@@ -4,7 +4,7 @@ module ViewModels
   # Gets raised when render_as, render_the, or render_template cannot
   # find the named template, not even in the hierarchy.
   #
-  class MissingTemplateError < StandardError; end
+  MissingTemplateError = Class.new(StandardError)
   
   # Base class from which all view_models inherit.
   #
@@ -188,7 +188,7 @@ module ViewModels
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model
     #
-    Rails.application.routes.install_helpers self if Rails && Rails.application
+    Rails.application.routes.install_helpers self if Rails.application
     
     # Renders the given partial in the view_model's view root in the format given.
     #
@@ -256,13 +256,7 @@ module ViewModels
       # TODO Try getting a view instance from the controller.
       #
       def renderer
-        # view = if controller.response.template
-        #   controller.response.template
-        # else
-          View.new context, self._helpers
-        # end
-        
-        # view.extend Extensions::View
+        View.new context, self._helpers
       end
       
       # Internal render method that uses the options to get a view instance
