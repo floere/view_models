@@ -18,12 +18,12 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '>= 3.0.0'
 
-  s.add_development_dependency 'rake',                '>= 0.9.2'
+  s.add_development_dependency 'rake',                '>= 0.8.7'
   s.add_development_dependency 'aruba'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'appraisal',           '~> 0.4.0'
   s.add_development_dependency 'bundler',             '>= 1.1.0'
-  s.add_development_dependency 'cucumber-rails',      '>= 1.3.0'
+  s.add_development_dependency 'cucumber-rails',      '>= 1.2.1'
   s.add_development_dependency 'cucumber',            '~> 1.2.0'
   s.add_development_dependency 'factory_girl_rails',  '~> 1.7.0'
   s.add_development_dependency 'factory_girl',        '~> 2.6.4'
