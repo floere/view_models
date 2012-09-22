@@ -16,10 +16,9 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'activesupport', '>= 3.0.0'
-  s.add_dependency 'actionpack',    '>= 3.0.0'
+  s.add_dependency 'rails', '>= 3.0.0'
 
-  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rake',                '>= 0.9.2'
   s.add_development_dependency 'aruba'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'appraisal',           '~> 0.4.0'
@@ -29,6 +28,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl_rails',  '~> 1.7.0'
   s.add_development_dependency 'factory_girl',        '~> 2.6.4'
   s.add_development_dependency 'slim-rails',          '~> 1.0.0'
-  s.add_development_dependency 'rails',               '>= 3.0'
   s.add_development_dependency 'rspec-rails',         '~> 2.11.0'
 end
