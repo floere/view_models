@@ -13,3 +13,7 @@ gemfile:
   - gemfiles/3.2.gemfile
   - gemfiles/3.1.Gemfile
   - gemfiles/3.0.Gemfile
+  
+matrix:
+  allow_failures:
+    - rvm: jruby
