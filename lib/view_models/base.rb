@@ -14,13 +14,6 @@ module ViewModels
     #
     include AbstractController::Helpers
     
-    # include the extensions by default
-    include ViewModels::Extensions::ActiveRecord
-
-    # include the helpers by default
-    helper ViewModels::Helpers::View
-    helper ViewModels::Helpers::Mapping
-    
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
     # The context is usually a view, a controller, or an app, but doesn't need to be.
     # 
@@ -208,6 +201,13 @@ module ViewModels
     # available in the view_model
     #
     Rails.application.routes.install_helpers self if Rails.application
+    
+    # active record extensions are included by default
+    include Extensions::ActiveRecord
+
+    # include the helpers by default
+    helper Helpers::View
+    helper Helpers::Mapping
     
     # Renders the given partial in the view_model's view root in the format given.
     #
