@@ -195,7 +195,7 @@ module ViewModels
         
     # Delegate context methods.
     #
-    context_method :logger, :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token
+    context_method :logger, :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token, :config
     
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model
