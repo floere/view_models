@@ -53,6 +53,31 @@ describe ViewModels::Base do
     end
   end
   
+  describe "to_param" do
+    before(:each) do
+      @model      = stub :model
+      @view_model = ViewModels::Base.new @model, nil
+    end
+    it "should delegate to_param to the model" do
+      @model.should_receive(:to_param).once
+      
+      @view_model.to_param
+    end
+    
+    it "should delegate id to the model" do
+      @model.should_receive(:id).once
+      
+      @view_model.id
+    end
+    
+    it "should delegate dom_id to ActionController::RecordIdentifier" do
+      ActionController::RecordIdentifier.should_receive(:dom_id).once
+      
+      @view_model.dom_id
+    end
+    
+  end
+  
   describe ".master_helper_module" do
     before(:each) do
       class ViewModels::SpecificMasterHelperModule < ViewModels::Base; end

@@ -197,13 +197,24 @@ module ViewModels
     #
     context_method :logger, :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token, :config, :cookies, :flash, :default_url_options
     
+    # id and param are simply delegated to the model.
+    #
+    # This makes it possible to use the view_model
+    # for e.g. url generation:
+    # * edit_user_path(view_model)
+    #
+    delegate :id, :to_param, :to => :model
+    
+    # Delegate dom id to the action controller record identifier.
+    #
+    def dom_id
+      ActionController::RecordIdentifier.dom_id model
+    end
+    
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model
     #
     Rails.application.routes.install_helpers self if Rails.application
-    
-    # active record extensions are included by default
-    include Extensions::ActiveRecord
 
     # include the helpers by default
     helper Helpers::View

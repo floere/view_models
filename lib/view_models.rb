@@ -1,4 +1,3 @@
-require 'view_models/extensions/active_record'
 require 'view_models/extensions/model_reader'
 
 require 'view_models/helpers/mapping'
