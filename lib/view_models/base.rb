@@ -207,8 +207,12 @@ module ViewModels
     
     # Delegate dom id to the action controller record identifier.
     #
-    def dom_id
-      ActionController::RecordIdentifier.dom_id model
+    def dom_id *args
+      if args.present?
+        context.dom_id *args
+      else
+        ActionController::RecordIdentifier.dom_id model
+      end
     end
     
     # Make all the dynamically generated routes (restful routes etc.)

@@ -1,8 +1,4 @@
-class ViewModels::Test < ViewModels::Base    
-  include ViewModels::Extensions::ActiveRecord
-  helper ViewModels::Helpers::View
-  helper ViewModels::Helpers::Mapping
-  helper ActionView::Helpers
+class ViewModels::Test < ViewModels::Base
   helper ApplicationHelper
     
   def creation

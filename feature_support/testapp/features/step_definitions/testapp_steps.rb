@@ -11,5 +11,6 @@ When /I visit (\w+) ([^']+)'s show page/ do |type, name|
   visit "/#{plurals[type]}/#{type.capitalize.constantize.find_by_name(name).id}"
 end
 Then /I should see "(.+)" within "(.+)"/ do |content, selector|
+  puts page.html
   page.should have_css(selector, :text => content)
 end

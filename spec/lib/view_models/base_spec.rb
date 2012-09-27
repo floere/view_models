@@ -70,10 +70,18 @@ describe ViewModels::Base do
       @view_model.id
     end
     
-    it "should delegate dom_id to ActionController::RecordIdentifier" do
+    it "should delegate dom_id with no args to ActionController::RecordIdentifier" do
       ActionController::RecordIdentifier.should_receive(:dom_id).once
       
       @view_model.dom_id
+    end
+    
+    it "should delegate dom_id with args to the context" do
+      @context = mock('context')
+      @view_model.stub! :context => @context
+      @context.should_receive(:dom_id).with('arg1', 'arg2').once
+      
+      @view_model.dom_id('arg1', 'arg2')
     end
     
   end
