@@ -14,6 +14,13 @@ module ViewModels
     #
     include AbstractController::Helpers
     
+    # include the extensions by default
+    include ViewModels::Extensions::ActiveRecord
+
+    # include the helpers by default
+    helper ViewModels::Helpers::View
+    helper ViewModels::Helpers::Mapping
+    
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
     # The context is usually a view, a controller, or an app, but doesn't need to be.
     # 
@@ -195,7 +202,7 @@ module ViewModels
         
     # Delegate context methods.
     #
-    context_method :logger, :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token, :config
+    context_method :logger, :form_authenticity_token, :protect_against_forgery?, :request_forgery_protection_token, :config, :cookies, :flash, :default_url_options
     
     # Make all the dynamically generated routes (restful routes etc.)
     # available in the view_model

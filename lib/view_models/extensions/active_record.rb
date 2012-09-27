@@ -19,6 +19,7 @@ module ViewModels
       # Delegate to the action controller record identifier.
       #
       def dom_id
+        puts 'HELLO'
         ActionController::RecordIdentifier.dom_id model
       end
       
