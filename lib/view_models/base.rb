@@ -188,7 +188,7 @@ module ViewModels
         # Note: Remembers the result since it is dependent on the Class name only.
         #
         def view_model_path
-          @view_model_path ||= self.name.gsub(/^ViewModels::|(\w+)(::)?/) { $1.downcase.pluralize + ($2 ? '/' : '').to_s if $1 }
+          @view_model_path ||= self.name.gsub(/^ViewModels::|(\w+)(::)?/) { $1.underscore.pluralize + ($2 ? '/' : '').to_s if $1 }
         end
         
     end
