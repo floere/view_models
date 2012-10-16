@@ -4,7 +4,7 @@ module ViewModels
       
       # Construct a view_model for a collection.
       #
-      # TODO Think about moving it into view_model_for, or renaming it view_models_for.
+      # @todo Think about moving it into view_model_for, or renaming it view_models_for.
       #
       def collection_view_model_for array_or_pagination, context = self
         Collection.new array_or_pagination, context
@@ -33,16 +33,11 @@ module ViewModels
         
         # Renders a list (in the broadest sense of the word).
         #
-        # Options:
-        #   collection => collection to iterate over
-        #   context => context to render in
-        #   template_name => template to render for each model element
-        #   separator => separator between each element
-        # By default, uses:
-        #   * The collection of the collection view_model to iterate over.
-        #   * The original context given to the collection view_model to render in.
-        #   * Uses :list_item as the default element template.
-        #   * Uses a nil separator in html.
+        # @param [Hash] options The options for the list
+        # @option options :collection the collection to iterate over (default: The collection of the collection view_model to iterate over)
+        # @option options :context context to render in (default: The original context given to the collection view_model to render in)
+        # @option options :template_name the template to render for each model element (default: list_item as the default element template)
+        # @option options :separator the separator between each element (default: nil separator in html)
         #
         def list options = {}          
           render_partial :list, template_locals(:list_item, options)
@@ -50,18 +45,13 @@ module ViewModels
         
         # Renders a collection.
         #
-        # Note: The only difference between a list and a collection is the enclosing
-        #       list type. While list uses ol, the collection uses ul.
+        # @note The only difference between a list and a collection is the enclosing list type. While list uses ol, the collection uses ul.
         #
-        # Options:
-        #   collection => collection to iterate over
-        #   context => context to render in
-        #   template_name => template to render for each model element
-        #   separator => separator between each element
-        # By default, uses:
-        #   * The collection of the collection view_model to iterate over.
-        #   * Uses :collection_item as the default element template.
-        #   * Uses a nil separator.
+        # @param [Hash] options The options for the collection
+        # @option options :collection the collection to iterate over (default: The collection of the collection view_model to iterate over)
+        # @option options :context the context to render in (default: The original context given to the collection view_model to render in)
+        # @option options :template_name the template to render for each model element (default: Uses :collection_item as the default element template)
+        # @option options :separator => separator between each element (default: nil separator in html)
         #
         def collection options = {}          
           render_partial :collection, template_locals(:collection_item, options)
@@ -71,15 +61,11 @@ module ViewModels
         #
         # Note: Each item represents a table row.
         #
-        # Options:
-        #   collection => collection to iterate over
-        #   context => context to render in
-        #   template_name => template to render for each model element
-        #   separator => separator between each element
-        # By default, uses:
-        #   * The collection of the collection view_model to iterate over.
-        #   * Uses :table_row as the default element template.
-        #   * Uses a nil separator.
+        # @param [Hash] options The options for the table
+        # @option options :collection the collection to iterate over (default: The collection of the collection view_model to iterate over)
+        # @option options :context the context to render in (default: The original context given to the collection view_model to render in)
+        # @option options :template_name the template to render for each model element (default: Uses :table_row as the default element template)
+        # @option options :separator => separator between each element (default: nil separator in html)
         #
         def table options = {}          
           render_partial :table, template_locals(:table_row, options)
@@ -87,13 +73,11 @@ module ViewModels
         
         # Renders a pagination.
         #
-        # Options:
-        #   collection => collection to iterate over
-        #   context => context to render in
-        #   separator => separator between pages
-        # By default, uses:
-        #   * The collection of the collection view_model to iterate over.
-        #   * Uses | as separator.
+        # @param [Hash] options The options for the collection
+        # @option options :collection the collection to iterate over (default: The collection of the collection view_model to iterate over)
+        # @option options :context the context to render in (default: The original context given to the collection view_model to render in)
+        # @option options :template_name the template to render for each model element (default: Uses :collection_item as the default element template)
+        # @option options :separator => separator between each element (default: | separator in html)
         #
         def pagination options = {}          
           render_partial :pagination, template_locals(:pagination, {:separator => '|'}.merge(options))
@@ -103,9 +87,7 @@ module ViewModels
           
           # Helper method that renders a partial in the context of the context instance.
           #
-          # Example:
-          #   If the collection view_model helper has been instantiated in the context
-          #   of a controller, render will be called in the controller.
+          # @note If the collection view_model helper has been instantiated in the context of a controller, render will be called in the controller.
           #
           def render_partial name, locals
             @context.instance_eval { render :partial => "view_models/collection/#{name}", :locals => locals }

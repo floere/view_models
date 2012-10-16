@@ -31,7 +31,7 @@ module ViewModels
     
     # Prepare the key for the next storing procedure.
     #
-    # Note: If this is nil, the store will not save the path.
+    # @note If this is nil, the store will not save the path.
     #
     def prepare key
       @key = key

@@ -9,7 +9,6 @@ class ViewModelsGenerator < Rails::Generators::Base
     create_model class_name, file_name
     
     create_views file_name if options.views.present?
-    end
   end
   
   def create_views file_name
@@ -46,6 +45,5 @@ describe ViewModels::#{class_name} do
 end
     FILE
 
-    end
   end
 end

@@ -1,12 +1,23 @@
 # Base Module for ViewModels.
+# @author Florian Hanke
+# @author Kaspar Schiess
+# @author Niko Dittmann
+# @author Beat Richartz
+# @version 3.0.0
+# @since 1.0.0
 #
-module ViewModels  
+module ViewModels 
+
   # Gets raised when render_as, render_the, or render_template cannot
   # find the named template, not even in the hierarchy.
   #
   MissingTemplateError = Class.new(StandardError)
   
   # Base class from which all view_models inherit.
+  # @example Create Your first View Model
+  #   class ViewModels::MyViewModel < ViewModels::Base
+  #     # your code
+  #   end
   #
   class Base
     
@@ -18,8 +29,7 @@ module ViewModels
     # The context is usually a view, a controller, or an app, but doesn't need to be.
     # 
     #
-    # The @context = @controller is really only needed because some Rails helpers access
-    # @controller directly.
+    # The @context = @controller is really only needed because some Rails helpers access @controller directly.
     # It's really bad.
     # @param [ActiveRecord] model The model which the view model is based upon
     # @param [ActionView, ActionController, Rails.application] app_or_controller_or_view The context of the view model
@@ -34,13 +44,16 @@ module ViewModels
     
     class << self
       
+      # The path store
+      #
+      attr_accessor :path_store
+      
       # Installs a path store, a specific store for
       # template inheritance, to remember specific
-      # [path, name, format] tuples, pointing to a template path,
+      # [path, name, format] tuples, pointing to a template path
       # so the view models don't have to traverse the inheritance chain always.
       # @param [ViewModel] subclass The subclass of the view model
       #
-      attr_accessor :path_store
       def inherited subclass
         ViewModels::PathStore.install_in subclass
         super
@@ -52,7 +65,7 @@ module ViewModels
       # will call
       #   context.current_user
       #
-      # @params [Symbol] methods A list of symbols representing methods to be delegated
+      # @param [Symbol] methods A list of symbols representing methods to be delegated
       # @example delegate one method to the context
       #   context_method :current_user
       # @example delegate multiple methods to the context
@@ -75,7 +88,7 @@ module ViewModels
       # includes given helper in the view_model
       #
       # @todo extract into module
-      # @params [Module] helper_module the helper to be added
+      # @param [Module] helper_module the helper to be added
       #
       unless instance_methods.include?('old_add_template_helper')
         alias old_add_template_helper add_template_helper
@@ -86,7 +99,9 @@ module ViewModels
       end
       
       # Sets the view format and tries to render the given options.
-      #
+      # @param [ActionView] renderer The view renderer
+      # @param [Hash] options The options to pass to the view
+      # @option options [Hash] :locals The locals to pass to the view
       # @note Also caches [path, name, format] => template path.
       #
       def render renderer, options
@@ -104,18 +119,18 @@ module ViewModels
         
         # Returns the next view model class in the render hierarchy.
         #
-        # Note: Just returns the superclass.
+        # @note Just returns the superclass.
         #
         # @todo Think about raising the MissingTemplateError here.
-        # @returns The superclass of the view model, which ends with ViewModel::Base
+        # @return The superclass of the view model, which ends with ViewModel::Base
         #
         def next_in_render_hierarchy
           superclass
         end
         
         # Raises the fitting template error with the given message
-        # @params [String,Symbol] message The message with which the template error should be raised
-        # @raises [MissingTemplateError] A template error indicating that the template is missing
+        # @param [String,Symbol] message The message with which the template error should be raised
+        # @raise [MissingTemplateError] A template error indicating that the template is missing
         #
         def raise_template_error_with message
           raise MissingTemplateError.new("No template #{message} found.")
@@ -123,7 +138,7 @@ module ViewModels
         
         # Check if the view lookup inheritance chain has ended.
         # Raises a MissingTemplateError if yes.
-        # @returns wether the current class is ViewModel::Base and therefore at the end of the inheritance chain
+        # @return wether the current class is ViewModel::Base and therefore at the end of the inheritance chain
         #
         def inheritance_chain_ends?
            self == ViewModels::Base
@@ -138,16 +153,18 @@ module ViewModels
         #
         # Raises a MissingTemplateError if none is found during
         # inheritance chain traversal.
-        # @param 
+        # @param [ActionView] renderer The view renderer
+        # @param [Hash] options The options to pass to the template path
         #
         def template_path renderer, options          
           raise_template_error_with options.error_message if inheritance_chain_ends?
           
           template_path_from(renderer, options) || self.next_in_render_hierarchy.template_path(renderer, options)
         end
-        
-        # ...        
+           
         # Accesses the view to find a suitable template path.
+        # @param [ActionView] renderer The view renderer
+        # @param [Hash] options The options to pass to the view
         #
         def template_path_from renderer, options
           template = renderer.find_template tentative_template_path(options)
@@ -155,16 +172,17 @@ module ViewModels
           template && template.virtual_path.to_s
         end
         
-        # Return as render path either a stored path or a newly generated one.
-        #
-        # If nothing or nil is passed, the store is ignored.
+        # @return render path either a stored path or a newly generated one.
+        # @note If nothing or nil is passed, the store is ignored.
+        # @param [Hash] options The view render options
         #
         def tentative_template_path options
           path_store[options.path_key] || generate_template_path_from(options)
         end
         
-        # Returns the root of this view_models views with the template name appended.
-        # e.g. 'view_models/some/specific/path/to/template'
+        # @return the root of this view_models views with the template name appended.
+        # @example Returning a specific path
+        #   'some/specific/path/to/template'
         #
         def generate_template_path_from options
           File.join generate_path_from(options), options.name
@@ -220,7 +238,8 @@ module ViewModels
     #
     Rails.application.routes.install_helpers self if Rails.application
 
-    # include the helpers by default
+    # include these helpers by default
+    #
     helper Helpers::View
     helper Helpers::Mapping
     
@@ -278,16 +297,16 @@ module ViewModels
       # the methods model, controller, context public.
       #
       attr_reader :model, :context
+      
       # CaptureHelper needs this.
       #
       attr_accessor :output_buffer
-      
       
       alias controller context
       
       # Returns a view instance for render_xxx.
       #
-      # TODO Try getting a view instance from the controller.
+      # @todo Try getting a view instance from the controller.
       #
       def renderer
         View.new context, self._helpers

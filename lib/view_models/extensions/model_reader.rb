@@ -8,9 +8,10 @@ module ViewModels
       # Define a reader for a model attribute. Acts as a filtered delegation to the model. 
       #
       # You may specify a :filter_through option that is either a symbol or an array of symbols. The return value
-      # from the model will be filtered through the functions (arity 1) and then passed back to the receiver. 
+      # from the model will be filtered through the functions (arity 1) and then passed back to the receiver.
+      # @param [Symbol, Hash] attributes_and_options The attributes and options for the model reader
       #
-      # Example: 
+      # @example install different model readers
       #
       #   model_reader :foobar                                        # same as delegate :foobar, :to => :model
       #   model_reader :foobar, :filter_through => :h                 # html escape foobar 
@@ -32,6 +33,7 @@ module ViewModels
         end
         
         # Extract filter_through options from the options hash if there are any.
+        # @param [Hash] options the options to split
         #
         def split options
           @filters = if options.last.kind_of?(Hash)
@@ -53,6 +55,8 @@ module ViewModels
       #
       class FilteredDelegationInstaller
         
+        # The attributes target, attributes, filters
+        #
         attr_reader :target, :attributes, :filters
         
         def initialize target, options
@@ -67,9 +71,8 @@ module ViewModels
         
         # Install a reader for the given name with the given filters.
         #
-        # Example:
-        # # Installs a reader for model.attribute
-        # #
+        # @example Installs a reader for model.attribute
+        #
         # * install_reader :attribute
         #
         def install_reader attribute
@@ -79,7 +82,7 @@ module ViewModels
         # Defines a reader for the given model attribute and filtering
         # through the given filters.
         # 
-        # Note: The filters are applied from last to first element.
+        # @note The filters are applied from last to first element.
         #
         def reader_definition_for attribute
           "def #{attribute}; #{filtered_left_parentheses}model.#{attribute}#{right_parentheses}; end"
@@ -99,10 +102,8 @@ module ViewModels
         
         # Generates an array of left parentheses with
         # length <amount of filters>
-        # Example:
-        # # 4 Filters
-        # # 
-        # left_parentheses # => ['(', '(', '(', '(']
+        # @example for 4 Filters
+        #   left_parentheses # => ['(', '(', '(', '(']
         #
         def left_parentheses
           ['('] * filters.size

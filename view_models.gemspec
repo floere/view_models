@@ -4,7 +4,7 @@ require 'view_models/version'
 Gem::Specification.new do |s|
   s.name        = "view_models"
   s.version     = ViewModels::VERSION.dup
-  s.authors     = ["Florian Hanke", "Kaspar Schiess", "Beat Richartz"]
+  s.authors     = ["Florian Hanke", "Kaspar Schiess", "Niko Dittmann", "Beat Richartz"]
   s.date        = Time.now.strftime("%Y-%m-%d")
   s.email       = "support@viewmodels.com"
   s.homepage    = "http://florianhanke.com/view_models/"
@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake',                '>= 0.8.7'
   s.add_development_dependency 'aruba'
+  s.add_development_dependency 'yard'
+  s.add_development_dependency 'redcloth'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'appraisal',           '~> 0.4.0'
   s.add_development_dependency 'bundler',             '>= 1.1.0'

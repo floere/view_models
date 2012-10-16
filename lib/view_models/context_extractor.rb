@@ -4,17 +4,21 @@ module ViewModels
   
   # Extracts controllers for a living from unsuspecting views.
   #
-  # Note: This is actually only needed in Rails. In Padrino, the context is always the app.
-  #
   class ContextExtractor
     
+    # The context
+    #
     attr_reader :context
     
+    # Initialize the Context extractor
+    # @param [ActionController, ActionMailer, ActionView] context Some render context
+    #
     def initialize context
       @context = context
     end
     
     # Extracts a controller from the context.
+    # @return [ActionController] an instance of action controller
     #
     def extract
       context = self.context
