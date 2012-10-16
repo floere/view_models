@@ -8,8 +8,13 @@ module ViewModels
   #
   class PathStore
     
+    # The view model class attribute
+    #
     attr_reader :view_model_class
     
+    # Initialize the path store
+    # @param [ViewModel] view_model_class The view model class
+    #
     def initialize view_model_class
       @view_model_class = view_model_class
       @name_path_mapping = {}

@@ -176,7 +176,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>The path store.</p>
+<p>The path store accessor, storing the view paths for the view model.</p>
 </div></span>
   
 </li>
@@ -241,12 +241,12 @@
     <span class="summary_desc"><div class='inline'>
 <p>Installs a path store, a specific store for template inheritance, to
 remember specific</p>
-<dl class="rdoc-list"><dt>path, name, format</dt>
+<dl class="rdoc-list label-list"><dt>path, name, format
 <dd>
 <p>tuples, pointing to a template path</p>
 </dd></dl>
 
-<p>so the view models don't have to traverse the inheritance chain always.</p>
+<p>so the view models don't have to always traverse the inheritance chain.</p>
 </div></span>
   
 </li>
@@ -302,7 +302,10 @@ remember specific</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Wrapper for add_template_helper in ActionController::Helpers, also includes
+given helper in the view_model.</p>
+</div></span>
   
 </li>
 
@@ -461,14 +464,6 @@ given.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-  <div class="note todo">
-    <strong>TODO:</strong>
-    <div class='inline'>
-<p>Include this | Make it call super</p>
-</div>
-  </div>
-
-
 <p>Create a view_model. To create a view_model, you need to have a model (to
 present) and a context. The context is usually a view, a controller, or an
 app, but doesn't need to be.</p>
@@ -516,7 +511,7 @@ access @controller directly. It's really bad.</p>
         <span class='name'>app_or_controller_or_view</span>
       
       
-        <span class='type'>(<tt>ActionView</tt>, <tt>ActionController</tt>, <tt>Rails.application</tt>)</span>
+        <span class='type'>(<tt>ActionView</tt>, <tt>ActionController</tt>, <tt>Rails::Application</tt>)</span>
       
       
       
@@ -552,13 +547,13 @@ access @controller directly. It's really bad.</p>
       <pre class="lines">
 
 
+38
+39
 40
-41
-42
-43</pre>
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_model'>model</span><span class='comma'>,</span> <span class='id identifier rubyid_app_or_controller_or_view'>app_or_controller_or_view</span>
   <span class='ivar'>@model</span>                 <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span>
@@ -588,7 +583,7 @@ access @controller directly. It's really bad.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>The path store</p>
+<p>The path store accessor, storing the view paths for the view model</p>
 
 
   </div>
@@ -618,12 +613,12 @@ access @controller directly. It's really bad.</p>
       <pre class="lines">
 
 
-49
-50
-51</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path_store'>path_store</span>
   <span class='ivar'>@path_store</span>
@@ -731,12 +726,12 @@ access @controller directly. It's really bad.</p>
       <pre class="lines">
 
 
-74
-75
-76</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_context_method'>context_method</span> <span class='op'>*</span><span class='id identifier rubyid_methods'>methods</span>
   <span class='id identifier rubyid_delegate'>delegate</span> <span class='op'>*</span><span class='id identifier rubyid_methods'>methods</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='symbol'>:to</span> <span class='op'>=&gt;</span> <span class='symbol'>:context</span> <span class='rbrace'>}</span>
@@ -760,12 +755,12 @@ access @controller directly. It's really bad.</p>
     
 <p>Installs a path store, a specific store for template inheritance, to
 remember specific</p>
-<dl class="rdoc-list"><dt>path, name, format</dt>
+<dl class="rdoc-list label-list"><dt>path, name, format
 <dd>
 <p>tuples, pointing to a template path</p>
 </dd></dl>
 
-<p>so the view models don't have to traverse the inheritance chain always.</p>
+<p>so the view models don't have to always traverse the inheritance chain.</p>
 
 
   </div>
@@ -815,13 +810,13 @@ remember specific</p>
       <pre class="lines">
 
 
-57
-58
-59
-60</pre>
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inherited'>inherited</span> <span class='id identifier rubyid_subclass'>subclass</span>
   <span class='const'>ViewModels</span><span class='op'>::</span><span class='const'>PathStore</span><span class='period'>.</span><span class='id identifier rubyid_install_in'>install_in</span> <span class='id identifier rubyid_subclass'>subclass</span>
@@ -942,16 +937,16 @@ remember specific</p>
       <pre class="lines">
 
 
+105
+106
 107
 108
 109
 110
-111
-112
-113</pre>
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span> <span class='id identifier rubyid_renderer'>renderer</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
   <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_format!'>format!</span> <span class='id identifier rubyid_renderer'>renderer</span>
@@ -983,11 +978,42 @@ remember specific</p>
 </h3><div class="docstring">
   <div class="discussion">
     
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'>
+<p>extract into module</p>
+</div>
+  </div>
+
+
+<p>Wrapper for add_template_helper in ActionController::Helpers, also includes
+given helper in the view_model</p>
+
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>helper_module</span>
+      
+      
+        <span class='type'>(<tt>Module</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the helper to be added</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -1011,13 +1037,13 @@ remember specific</p>
       <pre class="lines">
 
 
+93
+94
 95
-96
-97
-98</pre>
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_template_helper'>add_template_helper</span> <span class='id identifier rubyid_helper_module'>helper_module</span>
   <span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_helper_module'>helper_module</span>
@@ -1070,16 +1096,16 @@ remember specific</p>
       <pre class="lines">
 
 
+226
+227
 228
 229
 230
 231
-232
-233
-234</pre>
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dom_id'>dom_id</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -1133,10 +1159,10 @@ remember specific</p>
       <pre class="lines">
 
 
-94</pre>
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 85</span>
 
 <span class='kw'>alias</span> <span class='id identifier rubyid_old_add_template_helper'>old_add_template_helper</span> <span class='id identifier rubyid_add_template_helper'>add_template_helper</span></pre>
     </td>
@@ -1210,12 +1236,12 @@ specify locals you can call view_model.render_as(:partial, :locals =&gt; {
       <pre class="lines">
 
 
-260
-261
-262</pre>
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_as'>render_as</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_render_internal'>render_internal</span> <span class='const'>RenderOptions</span><span class='op'>::</span><span class='const'>Partial</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1287,12 +1313,12 @@ specify locals you can call view_model.render_template(:template, :locals
       <pre class="lines">
 
 
-286
-287
-288</pre>
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_template'>render_template</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_render_internal'>render_internal</span> <span class='const'>RenderOptions</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1307,7 +1333,7 @@ specify locals you can call view_model.render_template(:template, :locals
 </div>
 
     <div id="footer">
-  Generated on Tue Oct 16 22:52:31 2012 by
+  Generated on Tue Oct 16 23:27:35 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

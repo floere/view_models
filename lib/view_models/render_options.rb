@@ -1,8 +1,6 @@
 module ViewModels
   
   # Container object for render options.
-  #
-  # TODO Make a rails exclusive.
   # 
   module RenderOptions
     
@@ -10,8 +8,15 @@ module ViewModels
     #
     class Base
       
+      # The different attributes used to generate render options
+      #
       attr_accessor :path, :name, :prefix, :file, :view_model, :format
       
+      # Initialize Render Options
+      # @param [String] prefix The prefix for rendering
+      # @param [String] name The template name
+      # @param [Hash] options The render options as a hash
+      #
       def initialize prefix, name, options
         @prefix = prefix
         @options = options
@@ -24,16 +29,25 @@ module ViewModels
       def error_message
         "'#{error_path}#{name}' with #{error_format}"
       end
+      
+      # The error path, always returns a string
+      # @return [String] The error path
+      #
       def error_path
         path = self.path
         path ? "#{path}/" : ""
       end
+      
+      # The format when trying to render
+      # @return [String] the render format
+      #
       def error_format
         format = self.format
         format ? "format #{format}" : "default format"
       end
       
       # Used when rendering.
+      # @return [Hash] The render options
       #
       def to_render_options
         @options[:locals] ||= {}
@@ -41,7 +55,8 @@ module ViewModels
         @options.reverse_merge :file => file
       end
       
-      # TODO Rails specific.
+      # @todo Rails specific.
+      # @param [ActionView] view The view to render
       #
       def format! view
         view.template_format = @format if @format
@@ -55,7 +70,7 @@ module ViewModels
       
       private
         
-        # TODO rewrite
+        # @todo rewrite
         #
         def template_name= template_name
           template_name.to_s.include?('/') ? specific_path(template_name) : incomplete_path(template_name)

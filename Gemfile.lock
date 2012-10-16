@@ -8,6 +8,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    RedCloth (4.2.9)
     actionpack (3.2.8)
       activemodel (= 3.2.8)
       activesupport (= 3.2.8)
@@ -139,6 +140,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth
   activerecord-jdbc-adapter
   activerecord-jdbcsqlite3-adapter
   appraisal (~> 0.4.0)

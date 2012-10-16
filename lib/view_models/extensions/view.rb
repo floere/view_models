@@ -5,6 +5,9 @@
 #
 module ViewModels
   module Extensions
+    
+    # Extensions for the View instance
+    #
     module View
       
       # Renders the template with the given options

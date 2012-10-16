@@ -2,7 +2,14 @@
 #
 #
 module ViewModels
+  
+  # Extensions of the View Model Class
+  #
   module Extensions
+    
+    # Model Reader extension. Allows to define model readers on view models, accessing attributes and methods
+    # on models
+    #
     module ModelReader
       
       # Define a reader for a model attribute. Acts as a filtered delegation to the model. 
@@ -44,6 +51,9 @@ module ViewModels
           @attributes = options
         end
         
+        # Render the options to an array
+        # @return [Array] The attributes and the filters in this order
+        #
         def to_a
           [attributes, filters]
         end
@@ -59,11 +69,15 @@ module ViewModels
         #
         attr_reader :target, :attributes, :filters
         
+        # Initialize a new filtered delegation
+        # @param [ViewModel] target the target to install the filtered delegation in
+        # @param [ModelReader::Options] options The options for the filtered delegation
+        #
         def initialize target, options
           @target, @attributes, @filters = target, *options
         end
         
-        # Install install
+        # Install a reader for each attribute
         #
         def install
           attributes.each { |attribute| install_reader(attribute) }
@@ -72,8 +86,7 @@ module ViewModels
         # Install a reader for the given name with the given filters.
         #
         # @example Installs a reader for model.attribute
-        #
-        # * install_reader :attribute
+        #   install_reader :attribute
         #
         def install_reader attribute
           target.class_eval reader_definition_for(attribute)

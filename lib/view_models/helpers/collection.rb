@@ -1,5 +1,12 @@
 module ViewModels
+  
+  # Helpers you can include in just about anything to get convenient access to view model functionality
+  #
   module Helpers
+    
+    # Mapping helpers install collection_view_model_for and view_model_for, which you can use with instances
+    # to conveniently instantiate a view model for it
+    #
     module Mapping
       
       # Construct a view_model for a collection.
@@ -19,7 +26,7 @@ module ViewModels
       class Collection
         
         # Delegate collection relevant methods to the collection.
-        # TODO: Why is as_json not yet loaded in Enumerable.instance_methods 
+        # @todo Why is as_json not yet loaded in Enumerable.instance_methods 
         # when this file is loaded in the spec, require active_support is installed before view_models are loaded
         # Load Order ? Rails Blagic?
         #

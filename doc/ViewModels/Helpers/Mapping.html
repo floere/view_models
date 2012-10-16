@@ -79,14 +79,26 @@
   
   
     <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/view_models/helpers/mapping.rb<span class="defines">,<br />
-  lib/view_models/helpers/collection.rb</span>
+    <dd class="r1 last">lib/view_models/helpers/collection.rb<span class="defines">,<br />
+  lib/view_models/helpers/mapping.rb</span>
 </dd>
   
 </dl>
 <div class="clear"></div>
 
-<h2>Defined Under Namespace</h2>
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Mapping helpers install collection_view_model_for and view_model_for, which
+you can use with instances to conveniently instantiate a view model for it</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
 <p class="children">
   
     
@@ -152,7 +164,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the default view_model class for the given model instance.</p>
+</div></span>
   
 </li>
 
@@ -273,12 +287,12 @@ given arguments.</p>
       <pre class="lines">
 
 
-9
-10
-11</pre>
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/collection.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/collection.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collection_view_model_for'>collection_view_model_for</span> <span class='id identifier rubyid_array_or_pagination'>array_or_pagination</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='kw'>self</span>
   <span class='const'>Collection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_array_or_pagination'>array_or_pagination</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span>
@@ -297,18 +311,52 @@ given arguments.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the default view_model class for the given model instance.</p>
+
+<p>Default class name is: ViewModels::&lt;ModelClassName&gt;</p>
+
+<p>Override this method if you'd like to change the <em>default</em>
+model-to-view_model class mapping.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>NameError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if a corresponding ViewModels constant cannot be loaded.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_view_model_class_for'>default_view_model_class_for</span> <span class='id identifier rubyid_model'>model</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_default_prefix'>default_prefix</span> <span class='op'>+</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span>
@@ -365,12 +413,12 @@ the given model.</p>
       <pre class="lines">
 
 
-48
-49
-50</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_specific_view_model_class_for'>specific_view_model_class_for</span> <span class='id identifier rubyid_model'>model</span>
   <span class='id identifier rubyid_specific_view_model_mapping'>specific_view_model_mapping</span><span class='lbracket'>[</span><span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rbracket'>]</span>
@@ -417,12 +465,12 @@ default_view_model_class_for(model) if you'd like to change the default.</p>
       <pre class="lines">
 
 
-21
-22
-23</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_view_model_class_for'>view_model_class_for</span> <span class='id identifier rubyid_model'>model</span>
   <span class='id identifier rubyid_specific_view_model_class_for'>specific_view_model_class_for</span><span class='lparen'>(</span><span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_default_view_model_class_for'>default_view_model_class_for</span><span class='lparen'>(</span><span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span>
@@ -485,12 +533,12 @@ given arguments.</p>
       <pre class="lines">
 
 
-13
-14
-15</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/helpers/mapping.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_view_model_for'>view_model_for</span> <span class='id identifier rubyid_model'>model</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='kw'>self</span>
   <span class='id identifier rubyid_view_model_class_for'>view_model_class_for</span><span class='lparen'>(</span><span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_model'>model</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span>
@@ -505,7 +553,7 @@ given arguments.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Oct 16 22:52:31 2012 by
+  Generated on Tue Oct 16 23:27:34 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

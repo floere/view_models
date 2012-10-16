@@ -241,7 +241,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to_a-instance_method" title="#to_a (instance method)">- (Object) <strong>to_a</strong> </a>
+      <a href="#to_a-instance_method" title="#to_a (instance method)">- (Array) <strong>to_a</strong> </a>
     
 
     
@@ -255,7 +255,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Render the options to an array.</p>
+</div></span>
   
 </li>
 
@@ -292,12 +294,12 @@
       <pre class="lines">
 
 
-31
-32
-33</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='op'>*</span><span class='id identifier rubyid_attributes_and_options'>attributes_and_options</span>
   <span class='id identifier rubyid_split'>split</span> <span class='id identifier rubyid_attributes_and_options'>attributes_and_options</span>
@@ -340,12 +342,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attributes'>attributes</span>
   <span class='ivar'>@attributes</span>
@@ -383,12 +385,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_filters'>filters</span>
   <span class='ivar'>@filters</span>
@@ -451,17 +453,17 @@
       <pre class="lines">
 
 
-38
-39
-40
-41
-42
-43
-44
-45</pre>
+45
+46
+47
+48
+49
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_split'>split</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@filters</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_kind_of?'>kind_of?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
@@ -479,24 +481,53 @@
       <div class="method_details ">
   <h3 class="signature " id="to_a-instance_method">
   
-    - (<tt>Object</tt>) <strong>to_a</strong> 
+    - (<tt>Array</tt>) <strong>to_a</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Render the options to an array</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The attributes and the filters in this order</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-47
-48
-49</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/view_models/extensions/model_reader.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_attributes'>attributes</span><span class='comma'>,</span> <span class='id identifier rubyid_filters'>filters</span><span class='rbracket'>]</span>
@@ -511,7 +542,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Oct 16 22:52:32 2012 by
+  Generated on Tue Oct 16 23:27:35 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

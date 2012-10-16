@@ -21,19 +21,17 @@ module ViewModels
   #
   class Base
     
-    # Make helper and helper_method available
+    # Make the rails methods helper and helper_method available in view models
     #
     include AbstractController::Helpers
     
     # Create a view_model. To create a view_model, you need to have a model (to present) and a context.
     # The context is usually a view, a controller, or an app, but doesn't need to be.
     # 
-    #
     # The @context = @controller is really only needed because some Rails helpers access @controller directly.
     # It's really bad.
     # @param [ActiveRecord] model The model which the view model is based upon
-    # @param [ActionView, ActionController, Rails.application] app_or_controller_or_view The context of the view model
-    # @todo Include this | Make it call super
+    # @param [ActionView, ActionController, Rails::Application] app_or_controller_or_view The context of the view model
     # @example Initialize a view model without the mapping helper
     #   ViewModel::YourModel.new(@model, @context)
     # 
@@ -44,14 +42,13 @@ module ViewModels
     
     class << self
       
-      # The path store
+      # The path store accessor, storing the view paths for the view model
       #
       attr_accessor :path_store
       
-      # Installs a path store, a specific store for
-      # template inheritance, to remember specific
+      # Installs a path store, a specific store for template inheritance, to remember specific
       # [path, name, format] tuples, pointing to a template path
-      # so the view models don't have to traverse the inheritance chain always.
+      # so the view models don't have to always traverse the inheritance chain.
       # @param [ViewModel] subclass The subclass of the view model
       #
       def inherited subclass
@@ -84,14 +81,15 @@ module ViewModels
       #
       include Extensions::ModelReader
       
-      # Wrapper for add_template_helper in ActionController::Helpers, also
-      # includes given helper in the view_model
-      #
-      # @todo extract into module
-      # @param [Module] helper_module the helper to be added
-      #
       unless instance_methods.include?('old_add_template_helper')
         alias old_add_template_helper add_template_helper
+        
+        # Wrapper for add_template_helper in ActionController::Helpers, also
+        # includes given helper in the view_model
+        #
+        # @todo extract into module
+        # @param [Module] helper_module the helper to be added
+        #
         def add_template_helper helper_module
           include helper_module
           old_add_template_helper helper_module
@@ -302,6 +300,8 @@ module ViewModels
       #
       attr_accessor :output_buffer
       
+      # alias the context as controller
+      #
       alias controller context
       
       # Returns a view instance for render_xxx.
@@ -325,9 +325,7 @@ module ViewModels
       
       # Determines what format to use for rendering.
       #
-      # Note: Uses the template format of the view model instance
-      #       if none is explicitly set in the options.
-      #       This propagates the format to further render_xxx calls.
+      # @note Uses the template format of the view model instance if none is explicitly set in the options. This propagates the format to further render_xxx calls.
       #
       def determine_and_set_format options
         options.format = @template_format = options.format || @template_format

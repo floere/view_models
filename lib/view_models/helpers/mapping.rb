@@ -2,8 +2,15 @@ module ViewModels
   module Helpers
     module Mapping
       
+      # module attribute used for specific mapping
+      #
       mattr_accessor :specific_view_model_mapping
       self.specific_view_model_mapping = {}
+      
+      # module attribute for the default view models prefix
+      #
+      mattr_accessor :default_prefix
+      self.default_prefix = 'ViewModels::'
       
       # Create a new view_model instance for the given model instance
       # with the given arguments.
@@ -32,8 +39,6 @@ module ViewModels
       #
       # @raise [NameError] if a corresponding ViewModels constant cannot be loaded.
       #
-      mattr_accessor :default_prefix
-      self.default_prefix = 'ViewModels::'
       def default_view_model_class_for model
         (default_prefix + model.class.name).constantize
       end
