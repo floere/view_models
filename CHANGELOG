@@ -1,3 +1,4 @@
+3.0.0 - 28.10.12 - beatrichartz: Rails 3 Version of view models
 2.0.0 - 21.06.10 - floere: Dualboot (Padrino/Rails2) gem.
 1.6.0 - 15.06.10 - floere: Added Padrino to the frameworks.
                            Changed visibility of methods model, context (controller, app) from public to protected.
