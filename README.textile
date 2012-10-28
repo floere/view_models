@@ -18,8 +18,7 @@ h2. Basic Usage
 
 Let's say you have a model User (with a first and a last name and an address in the database):
 
-<pre><code>
-class User < ActiveRecord::Base
+<pre><code>class User < ActiveRecord::Base
   
   has_many :posts
   
@@ -28,8 +27,7 @@ end
 
 Write a corresponding view model user.rb in your view_models folder
 
-<pre><code>
-class ViewModels::User < ViewModels::Base
+<pre><code>class ViewModels::User < ViewModels::Base
   
   # model readers make model methods accessible on the view model object
   #
@@ -52,8 +50,7 @@ end
 
 In your view, call the view_model for a model by using «view_model_for»
 
-<pre><code>
-- view_model = view_model_for(@user)
+<pre><code>- view_model = view_model_for(@user)
 %h2= view_model.name
 %h2= view_model.creation_time
 </code></pre>
@@ -64,16 +61,14 @@ h2. Why View Models? (aka «The Problem»)
 
 Ever felt like putting something like this in your views (example in haml)?
 
-<pre><code>
-#user
+<pre><code>#user
   .name= [@user.first_name, @user.last_name].join ' '
   .address= [@user.street, @user.street_number, @user.zip_code, @user.city].join ' '
 </code></pre>
 
 Well, that may feel good if you're in a hurry. Soon there comes the time when you use this code in more than one place. Time to build a helper:
 
-<pre><code>
-module UserHelper
+<pre><code>module UserHelper
   def user_name user
     [user.first_name, user.last_name].join ' '
   end
@@ -94,8 +89,7 @@ h3. Meet View Models (aka «The Solution»)
 
 View models are pretty, because they represent your models in your views. They look good in every context, and therefore make you look good, too. Take our example from before:
 
-<pre><code>
-class ViewModels::User < ViewModels::Base
+<pre><code>class ViewModels::User < ViewModels::Base
 
   model_reader :first_name, :last_name, :street, :street_number, :zip_code, :city
   
@@ -123,16 +117,14 @@ View models feature template rendering: You can render any partial in your views
 
 Let's say you have the user model from before, and the following partial written for the view model to render named "info":
 
-<pre><code>
-#user
+<pre><code>#user
   .name= view_model.name
   .address= view_model.address
 </code></pre>
 
 Now everything you have to do to render that partial is:
 
-<pre><code>
-= view_model_for(@user).render_as :info
+<pre><code>= view_model_for(@user).render_as :info
 </code></pre>
 
 View models feature hierarchical template rendering. That means, if you have a parent view model which has an identical partial already installed, you do not need to copy identical code just to render the same template. The view model will lookup its inheritance chain and Rails template paths to find the suitable partial. Which brings us to another great feature:
@@ -145,23 +137,21 @@ h5. The View Model Way
 
 You can generate a view model tree structure with a view model for your whole app for your other view models to inherit from. The polymorphic class matching of the view models ignores the missing class YourApp candidly.
 
-<pre><code>
-  class ViewModels::YourApp < ViewModels::Base
-  
-    def creation_time
-      time_ago_in_words model.created_at
-    end
-  
+<pre><code>class ViewModels::YourApp < ViewModels::Base
+
+  def creation_time
+    time_ago_in_words model.created_at
   end
-  
-  class ViewModels::User < ViewModels::YourApp
-  end
+
+end
+
+class ViewModels::User < ViewModels::YourApp
+end
 </code></pre>
 
 In your view:
 
-<pre><code>
-= view_model_for(@user).creation_time
+<pre><code>= view_model_for(@user).creation_time
 </code></pre>
 
 h5. The Helper Way
