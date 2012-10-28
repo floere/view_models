@@ -1,0 +1,6 @@
+Usage:
+  rails g view_models <view model class name>
+  rails g view_models User
+  
+  rails g view_models <view model class name> <partials for render_as, separated by space>
+  rails g view_models User compact extensive list_item table_item

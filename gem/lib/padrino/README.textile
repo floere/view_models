@@ -1,3 +1,0 @@
-h1. View Models for Padrino
-
-This is the Padrino specific folder of the view models.

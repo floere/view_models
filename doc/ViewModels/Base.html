@@ -1,0 +1,1342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: ViewModels::Base
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../ViewModels.html" title="ViewModels (module)">ViewModels</a></span></span>
+     &raquo; 
+    <span class="title">Base</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: ViewModels::Base
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ViewModels::Base</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><span class='object_link'><a href="Extensions/ModelReader.html" title="ViewModels::Extensions::ModelReader (module)">Extensions::ModelReader</a></span></dd>
+      
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1">AbstractController::Helpers</dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/view_models/base.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Base class from which all view_models inherit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Create Your first View Model</p>
+</div></p>
+      
+      <pre class="example code"><span class='kw'>class</span> <span class='const'>ViewModels</span><span class='op'>::</span><span class='const'>MyViewModel</span> <span class='op'>&lt;</span> <span class='const'>ViewModels</span><span class='op'>::</span><span class='const'>Base</span>
+  <span class='comment'># your code
+</span><span class='kw'>end</span></pre>
+    
+  </div>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+
+  <h2>Class Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path_store-class_method" title="path_store (class method)">+ (Object) <strong>path_store</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The path store accessor, storing the view paths for the view model.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#context_method-class_method" title="context_method (class method)">+ (Object) <strong>context_method</strong>(*methods) </a>
+    
+
+    
+      (also: controller_method)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Delegates method calls to the context.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inherited-class_method" title="inherited (class method)">+ (Object) <strong>inherited</strong>(subclass) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Installs a path store, a specific store for template inheritance, to
+remember specific</p>
+<dl class="rdoc-list label-list"><dt>path, name, format
+<dd>
+<p>tuples, pointing to a template path</p>
+</dd></dl>
+
+<p>so the view models don't have to always traverse the inheritance chain.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render-class_method" title="render (class method)">+ (Object) <strong>render</strong>(renderer, options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the view format and tries to render the given options.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_template_helper-instance_method" title="#add_template_helper (instance method)">- (Object) <strong>add_template_helper</strong>(helper_module) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Wrapper for add_template_helper in ActionController::Helpers, also includes
+given helper in the view_model.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dom_id-instance_method" title="#dom_id (instance method)">- (Object) <strong>dom_id</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Delegate dom id to the action controller record identifier.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Base) <strong>initialize</strong>(model, app_or_controller_or_view) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a view_model.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#old_add_template_helper-instance_method" title="#old_add_template_helper (instance method)">- (Object) <strong>old_add_template_helper</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render_as-instance_method" title="#render_as (instance method)">- (Object) <strong>render_as</strong>(name, options = {}) </a>
+    
+
+    
+      (also: #render_the)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Renders the given partial in the view_model's view root in the format
+given.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render_template-instance_method" title="#render_template (instance method)">- (Object) <strong>render_template</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Renders the given template in the view_model's view root in the format
+given.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Extensions/ModelReader.html" title="ViewModels::Extensions::ModelReader (module)">Extensions::ModelReader</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Extensions/ModelReader.html#model_reader-instance_method" title="ViewModels::Extensions::ModelReader#model_reader (method)">model_reader</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="ViewModels::Base (class)">Base</a></span></tt>) <strong>initialize</strong>(model, app_or_controller_or_view) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a view_model. To create a view_model, you need to have a model (to
+present) and a context. The context is usually a view, a controller, or an
+app, but doesn't need to be.</p>
+
+<p>The @context = @controller is really only needed because some Rails helpers
+access @controller directly. It's really bad.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Initialize a view model without the mapping helper</p>
+</div></p>
+      
+      <pre class="example code"><span class='const'>ViewModel</span><span class='op'>::</span><span class='const'>YourModel</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@model</span><span class='comma'>,</span> <span class='ivar'>@context</span><span class='rparen'>)</span></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>model</span>
+      
+      
+        <span class='type'>(<tt>ActiveRecord</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The model which the view model is based upon</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>app_or_controller_or_view</span>
+      
+      
+        <span class='type'>(<tt>ActionView</tt>, <tt>ActionController</tt>, <tt>Rails::Application</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The context of the view model</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_model'>model</span><span class='comma'>,</span> <span class='id identifier rubyid_app_or_controller_or_view'>app_or_controller_or_view</span>
+  <span class='ivar'>@model</span>                 <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span>
+  <span class='ivar'>@context</span> <span class='op'>=</span> <span class='ivar'>@controller</span> <span class='op'>=</span> <span class='const'>ContextExtractor</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_app_or_controller_or_view'>app_or_controller_or_view</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_extract'>extract</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="class_attr_details" class="attr_details">
+    <h2>Class Attribute Details</h2>
+    
+      
+      <span id="path_store=-class_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="path_store-class_method">
+  
+    + (<tt>Object</tt>) <strong>path_store</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The path store accessor, storing the view paths for the view model</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_path_store'>path_store</span>
+  <span class='ivar'>@path_store</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="context_method-class_method">
+  
+    + (<tt>Object</tt>) <strong>context_method</strong>(*methods) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='controller_method-class_method'>controller_method</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Delegates method calls to the context. In the view_model:</p>
+
+<pre class="code ruby"><code><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_user'>current_user</span></code></pre>
+
+<p>will call</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_current_user'>current_user</span></code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>delegate one method to the context</p>
+</div></p>
+      
+      <pre class="example code"><span class='id identifier rubyid_context_method'>context_method</span> <span class='symbol'>:current_user</span></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>delegate multiple methods to the context</p>
+</div></p>
+      
+      <pre class="example code"><span class='id identifier rubyid_context_method'>context_method</span> <span class='symbol'>:current_user</span><span class='comma'>,</span> <span class='symbol'>:current_profile</span></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>methods</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A list of symbols representing methods to be delegated</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_context_method'>context_method</span> <span class='op'>*</span><span class='id identifier rubyid_methods'>methods</span>
+  <span class='id identifier rubyid_delegate'>delegate</span> <span class='op'>*</span><span class='id identifier rubyid_methods'>methods</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='symbol'>:to</span> <span class='op'>=&gt;</span> <span class='symbol'>:context</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inherited-class_method">
+  
+    + (<tt>Object</tt>) <strong>inherited</strong>(subclass) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Installs a path store, a specific store for template inheritance, to
+remember specific</p>
+<dl class="rdoc-list label-list"><dt>path, name, format
+<dd>
+<p>tuples, pointing to a template path</p>
+</dd></dl>
+
+<p>so the view models don't have to always traverse the inheritance chain.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>subclass</span>
+      
+      
+        <span class='type'>(<tt>ViewModel</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The subclass of the view model</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inherited'>inherited</span> <span class='id identifier rubyid_subclass'>subclass</span>
+  <span class='const'>ViewModels</span><span class='op'>::</span><span class='const'>PathStore</span><span class='period'>.</span><span class='id identifier rubyid_install_in'>install_in</span> <span class='id identifier rubyid_subclass'>subclass</span>
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="render-class_method">
+  
+    + (<tt>Object</tt>) <strong>render</strong>(renderer, options) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Also caches [path, name, format] =&gt; template path.</p>
+</div>
+  </div>
+
+
+<p>Sets the view format and tries to render the given options.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>renderer</span>
+      
+      
+        <span class='type'>(<tt>ActionView</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The view renderer</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The options to pass to the view</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:locals</span>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>The locals to pass to the view</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107
+108
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 105</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span> <span class='id identifier rubyid_renderer'>renderer</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+  <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_format!'>format!</span> <span class='id identifier rubyid_renderer'>renderer</span>
+  <span class='id identifier rubyid_path_store'>path_store</span><span class='period'>.</span><span class='id identifier rubyid_cached'>cached</span> <span class='id identifier rubyid_options'>options</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='id identifier rubyid_template_path'>template_path</span> <span class='id identifier rubyid_renderer'>renderer</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+    <span class='id identifier rubyid_renderer'>renderer</span><span class='period'>.</span><span class='id identifier rubyid_render_with'>render_with</span> <span class='id identifier rubyid_options'>options</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_template_helper-instance_method">
+  
+    - (<tt>Object</tt>) <strong>add_template_helper</strong>(helper_module) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'>
+<p>extract into module</p>
+</div>
+  </div>
+
+
+<p>Wrapper for add_template_helper in ActionController::Helpers, also includes
+given helper in the view_model</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>helper_module</span>
+      
+      
+        <span class='type'>(<tt>Module</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the helper to be added</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95
+96</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_template_helper'>add_template_helper</span> <span class='id identifier rubyid_helper_module'>helper_module</span>
+  <span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_helper_module'>helper_module</span>
+  <span class='id identifier rubyid_old_add_template_helper'>old_add_template_helper</span> <span class='id identifier rubyid_helper_module'>helper_module</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="dom_id-instance_method">
+  
+    - (<tt>Object</tt>) <strong>dom_id</strong>(*args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Delegate dom id to the action controller record identifier.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+226
+227
+228
+229
+230
+231
+232</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 226</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_dom_id'>dom_id</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_dom_id'>dom_id</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='kw'>else</span>
+    <span class='const'>ActionController</span><span class='op'>::</span><span class='const'>RecordIdentifier</span><span class='period'>.</span><span class='id identifier rubyid_dom_id'>dom_id</span> <span class='id identifier rubyid_model'>model</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="old_add_template_helper-instance_method">
+  
+    - (<tt>Object</tt>) <strong>old_add_template_helper</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 85</span>
+
+<span class='kw'>alias</span> <span class='id identifier rubyid_old_add_template_helper'>old_add_template_helper</span> <span class='id identifier rubyid_add_template_helper'>add_template_helper</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="render_as-instance_method">
+  
+    - (<tt>Object</tt>) <strong>render_as</strong>(name, options = {}) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='render_the-instance_method'>render_the</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Renders the given partial in the view_model's view root in the format
+given.</p>
+
+<p>Example:</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_views'>views</span><span class='op'>/</span><span class='id identifier rubyid_view_models'>view_models</span><span class='op'>/</span><span class='id identifier rubyid_this'>this</span><span class='op'>/</span><span class='id identifier rubyid_view_model'>view_model</span><span class='op'>/</span><span class='id identifier rubyid__partial'>_partial</span><span class='period'>.</span><span class='id identifier rubyid_haml'>haml</span>
+<span class='id identifier rubyid_views'>views</span><span class='op'>/</span><span class='id identifier rubyid_view_models'>view_models</span><span class='op'>/</span><span class='id identifier rubyid_this'>this</span><span class='op'>/</span><span class='id identifier rubyid_view_model'>view_model</span><span class='op'>/</span><span class='id identifier rubyid__partial'>_partial</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_erb'>erb</span></code></pre>
+
+<p>The following options are supported:</p>
+<ul><li>
+<p>:format - Calling view_model.render_as('partial') will render the haml
+partial, calling view_model.render_as('partial', :format =&gt; :text) will
+render the text erb.</p>
+</li><li>
+<p>All other options are passed on to the render call. I.e. if you want to
+specify locals you can call view_model.render_as(:partial, :locals =&gt; {
+:name =&gt; :value })</p>
+</li><li>
+<p>If no format is given, it will render the default format, which is
+(currently) html.</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+258
+259
+260</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 258</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render_as'>render_as</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_render_internal'>render_internal</span> <span class='const'>RenderOptions</span><span class='op'>::</span><span class='const'>Partial</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="render_template-instance_method">
+  
+    - (<tt>Object</tt>) <strong>render_template</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Renders the given template in the view_model's view root in the format
+given.</p>
+
+<p>Example:</p>
+
+<pre class="code ruby"><code>views/view_models/this/view_model/template.haml
+views/view_models/this/view_model/template name.text.erb</code></pre>
+
+<p>The following options are supported:</p>
+<ul><li>
+<p>:format - Calling view_model.render_template('template') will render the
+haml template, calling view_model.render_template('template', :format =&gt;
+:text) will render the text erb template.</p>
+</li><li>
+<p>All other options are passed on to the render call. I.e. if you want to
+specify locals you can call view_model.render_template(:template, :locals
+=&gt; { :name =&gt; :value })</p>
+</li><li>
+<p>If no format is given, it will render the default format, which is
+(currently) html.</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+284
+285
+286</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/view_models/base.rb', line 284</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render_template'>render_template</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_render_internal'>render_internal</span> <span class='const'>RenderOptions</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Oct 16 23:27:35 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
