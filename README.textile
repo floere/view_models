@@ -172,14 +172,14 @@ h2. Testing View Models
 
 Testing View Models is easy. You can use the view models initializer method (example in rspec with factory girl):
 
-<pre><code>
-  describe "ViewModels::User" do
-    let(:user) { build_stubbed(:user) }
-    subject { ViewModels::User.new(user, @controller) } # @controller may be nil or the controller
-    
-    describe "model_readers"
-      .. there you go
-    end
+<pre><code>describe "ViewModels::User" do
+  let(:user) { build_stubbed(:user) }
+  subject { ViewModels::User.new(user, @controller) } # @controller may be nil or the controller
+  
+  describe "model_readers"
+    .. there you go
+  end
+end
 </code></pre>
 
 h2. Further reads
