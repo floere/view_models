@@ -139,7 +139,7 @@ h3. View Models can haz inheritance
 
 Ever tried to do inheritance in Rails helpers? Right. View Models, on the other side, love inheritance. They do not need arguments to display a formatted creation time for all your models. Consider the following:
 
-h5. The View Model Way
+h4. The View Model Way
 
 You can generate a view model tree structure with a view model for your whole app for your other view models to inherit from. The polymorphic class matching of the view models ignores the missing class YourApp candidly.
 
@@ -160,7 +160,7 @@ In your view:
 <pre><code>= view_model_for(@user).creation_time
 </code></pre>
 
-h5. The Helper Way
+h4. The Helper Way
 
 Imagine how to do this in a helper ? Well, better go ahead and use time_ago_in_words everywhere.
 
