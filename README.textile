@@ -1,4 +1,4 @@
-h1. View Models
+h1. View Models !https://secure.travis-ci.org/beatrichartz/view_models.png(Build Status)!:http://travis-ci.org/beatrichartz/view_models "!https://codeclimate.com/badge.png!":https://codeclimate.com/github/beatrichartz/view_models
 
 A representer solution for Rails 3. For older versions of Rails please use versions up to 3. You may find view models useful (or not). Fact: They will keep code out of your views. Because view models do not like code in your view.
 
