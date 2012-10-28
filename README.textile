@@ -168,6 +168,20 @@ There are known some places in the big place called internet to use this gem:
 "rightclearing.com [Music Licensing Provider]": http://rightclearing.com
 "restorm.com [Music Platform]": http://restorm.com
 
+h2. Testing View Models
+
+Testing View Models is easy. You can use the view models initializer method (example in rspec with factory girl):
+
+<pre><code>
+  describe "ViewModels::User" do
+    let(:user) { build_stubbed(:user) }
+    subject { ViewModels::User.new(user, @controller) } # @controller may be nil or the controller
+    
+    describe "model_readers"
+      .. there you go
+    end
+</code></pre>
+
 h2. Further reads
 
 "Mailing List":http://groups.google.com/group/view_models/topics
