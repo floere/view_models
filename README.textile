@@ -14,8 +14,7 @@ And this to your application.rb: (It adds the app folder to the autoload paths, 
 </code></pre>
 
 Create a directory "view_models" in your app folder, and you're good to go.
-<pre><code>
-mkdir ./app/view_models
+<pre><code>mkdir ./app/view_models
 </code></pre>
 
 h2. Basic Usage
