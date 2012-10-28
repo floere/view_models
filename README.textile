@@ -105,8 +105,11 @@ View models are pretty, because they represent your models in your views. They l
   end
   
 end
+</code></pre>
 
-- user_view_model = view_model_for(@user)
+And your view will look like this:
+
+<pre><code>- user_view_model = view_model_for(@user)
 #user
   .name= user_view_model.name
   .address= user_view_model.address
