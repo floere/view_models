@@ -6,13 +6,17 @@ h2. Installing View Models
 
 Add this to your gemfile
 
-@gem "view_models",   ">= 3.0.0"
+<pre><code>gem "view_models",   ">= 3.0.0"
+</code></pre>
 
 And this to your application.rb: (It adds the app folder to the autoload paths, which is necessary for the view models to load)
-
-@config.autoload_paths += %W(#{config.root}/app)
+<pre><code>config.autoload_paths += %W(#{config.root}/app)
+</code></pre>
 
 Create a directory "view_models" in your app folder, and you're good to go.
+<pre><code>
+mkdir ./app/view_models
+</code></pre>
 
 h2. Basic Usage
 
