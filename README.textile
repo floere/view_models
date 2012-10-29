@@ -17,6 +17,12 @@ Create a directory "view_models" in your app folder, and you're good to go.
 <pre><code>mkdir ./app/view_models
 </code></pre>
 
+h2. TODOs
+
+What you can look forward to in future versions of this gem:
+- Bootstrapping for easier installation
+- JSON generation out of view models
+
 h2. Basic Usage
 
 Let's say you have a model User (with a first and a last name and an address in the database):
