@@ -1,0 +1,12 @@
+- if collection.page_count > 1
+  p
+    - if collection.previous_page?
+      = link_to 'previous', :page => collection.page-1
+    - 1.upto(collection.page_count) do |page|
+      - if page == collection.page
+        = page.to_s
+      - else
+        = link_to page, :page => page
+      = separator unless collection.last_page?
+    - if collection.next_page?
+      = link_to 'next', :page => collection.page+1

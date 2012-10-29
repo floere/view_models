@@ -1,6 +1,0 @@
-<% collection.each do |item| -%>
-<% view_model = view_model_for item -%>
-<%- options = (template_format ? { :format => template_format } : {}) -%>
-<%= view_model.render_as template_name, options -%>
-<%= separator || '\n' unless item == collection.entries.last -%>
-<% end -%>

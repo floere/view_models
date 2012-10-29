@@ -1,58 +1,193 @@
-h1. ViewModels
+h1. View Models !https://secure.travis-ci.org/beatrichartz/view_models.png(Build Status)!:http://travis-ci.org/beatrichartz/view_models "!https://codeclimate.com/badge.png!":https://codeclimate.com/github/beatrichartz/view_models
 
-A view model/representer solution for Padrino and Rails.
+A representer solution for Rails 3. For older versions of Rails please use versions up to 3. You may find view models useful (or not). Fact: They will keep code out of your views. Because view models do not like code in your view.
 
-h2. Features
+h2. Installing View Models
 
-* Polymorph view model objects that correspond to model objects.
-* View model specific templates.
-* Hierarchical Template Rendering: Allows generalized templates for a class tree of view models.
-* Helper methods directly on the view models.
-* No view related code in the models.
-* A clean API for use in Padrino/Rails.
-* 100% rcov coverage, nice metrics, gallons of blood and sweat by excellent contributors.
+Add this to your gemfile
 
-h2. Installation
+<pre><code>gem "view_models",   ">= 3.0.0"
+</code></pre>
 
-h3. Padrino (via Gem)
+And this to your application.rb: (It adds the app folder to the autoload paths, which is necessary for the view models to load)
+<pre><code>config.autoload_paths += %W(#{config.root}/app)
+</code></pre>
 
-Note: The Padrino API might change as I get acquainted with the Padrino way of doing things. Basic calls like render_as without all its options will stay the same, and so will view_model_for.
+Create a directory "view_models" in your app folder, and you're good to go.
+<pre><code>mkdir ./app/view_models
+</code></pre>
 
-@gem install view_models@
+h2. Basic Usage
 
-and then adding the line
+Let's say you have a model User (with a first and a last name and an address in the database):
 
-@gem 'view_models', '>=2.0.0' # for example@
-
-in your Gemfile, followed by your app file(s):
-
-<pre><code>require 'view_models'
-...
-class MyApplication < Padrino::Application
-  register Padrino::ViewModels
-  ...
+<pre><code>class User < ActiveRecord::Base
+  
+  has_many :posts
+  
 end
 </code></pre>
 
-Note: Adheres to the Padrino style by explicitly registering. 
+Write a corresponding view model user.rb in your view_models folder
 
-h3. Rails (via Gem)
+<pre><code>class ViewModels::User < ViewModels::Base
+  
+  # model readers make model methods accessible on the view model object
+  #
+  model_reader :first_name, :last_name, :street, :street_number, :zip_code, :city
+  
+  # Write helper methods which benefit from model readers
+  #
+  def name
+    [first_name, last_name].join ' '
+  end
+  
+  # Access the model by using «model»
+  #
+  def creation_time
+    time_ago_in_words model.created_at
+  end
+  
+end
+</code></pre>
 
-@gem install view_models@
+In your view, call the view_model for a model by using «view_model_for»
 
-and then adding the line
+<pre><code>- view_model = view_model_for(@user)
+%h2= view_model.name
+%h2= view_model.creation_time
+</code></pre>
 
-@config.gem 'view_models'@
+All beautiful, you may think, but...
 
-in your environment.rb.
+h2. Why View Models? (aka «The Problem»)
 
-h2. Links Galore!
+Ever felt like putting something like this in your views (example in haml)?
 
-"Usage, Examples, In-depth Infos [Wiki]":http://wiki.github.com/floere/view_models/
-"Reference [RDoc]":http://rdoc.info/projects/floere/view_models
-"Gem [RubyGems.org]":http://rubygems.org/gems/view_models
+<pre><code>#user
+  .name= [@user.first_name, @user.last_name].join ' '
+  .address= [@user.street, @user.street_number, @user.zip_code, @user.city].join ' '
+</code></pre>
+
+Well, that may feel good if you're in a hurry. Soon there comes the time when you use this code in more than one place. Time to build a helper:
+
+<pre><code>module UserHelper
+  def user_name user
+    [user.first_name, user.last_name].join ' '
+  end
+
+  def user_address user
+    [user.street, user.street_number, user.zip_code, user.city].join ' '
+  end
+end
+
+#user
+  .name= user_name @user
+  .address= user_address @user
+</code></pre>
+
+It may be a lot cleaner, but something just does not feel right. Right, but what? Well, for instance, you have to namespace all your methods with «user» so your methods don't get messy. Second, you have to include the helper either in every context you use it, or even in the whole app. If only you had a polymorphic object to represent your models in the views...
+
+h3. Meet View Models (aka «The Solution»)
+
+View models are pretty, because they represent your models in your views. They look good in every context, and therefore make you look good, too. Take our example from before:
+
+<pre><code>class ViewModels::User < ViewModels::Base
+
+  model_reader :first_name, :last_name, :street, :street_number, :zip_code, :city
+  
+  def name
+    [first_name, last_name].join ' '
+  end
+
+  def address
+    [street, street_number, zip_code, city].join ' '
+  end
+  
+end
+</code></pre>
+
+And your view will look like this:
+
+<pre><code>- user_view_model = view_model_for(@user)
+#user
+  .name= user_view_model.name
+  .address= user_view_model.address
+</code></pre>
+
+No helper inclusion needed, no further noise involved. In fact, you can make it even prettier: What if you needed that partial with the user name and address somewhere else in your code?
+
+h3. Meet View Models render_as method
+
+View models feature template rendering: You can render any partial in your views, following your views directory tree structure: A view_model variable will automatically be included as a local variable in your partial if you render it with view models:
+
+Let's say you have the user model from before, and the following partial written for the view model to render named "info":
+
+<pre><code>#user
+  .name= view_model.name
+  .address= view_model.address
+</code></pre>
+
+Now everything you have to do to render that partial is:
+
+<pre><code>= view_model_for(@user).render_as :info
+</code></pre>
+
+View models feature hierarchical template rendering. That means, if you have a parent view model which has an identical partial already installed, you do not need to copy identical code just to render the same template. The view model will lookup its inheritance chain and Rails template paths to find the suitable partial. Which brings us to another great feature:
+
+h3. View Models can haz inheritance
+
+Ever tried to do inheritance in Rails helpers? Right. View Models, on the other side, love inheritance. They do not need arguments to display a formatted creation time for all your models. Consider the following:
+
+h4. The View Model Way
+
+You can generate a view model tree structure with a view model for your whole app for your other view models to inherit from. The polymorphic class matching of the view models ignores the missing class YourApp candidly.
+
+<pre><code>class ViewModels::YourApp < ViewModels::Base
+
+  def creation_time
+    time_ago_in_words model.created_at
+  end
+
+end
+
+class ViewModels::User < ViewModels::YourApp
+end
+</code></pre>
+
+In your view:
+
+<pre><code>= view_model_for(@user).creation_time
+</code></pre>
+
+h4. The Helper Way
+
+Imagine how to do this in a helper ? Well, better go ahead and use time_ago_in_words everywhere.
+
+h2. Where is it used?
+
+There are known some places in the big place called internet to use this gem:
+
+"rightclearing.com [Music Licensing Provider]": http://rightclearing.com
+"restorm.com [Music Platform]": http://restorm.com
+
+h2. Testing View Models
+
+Testing View Models is easy. You can use the view models initializer instead of the view_model_for mapping (example in rspec with factory girl):
+
+<pre><code>describe "ViewModels::User" do
+  let(:user) { build_stubbed(:user) }
+  subject { ViewModels::User.new(user, @controller) } # @controller may be nil or the controller
+  
+  describe "model_readers"
+    .. there you go
+  end
+end
+</code></pre>
+
+h2. Further reads
+
 "Mailing List":http://groups.google.com/group/view_models/topics
+"Rubygems":http://rubygems.org/gems/view_models
 "Bug Tracker":http://github.com/floere/view_models/issues
-"Metrics":http://getcaliper.com/caliper/project?repo=git://github.com/floere/view_models.git
 "Source [Github]":http://github.com/floere/view_models
-"Homepage":http://floere.github.com/view_models/

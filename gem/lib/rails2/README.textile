@@ -1,3 +1,0 @@
-h1. View Models for Rails
-
-This is the Rails specific folder of the view models.

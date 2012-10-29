@@ -1,3 +1,0 @@
-h1. View Models for Padrino AND Rails
-
-This is shared folder which contains code and resources both for Padrino AND Rails.

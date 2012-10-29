@@ -1,0 +1,6 @@
+<ul class="collection">
+  <%- collection.each do |item| -%>
+    <%- view_model = view_model_for item -%>
+    <li><%= view_model.render_as template_name -%></li>
+  <%- end -%>
+</ul>
